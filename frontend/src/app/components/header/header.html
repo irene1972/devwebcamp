@@ -1,12 +1,21 @@
-<section class="contenedor d-md-flex justify-content-md-between align-items-md-center">
-    <h2 class="my-0 mx-3">
-        <a class="text-decoration-none text-dark" [routerLink]="['/home']">DevWebCamp</a>
-    </h2>
-    <nav>
-        <ul class="my-0 mx-3 list-unstyled d-md-flex gap-md-4">
-            <li><a class="text-decoration-none text-dark" [routerLink]="['/home']" routerLinkActive="activo">Home</a></li>
-            <li><a class="text-decoration-none text-dark" [routerLink]="['/login']" routerLinkActive="activo">Login</a></li>
-        </ul>
-    </nav>
+<section class="contenedor">
+    <div class="d-md-flex justify-content-md-between align-items-md-center">
+        <p class="my-0 mx-3">
+            <a class="text-decoration-none text-dark" [routerLink]="['/home']">DevWebCamp</a>
+        </p>
+        <nav>
+            <ul class="my-0 mx-3 list-unstyled d-md-flex gap-md-4">
+                <li><a class="text-decoration-none text-dark" [routerLink]="['/home']" routerLinkActive="activo">Home</a></li>
+                <li><a class="text-decoration-none text-dark" [routerLink]="['/registro']" routerLinkActive="activo">Registro</a></li>
+                <li><a class="text-decoration-none text-dark" [routerLink]="['/login']" routerLinkActive="activo">Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div>
+        <p>Octubre 5-6 - 2023</p>
+        <p>En Línea - Presencial</p>
+        <a  [routerLink]="['/registro']" routerLinkActive="activo">Comprar Pase</a>
+    </div>
+    
     
 </section>
