@@ -21,6 +21,10 @@ img{
     max-width: 120rem;
     margin:0 auto;
 }
+.flex{
+    display: flex;
+    gap:1em;
+}
 a{
     text-decoration: none;
     color:black;

@@ -1,1 +1,61 @@
-<p>registro works!</p>
+<main class="contenedor auth">
+    <h2 class="auth__heading">{{titulo}}</h2>
+    <p class="auth__texto">Regístrate en DevWebCamp</p>
+    <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+        <div class="formulario__campo">
+            <label for="nombre" class="formulario__label">Nombre</label>
+            <input type="text" class="formulario__input" placeholder="Tu Nombre" id="nombre" formControlName="nombre" [class.error]="nombre?.invalid && nombre?.touched">
+            @if (nombre?.touched && nombre?.hasError('required')) {
+                <div class="text-danger">
+                    El nombre es obligatorio.
+                </div>
+            }
+        </div>
+        <div class="formulario__campo">
+            <label for="apellido" class="formulario__label">Apellido</label>
+            <input type="text" class="formulario__input" placeholder="Tu Apellido" id="apellido" formControlName="apellido" [class.error]="apellido?.invalid && apellido?.touched">
+            @if (apellido?.touched && apellido?.hasError('required')) {
+                <div class="text-danger">
+                    El apellido es obligatorio.
+                </div>
+            }
+        </div>
+        <div class="formulario__campo">
+            <label for="email" class="formulario__label">Email</label>
+            <input type="email" class="formulario__input" placeholder="Tu Email" id="email" formControlName="email" [class.error]="email?.invalid && email?.touched">
+            @if (email?.touched && email?.hasError('required')) {
+                <div class="text-danger">
+                    El email es obligatorio.
+                </div>
+            }@else if (email?.touched && email?.hasError('pattern')) {
+                <div class="text-danger">
+                    El email no tiene un formato válido.
+                </div>
+            }
+        </div>
+        <div class="formulario__campo">
+            <label for="password" class="formulario__label">Password</label>
+            <input type="password" class="formulario__input" placeholder="Tu Password" id="password" formControlName="password" [class.error]="password?.invalid && password?.touched">
+            @if (password?.touched && password?.hasError('required')) {
+                <div class="text-danger">
+                    El password es obligatorio.
+                </div>
+            }
+        </div>
+        <div class="formulario__campo">
+            <label for="password2" class="formulario__label">Repetir Password</label>
+            <input type="password" class="formulario__input" placeholder="Repite tu Password" id="password2" formControlName="password2" [class.error]="password2?.invalid && password2?.touched">
+            @if (password2?.touched && password2?.hasError('required')) {
+                <div class="text-danger">
+                    El password es obligatorio.
+                </div>
+            }
+        </div>
+        <input type="submit" class="formulario__submit" value="Crear Cuenta">
+    </form>
+
+    <div class="acciones flex">
+        <a class="acciones__enlace" [routerLink]="['/login']" routerLinkActive="activo">¿Ya tienes cuenta? Iniciar Sesión</a>
+        <a class="acciones__enlace" [routerLink]="['/olvide']" routerLinkActive="activo">¿Olvidaste tu password?</a>
+    </div>
+</main>
