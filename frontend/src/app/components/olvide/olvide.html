@@ -1,1 +1,27 @@
-<p>olvide works!</p>
+<main class="contenedor auth">
+    <h2 class="auth__heading">{{titulo}}</h2>
+    <p class="auth__texto">Recupera tu acceso a DevWebCamp</p>
+    
+    <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+        <div class="formulario__campo">
+            <label for="email" class="formulario__label">Email</label>
+            <input type="email" class="formulario__input" placeholder="Tu Email" id="email" formControlName="email" [class.error]="email?.invalid && email?.touched">
+            @if (email?.touched && email?.hasError('required')) {
+                <div class="text-danger">
+                    El email es obligatorio.
+                </div>
+            }@else if (email?.touched && email?.hasError('pattern')) {
+                <div class="text-danger">
+                    El email no tiene un formato válido.
+                </div>
+            }
+        </div>
+        
+        <input type="submit" class="formulario__submit" value="Iniciar Sesión" [disabled]="!miForm.valid">
+    </form>
+
+    <div class="acciones flex">
+        <a class="acciones__enlace" [routerLink]="['/login']" routerLinkActive="activo">¿Ya tienes cuenta? Iniciar Sesión</a>
+        <a class="acciones__enlace" [routerLink]="['/registro']" routerLinkActive="activo">¿Aún no tienes una cuenta? Obtener una</a>
+    </div>
+</main>

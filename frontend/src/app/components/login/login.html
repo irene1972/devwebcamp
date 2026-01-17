@@ -1,7 +1,7 @@
 <main class="contenedor auth">
     <h2 class="auth__heading">{{titulo}}</h2>
     <p class="auth__texto">Inicia Sesión en DevWebCamp</p>
-    {{miForm.valid}}
+    
     <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
         <div class="formulario__campo">
             <label for="email" class="formulario__label">Email</label>
