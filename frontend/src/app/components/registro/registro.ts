@@ -64,7 +64,28 @@ export class Registro {
       this.miForm.markAllAsTouched();
       return;
     }
-    console.log(this.miForm.value);
-    this.router.navigate(['/cuenta-creada']);
+    //console.log(this.miForm.value);
+
+    fetch('http://localhost:3000/api/auth/registro',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json; charset=UTF-8'
+      },
+      body:JSON.stringify(this.miForm.value)
+    })
+      .then(response=>response.json())
+      .then(data=>{
+        console.log(data);
+        if(data.error){
+          console.log(data.error);
+          return;
+        }
+
+        this.router.navigate(['/cuenta-creada']);
+        
+      })
+      .catch(error=>console.log(error));
+
+    
   }
 }

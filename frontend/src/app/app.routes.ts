@@ -5,6 +5,7 @@ import { C404 } from './components/c404/c404';
 import { Registro } from './components/registro/registro';
 import { Olvide } from './components/olvide/olvide';
 import { CuentaCreada } from './components/cuenta-creada/cuenta-creada';
+import { Confirmar } from './components/confirmar/confirmar';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -13,6 +14,6 @@ export const routes: Routes = [
     {path:'registro',component:Registro},
     {path:'olvide',component:Olvide},
     {path:'cuenta-creada',component:CuentaCreada},
-
+    {path:'confirmar-cuenta',component:Confirmar},
     {path:'**',component:C404}
 ];

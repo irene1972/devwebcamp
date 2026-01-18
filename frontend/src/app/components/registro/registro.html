@@ -2,11 +2,6 @@
     <h2 class="auth__heading">{{titulo}}</h2>
     <p class="auth__texto">Regístrate en DevWebCamp</p>
     <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
-        @if (miForm.valid) {
-                <div class="text-success">
-                    Los datos se recibieron correctamente, se ha enviado un correo de confirmación a su email: {{email?.value}}
-                </div>
-            }
         <div class="formulario__campo">
             <label for="nombre" class="formulario__label">Nombre</label>
             <input type="text" class="formulario__input" placeholder="Tu Nombre" id="nombre" formControlName="nombre">
