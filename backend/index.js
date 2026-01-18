@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import propiedadRoutes from './routes/propiedadRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 const corsOptions ={
    origin:'*', 
@@ -17,7 +17,7 @@ app.use(cors(corsOptions));
 
 dotenv.config();
 
-app.use('/api/propiedades',propiedadRoutes);
+app.use('/api/auth',authRoutes);
 
 const PORT=process.env.PORT || 3000;
 
