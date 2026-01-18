@@ -1,5 +1,14 @@
 <main class="auth">
     <h2>{{titulo}}</h2>
     <p>Tu cuenta de DevWebCamp</p>
-    <div>{{mensaje}}</div>
+    <div [class.text-danger]="mensaje !== 'CUENTA COMPROBADA CORRECTAMENTE'" [class.text-success]="mensaje === 'CUENTA COMPROBADA CORRECTAMENTE'">{{mensaje}}</div>
+
+    @if(mensaje==='CUENTA COMPROBADA CORRECTAMENTE'){
+    <div class="my-0 mx-3 list-unstyled d-md-flex gap-md-4">
+        <a class="text-decoration-none text-dark" [routerLink]="['/login']" routerLinkActive="activo">Iniciar
+            Sesión</a>
+    </div>
+    }
+
+
 </main>

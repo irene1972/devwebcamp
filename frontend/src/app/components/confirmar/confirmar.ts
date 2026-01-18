@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { NgClass } from "../../../../node_modules/@angular/common/types/_common_module-chunk";
 
 @Component({
   selector: 'app-confirmar',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive, NgClass],
   templateUrl: './confirmar.html',
   styleUrl: './confirmar.css',
 })
