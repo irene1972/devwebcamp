@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -11,8 +11,9 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 export class Registro {
   miForm:FormGroup;
   titulo:string='Registro';
+  mensaje:string='';
 
-  constructor(private router:Router){
+  constructor(private router:Router, private cd: ChangeDetectorRef){
     
     this.miForm=new FormGroup({
       nombre:new FormControl('',[
@@ -78,6 +79,8 @@ export class Registro {
         console.log(data);
         if(data.error){
           console.log(data.error);
+          this.mensaje=data.error;
+          this.cd.detectChanges();
           return;
         }
 

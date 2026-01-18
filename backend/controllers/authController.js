@@ -20,10 +20,17 @@ const registro = async (req, res) => {
         return res.status(400).json({ error: 'Los password no son iguales' });
     }
 
+    //validar si el email ya existe en bd
+    const response=await pool.query('SELECT email FROM usuarios WHERE email=?',[email]);
+    
+    if(response[0][0]!==undefined){
+        return res.status(400).json({ error: 'El email ya existe en nuestra base de datos' });
+    }
+
     const token=crearToken(req.body.email);
     const passwordEncriptado=await encriptarPassword(password);
 
-    console.log('test: ',passwordEncriptado);
+    //console.log('test: ',passwordEncriptado);
 
     if(passwordEncriptado==='error'){
         return res.status(500).json({ error: 'Error al generar el hash' });
@@ -33,7 +40,7 @@ const registro = async (req, res) => {
     try {
         const response = pool.query('INSERT INTO usuarios (nombre,apellido,email,password,confirmado,token) VALUES (?,?,?,?,0,?)', [nombre, apellido, email, passwordEncriptado,token]);
         response.then(data => {
-            console.log(data);
+            //console.log(data);
             try {
                 //envio del email
                 emailRegistro({
@@ -87,10 +94,22 @@ const envioEmail = async (req, res) => {
 const decodificaToken=async(req,res)=>{
     //const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaGFrdUBoYWt1LmVzIiwiaWF0IjoxNzY4NzM4ODU4LCJleHAiOjE3Njg5MTE2NTh9.jbPYTfHIe2D7-NXMwLcVo5Ya-4uTCjpk8Jj2iBPZ-po';
     const token=req.body.token;
-    const secret='superIrene';
+    const secret=process.env.JWT_SECRET;
     const decodedToken=decodificarToken(token,secret);
     res.json({ decoded: decodedToken});
  
+}
+
+const confirmar = async (req, res) => {
+    const email=req.params.email;
+
+    try {
+        const response = await pool.query('UPDATE usuarios SET confirmado=1 WHERE email=?',[email]);
+        res.json({ mensaje: response });
+    } catch (error) {
+        return res.status(400).json({ error: 'Ha habido un error' });
+    }
+    
 }
 
 export {
@@ -99,5 +118,6 @@ export {
     registro,
     olvide,
     logout,
-    decodificaToken
+    decodificaToken,
+    confirmar
 }

@@ -5,7 +5,8 @@ import {
     registro,
     olvide,
     logout,
-    decodificaToken
+    decodificaToken,
+    confirmar
 } from '../controllers/authController.js';
 
 const router=express.Router();
@@ -19,5 +20,7 @@ router.post('/registro',registro);
 router.post('/olvide',olvide);
 
 router.post('/decodificar-token',decodificaToken);
+
+router.put('/confirmar/:email',confirmar);
 
 export default router;

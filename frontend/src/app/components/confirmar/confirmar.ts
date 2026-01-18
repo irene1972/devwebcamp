@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-confirmar',
@@ -10,36 +11,56 @@ import { ActivatedRoute } from '@angular/router';
 export class Confirmar implements OnInit {
   titulo: string = 'Confirma tu cuenta';
   token!: string;
+  mensaje:string='HA HABIDO UN ERROR';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     // Obtener parámetro de la ruta
     this.token = this.route.snapshot.queryParamMap.get('token')!;
-    console.log('Token:', this.token);
-
-    const secret = 'superIrene';
 
     //llamada a la api que me devuelva los datos del token decodificado
-    console.log('irene4');
-    fetch('http://localhost:3000/api/auth/decodificar-token',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json; charset=UTF-8'
+    fetch('http://localhost:3000/api/auth/decodificar-token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
       },
-      body:JSON.stringify({token:this.token})
+      body: JSON.stringify({ token: this.token })
     })
-      .then(response=>response.json())
-      .then(data=>{
-        console.log(data);
-        const email=data.decoded.user;
+      .then(response => response.json())
+      .then(data => {
+        const email = data.decoded.user;
+
+        try {
+          fetch(`http://localhost:3000/api/auth/confirmar/${email}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              
+              if(data.error){
+                console.log(data.error);
+                return;
+              }
+              this.mensaje='CUENTA COMPROBADA CORRECTAMENTE';
+              this.cd.detectChanges();
+
+            })
+            .catch(error => console.log(error));
+        } catch (error) {
+          console.log(error);
+        }
+
       })
-      .catch(error=>console.log(error));
+      .catch(error => console.log(error));
 
-    
-    //hago la consulta get usuarios y extraigo el token que se corresponde al email 
 
-    //si this.token===tokenObtenido => pintamos la CONFIRMACIÓN DE CUENTA CON EXITO
+    //hacer un PUT para actualizar el campor confirmado del email obtenido  
+
+    //si todo bien pintamos la CONFIRMACIÓN DE CUENTA CON EXITO
     //sino pintamos un mensaje de error
 
   }

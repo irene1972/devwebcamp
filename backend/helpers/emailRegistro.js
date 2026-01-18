@@ -19,7 +19,7 @@ const emailRegistro=async (datos)=>{
         text:'Confirma que ha llegado el email',
         html:`
                 <p>Hola: ${nombre}, has registrado correctamente tu cuenta en DevWebCamp, pero es necesario confirmarla</p>
-                <p>Presiona aquí: <a href='http://localhost:4200/confirmar-cuenta?token=${token}'>Confirmar Cuenta</a></p>
+                <p>Presiona aquí: <a href='${process.env.FRONTEND_URL}/confirmar-cuenta?token=${token}'>Confirmar Cuenta</a></p>
                 <p>Si tú no creaste esta cuenta, puedes ignorar este mensaje</p>
             `
     });
