@@ -92,11 +92,16 @@ const envioEmail = async (req, res) => {
 }
 
 const decodificaToken=async(req,res)=>{
-    //const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaGFrdUBoYWt1LmVzIiwiaWF0IjoxNzY4NzM4ODU4LCJleHAiOjE3Njg5MTE2NTh9.jbPYTfHIe2D7-NXMwLcVo5Ya-4uTCjpk8Jj2iBPZ-po';
     const token=req.body.token;
     const secret=process.env.JWT_SECRET;
-    const decodedToken=decodificarToken(token,secret);
-    res.json({ decoded: decodedToken});
+    const decodedToken=await decodificarToken(token,secret);
+    
+    if(decodedToken==='error'){
+        res.json({ decoded: 'error'});
+    }else{
+        res.json({ decoded: decodedToken});
+    }
+    
  
 }
 

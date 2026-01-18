@@ -1,7 +1,17 @@
 import jwt from 'jsonwebtoken';
+import pool from '../config/db.js';
 
-const decodificarToken=function(token,secret){
-    return jwt.verify(token,secret);
+const decodificarToken=async function(token,secret){
+
+    const response=await pool.query('SELECT * FROM usuarios WHERE token=?',[token]);
+    
+    if(response[0][0]===undefined){
+        return "error";
+    }
+    
+    const decode= jwt.verify(token,secret);
+    return decode;
+    
     
 }
 
