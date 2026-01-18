@@ -1,7 +1,0 @@
-.error{
-    background-color: red;
-    color:white;
-}
-.error::placeholder{
-    color:white;
-}

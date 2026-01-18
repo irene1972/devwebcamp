@@ -4,7 +4,7 @@
     <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
         <div class="formulario__campo">
             <label for="nombre" class="formulario__label">Nombre</label>
-            <input type="text" class="formulario__input" placeholder="Tu Nombre" id="nombre" formControlName="nombre" [class.error]="nombre?.invalid && nombre?.touched">
+            <input type="text" class="formulario__input" placeholder="Tu Nombre" id="nombre" formControlName="nombre">
             @if (nombre?.touched && nombre?.hasError('required')) {
                 <div class="text-danger">
                     El nombre es obligatorio.
@@ -13,7 +13,7 @@
         </div>
         <div class="formulario__campo">
             <label for="apellido" class="formulario__label">Apellido</label>
-            <input type="text" class="formulario__input" placeholder="Tu Apellido" id="apellido" formControlName="apellido" [class.error]="apellido?.invalid && apellido?.touched">
+            <input type="text" class="formulario__input" placeholder="Tu Apellido" id="apellido" formControlName="apellido">
             @if (apellido?.touched && apellido?.hasError('required')) {
                 <div class="text-danger">
                     El apellido es obligatorio.
@@ -22,7 +22,7 @@
         </div>
         <div class="formulario__campo">
             <label for="email" class="formulario__label">Email</label>
-            <input type="email" class="formulario__input" placeholder="Tu Email" id="email" formControlName="email" [class.error]="email?.invalid && email?.touched">
+            <input type="email" class="formulario__input" placeholder="Tu Email" id="email" formControlName="email">
             @if (email?.touched && email?.hasError('required')) {
                 <div class="text-danger">
                     El email es obligatorio.
@@ -35,7 +35,7 @@
         </div>
         <div class="formulario__campo">
             <label for="password" class="formulario__label">Password</label>
-            <input type="password" class="formulario__input" placeholder="Tu Password" id="password" formControlName="password" [class.error]="password?.invalid && password?.touched">
+            <input type="password" class="formulario__input" placeholder="Tu Password" id="password" formControlName="password">
             @if (password?.touched && password?.hasError('required')) {
                 <div class="text-danger">
                     El password es obligatorio.
@@ -44,7 +44,7 @@
         </div>
         <div class="formulario__campo">
             <label for="password2" class="formulario__label">Repetir Password</label>
-            <input type="password" class="formulario__input" placeholder="Repite tu Password" id="password2" formControlName="password2" [class.error]="password2?.invalid && password2?.touched">
+            <input type="password" class="formulario__input" placeholder="Repite tu Password" id="password2" formControlName="password2">
             @if (password2?.touched && password2?.hasError('required')) {
                 <div class="text-danger">
                     El password es obligatorio.
