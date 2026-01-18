@@ -6,6 +6,7 @@ import { Registro } from './components/registro/registro';
 import { Olvide } from './components/olvide/olvide';
 import { CuentaCreada } from './components/cuenta-creada/cuenta-creada';
 import { Confirmar } from './components/confirmar/confirmar';
+import { Restablecer } from './components/restablecer/restablecer';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -15,5 +16,6 @@ export const routes: Routes = [
     {path:'olvide',component:Olvide},
     {path:'cuenta-creada',component:CuentaCreada},
     {path:'confirmar-cuenta',component:Confirmar},
+    {path:'restablecer',component:Restablecer},
     {path:'**',component:C404}
 ];

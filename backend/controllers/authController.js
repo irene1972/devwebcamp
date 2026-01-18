@@ -1,4 +1,5 @@
 import emailRegistro from '../helpers/emailRegistro.js';
+import emailOlvide from '../helpers/emailOlvide.js';
 import pool from '../config/db.js';
 import { crearToken } from '../helpers/crearToken.js';
 import { encriptarPassword } from '../helpers/encriptarPassword.js';
@@ -66,29 +67,45 @@ const registro = async (req, res) => {
 }
 
 const olvide = async (req, res) => {
-    res.json({ mensaje: `Test OK en olvide` });
-}
+    const email=req.body.email;
 
-const logout = async (req, res) => {
-    res.json({ mensaje: `Test OK en logout` });
-}
+    const response=await pool.query('SELECT * FROM usuarios WHERE email=?',[email]);
 
-const envioEmail = async (req, res) => {
-    //res.json('Funciona!');
+    if(response[0].length===0){
+        return res.status(500).json({ error: 'El usuario no está registrado' });
+    }
 
+    //verificar que está confirmado
+    if(response[0][0].confirmado===0){
+        return res.status(500).json({ error: 'El usuario no está confirmado' });
+    }
+
+    const nombre=`${response[0][0].nombre} ${response[0][0].apellido}`;
+    const token=response[0][0].token;
+
+    //enviar el email
     try {
         //envio del email
-        email({
-            email: 'ireneog_72@hotmail.es',
-            nombre: 'Irene Olmos'
+        emailOlvide({
+            email: email,
+            nombre: nombre,
+            token: token
         });
 
-        res.json({ mensaje: `El email se ha enviado correctamente` });
+        res.json({ mensaje: `El email, para modificar su password, se ha enviado correctamente` });
 
     } catch (error) {
         console.log(error);
         return res.status(400).json({ error: 'Ha habido un error' });
     }
+
+    //devolver los datos
+    res.json({ mensaje: response });
+    
+}
+
+const logout = async (req, res) => {
+    res.json({ mensaje: `Test OK en logout` });
 }
 
 const decodificaToken=async(req,res)=>{
@@ -118,7 +135,6 @@ const confirmar = async (req, res) => {
 }
 
 export {
-    envioEmail,
     login,
     registro,
     olvide,
