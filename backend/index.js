@@ -1,5 +1,5 @@
 import express from 'express';
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/authRoutes.js';
 
@@ -22,7 +22,7 @@ app.use(express.json());
 
 app.use(cors(corsOptions));
 
-dotenv.config();
+//dotenv.config();
 
 app.use('/api/auth',authRoutes);
 

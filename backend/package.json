@@ -4,7 +4,7 @@
   "description": "DevWebCamp con express, js, css y html",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon --import dotenv/config index.js",
     "start": "node ./index.js"
   },
   "author": "Irene Olmos",
