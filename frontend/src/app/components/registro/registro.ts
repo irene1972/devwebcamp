@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -12,7 +12,7 @@ export class Registro {
   miForm:FormGroup;
   titulo:string='Registro';
 
-  constructor(){
+  constructor(private router:Router){
     
     this.miForm=new FormGroup({
       nombre:new FormControl('',[
@@ -29,11 +29,11 @@ export class Registro {
       ]),
       password:new FormControl('',[
         Validators.required,
-        Validators.minLength(8)
+        Validators.minLength(3)
       ]),
       password2:new FormControl('',[
         Validators.required,
-        Validators.minLength(8)
+        Validators.minLength(3)
       ]),
 
     },[]);
@@ -65,5 +65,6 @@ export class Registro {
       return;
     }
     console.log(this.miForm.value);
+    this.router.navigate(['/cuenta-creada']);
   }
 }
