@@ -1,0 +1,70 @@
+<section>
+    <h2>{{titulo}}</h2>
+    <div class="cont1 d-flex">
+        <a class="btn btn-primary btn-derecha" [routerLink]="['/admin/ponentes']">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Volver
+        </a>
+    </div>
+    <div>
+        <div [class.text-danger]="tipo === false" [class.text-success]="tipo === true">{{mensaje}}</div>
+        <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+            <div class="formulario__campo">
+                <label for="nombre" class="formulario__label">Nombre</label>
+                <input type="text" class="formulario__input" placeholder="Nombre del ponente" id="nombre"
+                    formControlName="nombre">
+                @if (nombre?.touched && nombre?.hasError('required')) {
+                <div class="text-danger">
+                    El nombre es obligatorio.
+                </div>
+                }
+            </div>
+
+            <div class="formulario__campo">
+                <label for="apellido" class="formulario__label">Apellido</label>
+                <input type="text" class="formulario__input" placeholder="Apellido del ponente" id="apellido"
+                    formControlName="apellido">
+                @if (apellido?.touched && apellido?.hasError('required')) {
+                <div class="text-danger">
+                    El apellido es obligatorio.
+                </div>
+                }
+            </div>
+
+            <div class="formulario__campo">
+                <label for="ciudad" class="formulario__label">Ciudad</label>
+                <input type="text" class="formulario__input" placeholder="Ciudad del ponente" id="ciudad"
+                    formControlName="ciudad">
+                @if (ciudad?.touched && ciudad?.hasError('required')) {
+                <div class="text-danger">
+                    La ciudad es obligatoria.
+                </div>
+                }
+            </div>
+
+            <div class="formulario__campo">
+                <label for="pais" class="formulario__label">Pais</label>
+                <input type="text" class="formulario__input" placeholder="Pais del ponente" id="pais"
+                    formControlName="pais">
+                @if (pais?.touched && pais?.hasError('required')) {
+                <div class="text-danger">
+                    El pais es obligatorio.
+                </div>
+                }
+            </div>
+
+            <div class="formulario__campo">
+                <label for="imagen" class="formulario__label">Imagen</label>
+                <input type="file" class="formulario__input" id="imagen"
+                    formControlName="imagen">
+                @if (imagen?.touched && imagen?.hasError('required')) {
+                <div class="text-danger">
+                    La imagen es obligatoria.
+                </div>
+                }
+            </div>
+
+            <input type="submit" class="formulario__submit" value="Registrar Ponente" [disabled]="!miForm.valid">
+        </form>
+    </div>
+</section>

@@ -13,6 +13,7 @@ import { Ponentes } from './components/ponentes/ponentes';
 import { Eventos } from './components/eventos/eventos';
 import { Registrados } from './components/registrados/registrados';
 import { Regalos } from './components/regalos/regalos';
+import { Crear } from './components/crear/crear';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -26,6 +27,7 @@ export const routes: Routes = [
     {path:'finalizar-registro',component:FinalizarRegistro},
     {path:'admin/dashboard',component:Dashboard},
     {path:'admin/ponentes',component:Ponentes},
+    {path:'admin/ponentes/crear',component:Crear},
     {path:'admin/eventos',component:Eventos},
     {path:'admin/registrados',component:Registrados},
     {path:'admin/regalos',component:Regalos},
