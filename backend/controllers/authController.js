@@ -140,11 +140,48 @@ const confirmar = async (req, res) => {
 
 }
 
+const restablecer=async(req,res)=>{
+    const token=req.body.token;
+    const nuevoPassword=req.body.password;
+
+    //decodificar el token para extraer el email
+    const secret = process.env.JWT_SECRET;
+    const decodedToken = await decodificarToken(token, secret);
+    const email=decodedToken.user;
+
+    //hacer consulta a bd para recuperar los datos del usuario
+    const response=await pool.query('SELECT * FROM usuarios WHERE email=?',[email]);
+    if(response[0].length===0){
+        return res.status(500).json({ error: 'Token inválido' });
+    }
+    const usuario=response[0][0];
+    //res.json(usuario);
+
+    if(usuario.confirmado==1){
+        //actualizar el password (hasheado) y borrar el token
+        const nuevoPasswordEncriptado= await encriptarPassword(nuevoPassword);
+        
+        try {
+            pool.query('UPDATE usuarios SET password=?,token="" WHERE email=?',[nuevoPasswordEncriptado,email]);
+            res.json({mensaje:'Se han actualizado los datos correctamente'});
+
+        } catch (error) {
+            return res.status(400).json({ error: 'Error al actualizar los datos' });
+        }
+
+    }else{
+        return res.status(500).json({ error: 'El usuario no está confirmado' });
+    }
+
+    
+}
+
 export {
     login,
     registro,
     olvide,
     logout,
     decodificaToken,
-    confirmar
+    confirmar,
+    restablecer
 }

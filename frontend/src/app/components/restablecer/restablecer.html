@@ -2,7 +2,7 @@
     <h2 class="auth__heading">{{titulo}}</h2>
     <p class="auth__texto">Inserta tu nuevo password</p>
     
-    <div [class.text-danger]="mensaje === 'El usuario no está registrado'" [class.text-success]="mensaje !== 'El usuario no está registrado'">{{mensaje}}</div>
+    <div [class.text-danger]="tipo === false" [class.text-success]="tipo === true">{{mensaje}}</div>
     <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
         <div class="formulario__campo">
             <label for="password" class="formulario__label">Nuevo Password</label>

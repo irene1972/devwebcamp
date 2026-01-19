@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -12,9 +12,10 @@ export class Restablecer {
   miForm: FormGroup;
   token!: string;
   titulo: string = 'Restablecer Password';
-  mensaje:string='';
+  mensaje: string = '';
+  tipo:boolean=false;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private cd: ChangeDetectorRef) {
     this.miForm = new FormGroup({
       password: new FormControl('', [
         Validators.required,
@@ -23,7 +24,7 @@ export class Restablecer {
 
     }, []);
   }
-  ngOnInit():void{
+  ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token')!;
     console.log(this.token);
   }
@@ -32,14 +33,36 @@ export class Restablecer {
   }
 
   cargarDatos() {
-    if(!this.miForm.valid){
+    if (!this.miForm.valid) {
       this.miForm.markAllAsTouched();
       return;
     }
     console.log(this.miForm.value);
 
     //llamar a restablecer password
-
-    //mostrar alertas de error y exito
+    fetch('http://localhost:3000/api/auth/restablecer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: JSON.stringify({
+        token: this.token,
+        password: this.miForm.value.password
+      })
+    })
+      .then(response=>response.json())
+      .then(data=>{
+        console.log(data);
+        if(data.error){
+          this.mensaje=data.error;
+        }else{
+          this.tipo=true;
+          this.mensaje=data.mensaje;
+        }
+      })
+      .catch(error => console.log(error))
+      .finally(()=>{
+        this.cd.detectChanges();
+      })
   }
 }
