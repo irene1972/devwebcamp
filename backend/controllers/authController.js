@@ -31,7 +31,7 @@ const login = async (req, res) => {
 
     try {
         await pool.query('UPDATE usuarios SET token=? WHERE email=?',[token,email]);
-        res.json({ mensaje: token });
+        res.json({ mensaje: token, admin: usuario.admin });
     } catch (error) {
         return res.status(500).json({ error: 'Error al actualizar en bd el token' });
     }
