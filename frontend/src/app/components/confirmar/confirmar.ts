@@ -32,7 +32,7 @@ export class Confirmar implements OnInit {
       .then(response => response.json())
       .then(data => {
         
-        if (Object.keys(data.decoded).length === 0) {
+        if (data.decoded !== 'error') {
           const email = data.decoded.user;
 
           try {
@@ -49,7 +49,7 @@ export class Confirmar implements OnInit {
                   console.log(data.error);
                   return;
                 }
-                this.mensaje = 'CUENTA COMPROBADA CORRECTAMENTE';
+                this.mensaje = 'CUENTA CONFIRMADA CORRECTAMENTE';
                 this.cd.detectChanges();
 
               })

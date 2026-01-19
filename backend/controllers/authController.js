@@ -3,7 +3,7 @@ import emailOlvide from '../helpers/emailOlvide.js';
 import pool from '../config/db.js';
 import { crearToken } from '../helpers/crearToken.js';
 import { encriptarPassword } from '../helpers/encriptarPassword.js';
-import {decodificarToken} from '../helpers/decodificarToken.js';
+import { decodificarToken } from '../helpers/decodificarToken.js';
 
 const login = async (req, res) => {
     res.json({ mensaje: `Test OK en login` });
@@ -22,24 +22,24 @@ const registro = async (req, res) => {
     }
 
     //validar si el email ya existe en bd
-    const response=await pool.query('SELECT email FROM usuarios WHERE email=?',[email]);
-    
-    if(response[0][0]!==undefined){
+    const response = await pool.query('SELECT email FROM usuarios WHERE email=?', [email]);
+
+    if (response[0][0] !== undefined) {
         return res.status(400).json({ error: 'El email ya existe en nuestra base de datos' });
     }
 
-    const token=crearToken(req.body.email);
-    const passwordEncriptado=await encriptarPassword(password);
+    const token = crearToken(req.body.email);
+    const passwordEncriptado = await encriptarPassword(password);
 
     //console.log('test: ',passwordEncriptado);
 
-    if(passwordEncriptado==='error'){
+    if (passwordEncriptado === 'error') {
         return res.status(500).json({ error: 'Error al generar el hash' });
     }
-    
+
     //todo:guardar datos en bd
     try {
-        const response = pool.query('INSERT INTO usuarios (nombre,apellido,email,password,confirmado,token) VALUES (?,?,?,?,0,?)', [nombre, apellido, email, passwordEncriptado,token]);
+        const response = pool.query('INSERT INTO usuarios (nombre,apellido,email,password,confirmado,token) VALUES (?,?,?,?,0,?)', [nombre, apellido, email, passwordEncriptado, token]);
         response.then(data => {
             //console.log(data);
             try {
@@ -67,71 +67,75 @@ const registro = async (req, res) => {
 }
 
 const olvide = async (req, res) => {
-    const email=req.body.email;
+    const email = req.body.email;
 
-    const response=await pool.query('SELECT * FROM usuarios WHERE email=?',[email]);
+    const response = await pool.query('SELECT * FROM usuarios WHERE email=?', [email]);
 
-    if(response[0].length===0){
+    if (response[0].length === 0) {
         return res.status(500).json({ error: 'El usuario no está registrado' });
     }
 
     //verificar que está confirmado
-    if(response[0][0].confirmado===0){
+    if (response[0][0].confirmado === 0) {
         return res.status(500).json({ error: 'El usuario no está confirmado' });
     }
 
-    const nombre=`${response[0][0].nombre} ${response[0][0].apellido}`;
-    const token=response[0][0].token;
+    const nombre = `${response[0][0].nombre} ${response[0][0].apellido}`;
+    const token = crearToken(email);
 
-    //enviar el email
+    //insertar token en bd
     try {
-        //envio del email
-        emailOlvide({
-            email: email,
-            nombre: nombre,
-            token: token
-        });
+        const respuesta = pool.query('UPDATE usuarios SET token=? WHERE email=?', [token, email]);
 
-        res.json({ mensaje: `El email, para modificar su password, se ha enviado correctamente` });
+        try {
+            //envio del email
+            emailOlvide({
+                email: email,
+                nombre: nombre,
+                token: token
+            });
+
+            res.json({ mensaje: `El email, para modificar su password, se ha enviado correctamente` });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json({ error: 'Ha habido un error' });
+        }
 
     } catch (error) {
-        console.log(error);
-        return res.status(400).json({ error: 'Ha habido un error' });
+        return res.status(500).json({ error: 'Error al intentar modificar el campo token' });
     }
 
-    //devolver los datos
-    res.json({ mensaje: response });
-    
 }
 
 const logout = async (req, res) => {
     res.json({ mensaje: `Test OK en logout` });
 }
 
-const decodificaToken=async(req,res)=>{
-    const token=req.body.token;
-    const secret=process.env.JWT_SECRET;
-    const decodedToken=await decodificarToken(token,secret);
+const decodificaToken = async (req, res) => {
+    const token = req.body.token;
+    const secret = process.env.JWT_SECRET;
+    const decodedToken = await decodificarToken(token, secret);
     
-    if(decodedToken==='error'){
-        res.json({ decoded: 'error'});
-    }else{
-        res.json({ decoded: decodedToken});
+    if (decodedToken === 'error') {
+        res.json({ decoded: 'error' });
+    } else {
+        res.json({ decoded: decodedToken });
     }
-    
- 
+
+
 }
 
 const confirmar = async (req, res) => {
-    const email=req.params.email;
+    const email = req.params.email;
 
     try {
-        const response = await pool.query('UPDATE usuarios SET confirmado=1 WHERE email=?',[email]);
+        const response = await pool.query('UPDATE usuarios SET confirmado=1,token="" WHERE email=?', [email]);
         res.json({ mensaje: response });
     } catch (error) {
         return res.status(400).json({ error: 'Ha habido un error' });
     }
-    
+
 }
 
 export {

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-olvide',
@@ -11,8 +11,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class Olvide {
   miForm:FormGroup;
   titulo:string='Olvidé mi password';
+  mensaje:string='';
 
-   constructor(){
+   constructor(private router:Router, private cd: ChangeDetectorRef){
     
     this.miForm=new FormGroup({
       email:new FormControl('',[
@@ -33,5 +34,29 @@ export class Olvide {
       return;
     }
     console.log(this.miForm.value);
+    
+    fetch('http://localhost:3000/api/auth/olvide',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json; charset=UTF-8'
+      },
+      body:JSON.stringify(this.miForm.value)
+    })
+      .then(response=>response.json())
+      .then(data=>{
+        console.log(data);
+        if(data.error){
+          console.log(data.error);
+          this.mensaje=data.error;
+          this.cd.detectChanges();
+          return;
+        }
+
+        this.mensaje=data.mensaje;
+        this.cd.detectChanges();
+        //this.router.navigate(['/restablecer']);
+        
+      })
+      .catch(error=>console.log(error));
   }
 }
