@@ -44,12 +44,13 @@ const registro = async (req, res) => {
             //console.log(data);
             try {
                 //envio del email
+                /*
                 emailRegistro({
                     email: email,
                     nombre: `${nombre} ${apellido}`,
                     token: token
                 });
-
+                */
                 res.json({ mensaje: `El email se ha enviado correctamente` });
 
             } catch (error) {
@@ -89,12 +90,13 @@ const olvide = async (req, res) => {
 
         try {
             //envio del email
+            /*
             emailOlvide({
                 email: email,
                 nombre: nombre,
                 token: token
             });
-
+            */
             res.json({ mensaje: `El email, para modificar su password, se ha enviado correctamente` });
 
         } catch (error) {

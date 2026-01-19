@@ -29,6 +29,7 @@ export class Olvide {
 }
 
   cargarDatos(){
+    this.mensaje='';
     if(!this.miForm.valid){
       this.miForm.markAllAsTouched();
       return;
@@ -44,19 +45,17 @@ export class Olvide {
     })
       .then(response=>response.json())
       .then(data=>{
-        console.log(data);
         if(data.error){
           console.log(data.error);
           this.mensaje=data.error;
-          this.cd.detectChanges();
           return;
         }
-
         this.mensaje=data.mensaje;
-        this.cd.detectChanges();
-        //this.router.navigate(['/restablecer']);
         
       })
-      .catch(error=>console.log(error));
+      .catch(error=>console.log(error))
+      .finally(()=>{
+        this.cd.detectChanges();
+      })
   }
 }

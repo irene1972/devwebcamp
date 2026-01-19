@@ -1,7 +1,7 @@
 <main class="contenedor auth">
     <h2 class="auth__heading">{{titulo}}</h2>
     <p class="auth__texto">Recupera tu acceso a DevWebCamp</p>
-    {{mensaje}}
+    
     <div [class.text-danger]="mensaje === 'El usuario no está registrado'" [class.text-success]="mensaje !== 'El usuario no está registrado'">{{mensaje}}</div>
     <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
         <div class="formulario__campo">
