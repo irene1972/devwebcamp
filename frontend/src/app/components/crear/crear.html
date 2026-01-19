@@ -55,13 +55,76 @@
 
             <div class="formulario__campo">
                 <label for="imagen" class="formulario__label">Imagen</label>
-                <input type="file" class="formulario__input" id="imagen"
-                    formControlName="imagen">
-                @if (imagen?.touched && imagen?.hasError('required')) {
-                <div class="text-danger">
-                    La imagen es obligatoria.
+                <input type="file" class="formulario__input" id="imagen" (change)="onFileSelected($event)">
+            </div>
+
+            <div class="formulario__campo">
+                <label for="tags_input" class="formulario__label">Areas de experiencia (separadas por coma)</label>
+                <input type="text" class="formulario__input" placeholder="Ej. Node.js, PHP, CSS, Laravel, UX/UI"
+                    id="tags_input" (keydown.coma)="insertarTags($event)" (keydown.enter)="insertarTags($event)">
+                <div class="tags">
+                    <span class="tag" *ngFor="let tag of tags; let i = index">
+                        {{ tag }}
+                        <button type="button" (click)="eliminarTag(i)">×</button>
+                    </span>
                 </div>
-                }
+                <input type="hidden" formControlName="tags">
+            </div>
+
+            <div class="formulario__campo">
+                <div>
+                    <div>
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+                    <input type="text" class="formulario__input" placeholder="Facebook"
+                        formControlName="redes_facebook">
+                </div>
+            </div>
+
+            <div class="formulario__campo">
+                <div>
+                    <div>
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+                    <input type="text" class="formulario__input" placeholder="Twitter" formControlName="redes_twitter">
+                </div>
+            </div>
+
+            <div class="formulario__campo">
+                <div>
+                    <div>
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+                    <input type="text" class="formulario__input" placeholder="Youtube" formControlName="redes_youtube">
+                </div>
+            </div>
+
+            <div class="formulario__campo">
+                <div>
+                    <div>
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+                    <input type="text" class="formulario__input" placeholder="Instagram"
+                        formControlName="redes_instagram">
+                </div>
+            </div>
+
+            <div class="formulario__campo">
+                <div>
+                    <div>
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+                    <input type="text" class="formulario__input" placeholder="Tiktok" formControlName="redes_tiktock">
+                </div>
+            </div>
+
+            <div class="formulario__campo">
+                <div>
+                    <div>
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+                    <input type="text" class="formulario__input" placeholder="Github" formControlName="redes_github">
+                </div>
             </div>
 
             <input type="submit" class="formulario__submit" value="Registrar Ponente" [disabled]="!miForm.valid">
