@@ -77,7 +77,7 @@ export class Crear {
     // archivo
     formData.append('imagen', this.imagenFile);
 
-    this.http.post('http://localhost:3000/api/auth/ponentes', formData)
+    this.http.post('http://localhost:3000/api/ponente/crear', formData)
       .subscribe(resp => {
         console.log(resp);
       });

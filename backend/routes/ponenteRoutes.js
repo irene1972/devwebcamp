@@ -6,6 +6,6 @@ import upload from '../helpers/upload.js';
 
 const router=express.Router();
 
-router.post('/ponentes', upload.single('imagen'), subirImagen);
+router.post('/crear', upload.single('imagen'), subirImagen);
 
 export default router;
