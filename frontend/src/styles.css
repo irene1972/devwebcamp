@@ -25,6 +25,9 @@ img{
     display: flex;
     gap:1em;
 }
+.activo{
+    color:blue !important;
+}
 a{
     text-decoration: none;
     color:black;
