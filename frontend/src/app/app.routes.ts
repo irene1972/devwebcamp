@@ -7,6 +7,8 @@ import { Olvide } from './components/olvide/olvide';
 import { CuentaCreada } from './components/cuenta-creada/cuenta-creada';
 import { Confirmar } from './components/confirmar/confirmar';
 import { Restablecer } from './components/restablecer/restablecer';
+import { Dashboard } from './components/dashboard/dashboard';
+import { FinalizarRegistro } from './components/finalizar-registro/finalizar-registro';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -17,5 +19,7 @@ export const routes: Routes = [
     {path:'cuenta-creada',component:CuentaCreada},
     {path:'confirmar-cuenta',component:Confirmar},
     {path:'restablecer',component:Restablecer},
+    {path:'admin/dashboard',component:Dashboard},
+    {path:'finalizar-registro',component:FinalizarRegistro},
     {path:'**',component:C404}
 ];

@@ -62,7 +62,11 @@ export class Login {
         this.tipo=true;
         const token=data.mensaje;
         localStorage.setItem('token', token);
-        //this.router.navigate(['/login']);
+        if(data.admin){
+          this.router.navigate(['/admin/dashboard']);
+        }else{
+          this.router.navigate(['/finalizar-registro']);
+        }
         
       })
       .catch(error=>console.log(error))

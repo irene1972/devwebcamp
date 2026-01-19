@@ -1,1 +1,43 @@
-<p>dashboard works!</p>
+<section class="contenedor">
+    <div class="header2 d-flex">
+        <a [routerLink]="['/home']">
+            <h2>DevWebCamp</h2>
+        </a>
+        <nav>
+            <form  [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+                <input type="submit" value="Cerrar Sesión">
+            </form>
+        </nav>
+    </div>
+</section>
+<section class="contenedor">
+    <aside>
+        <nav class="links d-flex">
+            <a [routerLink]="['/admin/dashboard']">
+                <i class="fa-solid-fa-house"></i>
+                <span>Inicio</span>
+            </a>
+            <a [routerLink]="['/admin/ponentes']">
+                <i class="fa-solid-fa-microphone"></i>
+                <span>Ponentes</span>
+            </a>
+            <a [routerLink]="['/admin/eventos']">
+                <i class="fa-solid-fa-calendar"></i>
+                <span>Eventos</span>
+            </a>
+            <a [routerLink]="['/admin/registrados']">
+                <i class="fa-solid-fa-users"></i>
+                <span>Registrados</span>
+            </a>
+            <a [routerLink]="['/admin/regalos']">
+                <i class="fa-solid-fa-gift"></i>
+                <span>Regalos</span>
+            </a>
+        </nav>
+    </aside>
+    <h1>{{titulo}}</h1>
+    
+</section>
+<section class="contenedor">
+
+</section>
