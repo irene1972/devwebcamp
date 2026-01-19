@@ -82,6 +82,9 @@ export class Crear {
         console.log(resp);
       });
     }
+
+    this.mensaje='Datos guardados correctamente';
+    this.tipo=true;
     
 
   }
@@ -99,6 +102,7 @@ export class Crear {
       .forEach(tag => {
         if (!this.tags.includes(tag)) {
           this.tags.push(tag);
+          //aquí quiero que se cree un div (con el nombre del tag) por cada tag
         }
       });
 
