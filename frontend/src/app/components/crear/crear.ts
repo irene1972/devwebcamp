@@ -60,13 +60,14 @@ export class Crear {
   }
 
   cargarDatos() {
-    if (!this.miForm.valid || !this.imagenFile) {
+    if (!this.miForm.valid) {
       this.miForm.markAllAsTouched();
       return;
     }
     console.log(this.miForm.value);
 
-    const formData = new FormData();
+    if(this.imagenFile){
+      const formData = new FormData();
 
     // campos normales
     Object.entries(this.miForm.value).forEach(([key, value]) => {
@@ -80,6 +81,8 @@ export class Crear {
       .subscribe(resp => {
         console.log(resp);
       });
+    }
+    
 
   }
   insertarTags(event: Event) {
