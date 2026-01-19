@@ -1,0 +1,7 @@
+.links{
+    gap:5px;
+}
+.header2{
+    justify-content: space-between;
+    align-items: center;
+}

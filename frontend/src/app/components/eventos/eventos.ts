@@ -3,14 +3,14 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-eventos',
   imports: [ReactiveFormsModule,RouterLink,RouterLinkActive],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
+  templateUrl: './eventos.html',
+  styleUrl: './eventos.css',
 })
-export class Dashboard {
+export class Eventos {
   miForm:FormGroup;
-  titulo:string='Panel de administración';
+  titulo:string='Conferencias y Workshops';
 
   constructor(){
     this.miForm=new FormGroup({},[]);

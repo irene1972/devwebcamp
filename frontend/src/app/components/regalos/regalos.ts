@@ -3,20 +3,20 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-regalos',
   imports: [ReactiveFormsModule,RouterLink,RouterLinkActive],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
+  templateUrl: './regalos.html',
+  styleUrl: './regalos.css',
 })
-export class Dashboard {
-  miForm:FormGroup;
-  titulo:string='Panel de administración';
+export class Regalos {
+  miForm: FormGroup;
+  titulo: string = 'Regalos';
 
-  constructor(){
-    this.miForm=new FormGroup({},[]);
+  constructor() {
+    this.miForm = new FormGroup({}, []);
   }
 
-  cargarDatos(){
+  cargarDatos() {
 
   }
 }

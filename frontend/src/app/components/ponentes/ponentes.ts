@@ -3,20 +3,20 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-ponentes',
   imports: [ReactiveFormsModule,RouterLink,RouterLinkActive],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
+  templateUrl: './ponentes.html',
+  styleUrl: './ponentes.css',
 })
-export class Dashboard {
+export class Ponentes {
   miForm:FormGroup;
-  titulo:string='Panel de administración';
+  titulo:string='Ponentes / Conferencistas';
 
   constructor(){
     this.miForm=new FormGroup({},[]);
   }
 
   cargarDatos(){
-
+    
   }
 }

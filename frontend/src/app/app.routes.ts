@@ -9,6 +9,10 @@ import { Confirmar } from './components/confirmar/confirmar';
 import { Restablecer } from './components/restablecer/restablecer';
 import { Dashboard } from './components/dashboard/dashboard';
 import { FinalizarRegistro } from './components/finalizar-registro/finalizar-registro';
+import { Ponentes } from './components/ponentes/ponentes';
+import { Eventos } from './components/eventos/eventos';
+import { Registrados } from './components/registrados/registrados';
+import { Regalos } from './components/regalos/regalos';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -19,7 +23,11 @@ export const routes: Routes = [
     {path:'cuenta-creada',component:CuentaCreada},
     {path:'confirmar-cuenta',component:Confirmar},
     {path:'restablecer',component:Restablecer},
-    {path:'admin/dashboard',component:Dashboard},
     {path:'finalizar-registro',component:FinalizarRegistro},
+    {path:'admin/dashboard',component:Dashboard},
+    {path:'admin/ponentes',component:Ponentes},
+    {path:'admin/eventos',component:Eventos},
+    {path:'admin/registrados',component:Registrados},
+    {path:'admin/regalos',component:Regalos},
     {path:'**',component:C404}
 ];
