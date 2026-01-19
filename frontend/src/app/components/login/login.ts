@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +11,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class Login {
   miForm:FormGroup;
   titulo:string='Iniciar Sesión';
+  mensaje:string='';
+  tipo:boolean=false;
 
-   constructor(){
+   constructor(private cd: ChangeDetectorRef,private router:Router){
     
     this.miForm=new FormGroup({
       email:new FormControl('',[
@@ -21,7 +23,7 @@ export class Login {
       ]),
       password:new FormControl('',[
         Validators.required,
-        Validators.minLength(8)
+        Validators.minLength(3)
       ])
 
     },[]);
@@ -41,5 +43,31 @@ export class Login {
       return;
     }
     console.log(this.miForm.value);
+
+    fetch('http://localhost:3000/api/auth/login',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json; charset=UTF-8'
+      },
+      body:JSON.stringify(this.miForm.value)
+    })
+      .then(response=>response.json())
+      .then(data=>{
+        
+        if(data.error){
+          this.mensaje=data.error;
+          return;
+        }
+
+        this.tipo=true;
+        const token=data.mensaje;
+        localStorage.setItem('token', token);
+        //this.router.navigate(['/login']);
+        
+      })
+      .catch(error=>console.log(error))
+      .finally(()=>{
+        this.cd.detectChanges();
+      });
   }
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-restablecer',
@@ -15,7 +15,7 @@ export class Restablecer {
   mensaje: string = '';
   tipo:boolean=false;
 
-  constructor(private route: ActivatedRoute, private cd: ChangeDetectorRef) {
+  constructor(private route: ActivatedRoute, private cd: ChangeDetectorRef,private router:Router) {
     this.miForm = new FormGroup({
       password: new FormControl('', [
         Validators.required,
@@ -58,6 +58,7 @@ export class Restablecer {
         }else{
           this.tipo=true;
           this.mensaje=data.mensaje;
+          this.router.navigate(['/login']);
         }
       })
       .catch(error => console.log(error))

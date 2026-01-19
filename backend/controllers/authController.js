@@ -1,12 +1,42 @@
 import emailRegistro from '../helpers/emailRegistro.js';
 import emailOlvide from '../helpers/emailOlvide.js';
+import matchPassword from '../helpers/matchPassword.js';
 import pool from '../config/db.js';
 import { crearToken } from '../helpers/crearToken.js';
 import { encriptarPassword } from '../helpers/encriptarPassword.js';
 import { decodificarToken } from '../helpers/decodificarToken.js';
 
 const login = async (req, res) => {
-    res.json({ mensaje: `Test OK en login` });
+    const {email,password}=req.body;
+
+    //hacer consulta a bd para recuperar los datos del usuario
+    const response=await pool.query('SELECT * FROM usuarios WHERE email=?',[email]);
+    if(response[0].length===0){
+        return res.status(500).json({ error: 'Usuario no registrado' });
+    }
+    const usuario=response[0][0];
+
+    if(usuario.confirmado==0){
+        return res.status(500).json({ error: 'Usuario no confirmado' });
+    }
+
+    //compara el password con el extraido de usuario, deben ser iguales
+    const coincidencia=await matchPassword(password,usuario.password);
+    
+    if(!coincidencia){
+        return res.status(500).json({ error: 'La contraseña no coincide' });
+    }
+
+    const token = crearToken(email);
+
+    try {
+        await pool.query('UPDATE usuarios SET token=? WHERE email=?',[token,email]);
+        res.json({ mensaje: token });
+    } catch (error) {
+        return res.status(500).json({ error: 'Error al actualizar en bd el token' });
+    }
+
+    
 }
 
 const registro = async (req, res) => {
