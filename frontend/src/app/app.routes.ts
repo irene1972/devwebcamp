@@ -14,11 +14,13 @@ import { Eventos } from './components/eventos/eventos';
 import { Registrados } from './components/registrados/registrados';
 import { Regalos } from './components/regalos/regalos';
 import { Crear } from './components/crear/crear';
+import { Logout } from './components/logout/logout';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
     {path:'home',component:Main},
     {path:'login',component:Login},
+    {path:'logout',component:Logout},
     {path:'registro',component:Registro},
     {path:'olvide',component:Olvide},
     {path:'cuenta-creada',component:CuentaCreada},
