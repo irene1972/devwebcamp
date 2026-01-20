@@ -16,9 +16,10 @@ const subirImagen=(req, res) => {
   };
 
   res.json({
-    ok: true,
+    mensaje: 'Datos guardados correctamente',
     ponente
   });
+  
 }
 export {
     subirImagen

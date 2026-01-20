@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -19,7 +19,7 @@ export class Crear {
   tags: string[] = [];
   imagenFile!: File | null;
 
-  constructor(private http: HttpClient) {
+  constructor(private cd: ChangeDetectorRef) {
 
     this.miForm = new FormGroup({
       nombre: new FormControl('', [
@@ -68,40 +68,54 @@ export class Crear {
     }
     console.log(this.miForm.value);
 
-    if (this.imagenFile) {
-      const formData = new FormData();
-
-      // campos normales
-      Object.entries(this.miForm.value).forEach(([key, value]) => {
-        formData.append(key, value as string);
-      });
-
-      // archivo
-      formData.append('imagen', this.imagenFile);
-
-      this.http.post('http://localhost:3000/api/ponente/crear', formData)
-        .subscribe(resp => {
-          console.log(resp);
-        });
+    if (!this.imagenFile) {
+      this.mensaje = 'Los campos nombre,apellido,ciudad,pais,imagen son obligatorios';
+      return;
     }
 
-    this.mensaje = 'Datos guardados correctamente';
-    this.tipo = true;
-    this.miForm.get('nombre')?.reset();
-    this.miForm.get('apellido')?.reset();
-    this.miForm.get('ciudad')?.reset();
-    this.miForm.get('pais')?.reset();
-    this.miForm.get('imagen')?.reset();
-    this.miForm.get('redes_facebook')?.reset();
-    this.miForm.get('redes_twitter')?.reset();
-    this.miForm.get('redes_youtube')?.reset();
-    this.miForm.get('redes_instagram')?.reset();
-    this.miForm.get('redes_github')?.reset();
-    this.miForm.get('redes_tiktok')?.reset();
+    const formData = new FormData();
 
-    this.fileInput.nativeElement.value = '';
-    // También puedes resetear el FormControl si quieres
-    this.miForm.get('imagen')?.reset();
+    // campos normales
+    Object.entries(this.miForm.value).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+
+    // archivo
+    formData.append('imagen', this.imagenFile);
+
+    fetch('http://localhost:3000/api/ponente/crear', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('irennne7:',data);
+
+        this.mensaje = 'Datos guardados correctamente';
+        this.tipo = true;
+        this.miForm.get('nombre')?.reset();
+        this.miForm.get('apellido')?.reset();
+        this.miForm.get('ciudad')?.reset();
+        this.miForm.get('pais')?.reset();
+        this.miForm.get('imagen')?.reset();
+        this.miForm.get('redes_facebook')?.reset();
+        this.miForm.get('redes_twitter')?.reset();
+        this.miForm.get('redes_youtube')?.reset();
+        this.miForm.get('redes_instagram')?.reset();
+        this.miForm.get('redes_github')?.reset();
+        this.miForm.get('redes_tiktok')?.reset();
+
+        this.fileInput.nativeElement.value = '';
+        // También puedes resetear el FormControl si quieres
+        this.miForm.get('imagen')?.reset();
+        
+      })
+      .catch(error => console.log(error))
+      .finally(()=>{
+        this.cd.detectChanges();
+      });
+
+
   }
 
   insertarTags(event: KeyboardEvent) {
@@ -135,7 +149,7 @@ export class Crear {
     this.tags.splice(index, 1);
     this.miForm.get('tags')?.setValue(this.tags.join(','));
   }
-  
+
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
 
