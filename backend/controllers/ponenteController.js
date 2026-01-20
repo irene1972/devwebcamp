@@ -1,6 +1,6 @@
 import pool from '../config/db.js';
 
-const subirImagen = (req, res) => {
+const guardarDatos = (req, res) => {
 
   const datos = req.body;
   const { nombre, apellido, ciudad, pais, tags, redes_facebook,redes_github,redes_instagram,redes_tiktok,redes_twitter,redes_youtube } = req.body;
@@ -37,5 +37,5 @@ const subirImagen = (req, res) => {
     */
 }
 export {
-  subirImagen
+  guardarDatos
 }
