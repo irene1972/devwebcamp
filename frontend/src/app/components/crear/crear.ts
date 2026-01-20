@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -89,31 +88,27 @@ export class Crear {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('irennne7:',data);
+        if (data.error) {
+          this.mensaje=data.error;
+          return;
+        }
 
-        this.mensaje = 'Datos guardados correctamente';
+        this.mensaje = data.mensaje;
         this.tipo = true;
-        this.miForm.get('nombre')?.reset();
-        this.miForm.get('apellido')?.reset();
-        this.miForm.get('ciudad')?.reset();
-        this.miForm.get('pais')?.reset();
-        this.miForm.get('imagen')?.reset();
-        this.miForm.get('redes_facebook')?.reset();
-        this.miForm.get('redes_twitter')?.reset();
-        this.miForm.get('redes_youtube')?.reset();
-        this.miForm.get('redes_instagram')?.reset();
-        this.miForm.get('redes_github')?.reset();
-        this.miForm.get('redes_tiktok')?.reset();
 
         this.fileInput.nativeElement.value = '';
-        // También puedes resetear el FormControl si quieres
-        this.miForm.get('imagen')?.reset();
 
-        this.tags=[];
-        
+        for (let propiedad in this.miForm.value) {
+          this.miForm.get(propiedad)?.reset();
+        }
+
+        this.tags = [];
+
+
+
       })
       .catch(error => console.log(error))
-      .finally(()=>{
+      .finally(() => {
         this.cd.detectChanges();
       });
 
