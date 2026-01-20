@@ -86,8 +86,17 @@ export class Crear {
 
     this.mensaje = 'Datos guardados correctamente';
     this.tipo = true;
-
-
+    this.miForm.get('nombre')?.reset();
+    this.miForm.get('apellido')?.reset();
+    this.miForm.get('ciudad')?.reset();
+    this.miForm.get('pais')?.reset();
+    this.miForm.get('imagen')?.reset();
+    this.miForm.get('redes_facebook')?.reset();
+    this.miForm.get('redes_twitter')?.reset();
+    this.miForm.get('redes_youtube')?.reset();
+    this.miForm.get('redes_instagram')?.reset();
+    this.miForm.get('redes_github')?.reset();
+    this.miForm.get('redes_tiktok')?.reset();
   }
   insertarTags(event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;

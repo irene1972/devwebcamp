@@ -60,8 +60,7 @@
 
             <div class="formulario__campo">
                 <label for="tags_input" class="formulario__label">Areas de experiencia (separadas por coma)</label>
-                <input type="text" class="formulario__input" placeholder="Ej. Node.js, PHP, CSS, Laravel, UX/UI"
-                    id="tags_input" (keydown)="insertarTags($event)" autocomplete="off">
+                <input type="text" class="formulario__input" placeholder="Ej. Node.js, PHP, CSS, Laravel, UX/UI" id="tags_input" (keydown)="insertarTags($event)" autocomplete="off">
 
                 <div class="tags">
                     <span class="tag" *ngFor="let tag of tags; let i = index">
