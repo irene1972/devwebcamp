@@ -3,6 +3,6 @@
         npm run dev
     2. Para que inicie el frontend ejecutar ir a la carpeta frontend:
         ng serve
-    2. Para verificar que llegan los emails se usa:
+    3. Para verificar que llegan los emails se usa:
         https://mailtrap.io/inboxes
 

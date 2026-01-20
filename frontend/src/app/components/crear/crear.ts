@@ -135,15 +135,13 @@ export class Crear {
     this.tags.splice(index, 1);
     this.miForm.get('tags')?.setValue(this.tags.join(','));
   }
+  
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
       this.imagenFile = input.files[0];
       console.log(this.imagenFile);
-      this.miForm.patchValue({
-        imagen: this.imagenFile.name
-      });
     }
   }
 }
