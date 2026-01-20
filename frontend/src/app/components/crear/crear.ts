@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-crear',
-  imports: [ReactiveFormsModule, RouterLink,CommonModule],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './crear.html',
   styleUrl: './crear.css',
 })
 export class Crear {
+  @ViewChild('fileInput') fileInput!: ElementRef;
   miForm: FormGroup;
   titulo: string = 'Crear Ponente';
   mensaje: string = '';
@@ -97,7 +98,12 @@ export class Crear {
     this.miForm.get('redes_instagram')?.reset();
     this.miForm.get('redes_github')?.reset();
     this.miForm.get('redes_tiktok')?.reset();
+
+    this.fileInput.nativeElement.value = '';
+    // También puedes resetear el FormControl si quieres
+    this.miForm.get('imagen')?.reset();
   }
+
   insertarTags(event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;
 

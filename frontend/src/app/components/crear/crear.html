@@ -55,7 +55,7 @@
 
             <div class="formulario__campo">
                 <label for="imagen" class="formulario__label">Imagen</label>
-                <input type="file" class="formulario__input" id="imagen" (change)="onFileSelected($event)">
+                <input type="file" #fileInput formControlName="imagen" class="formulario__input" id="imagen" (change)="onFileSelected($event)">
             </div>
 
             <div class="formulario__campo">
