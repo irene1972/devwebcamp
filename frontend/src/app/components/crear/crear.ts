@@ -108,6 +108,8 @@ export class Crear {
         this.fileInput.nativeElement.value = '';
         // También puedes resetear el FormControl si quieres
         this.miForm.get('imagen')?.reset();
+
+        this.tags=[];
         
       })
       .catch(error => console.log(error))
