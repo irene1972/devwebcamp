@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-crear',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink,CommonModule],
   templateUrl: './crear.html',
   styleUrl: './crear.css',
 })
@@ -66,51 +67,54 @@ export class Crear {
     }
     console.log(this.miForm.value);
 
-    if(this.imagenFile){
+    if (this.imagenFile) {
       const formData = new FormData();
 
-    // campos normales
-    Object.entries(this.miForm.value).forEach(([key, value]) => {
-      formData.append(key, value as string);
-    });
-
-    // archivo
-    formData.append('imagen', this.imagenFile);
-
-    this.http.post('http://localhost:3000/api/ponente/crear', formData)
-      .subscribe(resp => {
-        console.log(resp);
+      // campos normales
+      Object.entries(this.miForm.value).forEach(([key, value]) => {
+        formData.append(key, value as string);
       });
+
+      // archivo
+      formData.append('imagen', this.imagenFile);
+
+      this.http.post('http://localhost:3000/api/ponente/crear', formData)
+        .subscribe(resp => {
+          console.log(resp);
+        });
     }
 
-    this.mensaje='Datos guardados correctamente';
-    this.tipo=true;
-    
+    this.mensaje = 'Datos guardados correctamente';
+    this.tipo = true;
+
 
   }
-  insertarTags(event: Event) {
-    event.preventDefault();
-
+  insertarTags(event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;
-    const valor = input.value.trim();
 
-    if (!valor) return;
+    // Detectar Enter o Coma
+    if (event.key === 'Enter' || event.key === ',') {
+      event.preventDefault(); // Evita submit del form o coma en el input
 
-    valor.split(',')
-      .map(tag => tag.trim())
-      .filter(tag => tag.length > 0)
-      .forEach(tag => {
-        if (!this.tags.includes(tag)) {
-          this.tags.push(tag);
-          //aquí quiero que se cree un div (con el nombre del tag) por cada tag
-        }
-      });
+      const valor = input.value.trim();
+      if (!valor) return;
 
-    input.value = '';
+      // Separar por comas por si hay más de un tag
+      valor.split(',')
+        .map(tag => tag.trim())
+        .filter(tag => tag.length > 0)
+        .forEach(tag => {
+          if (!this.tags.includes(tag)) {
+            this.tags.push(tag);
+          }
+        });
 
-    this.miForm.get('tags')?.setValue(this.tags.join(','));
-
+      // Limpiar input y actualizar el FormControl
+      input.value = '';
+      this.miForm.get('tags')?.setValue(this.tags.join(','));
+    }
   }
+
 
   eliminarTag(index: number) {
     this.tags.splice(index, 1);

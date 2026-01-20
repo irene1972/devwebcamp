@@ -61,13 +61,17 @@
             <div class="formulario__campo">
                 <label for="tags_input" class="formulario__label">Areas de experiencia (separadas por coma)</label>
                 <input type="text" class="formulario__input" placeholder="Ej. Node.js, PHP, CSS, Laravel, UX/UI"
-                    id="tags_input" (keydown.coma)="insertarTags($event)" (keydown.enter)="insertarTags($event)">
+                    id="tags_input" (keydown)="insertarTags($event)" autocomplete="off">
+
                 <div class="tags">
                     <span class="tag" *ngFor="let tag of tags; let i = index">
                         {{ tag }}
                         <button type="button" (click)="eliminarTag(i)">×</button>
                     </span>
                 </div>
+
+                <input type="hidden" formControlName="tags">
+
                 <input type="hidden" formControlName="tags">
             </div>
 
@@ -114,7 +118,7 @@
                     <div>
                         <i class="fa-brands fa-facebook"></i>
                     </div>
-                    <input type="text" class="formulario__input" placeholder="Tiktok" formControlName="redes_tiktock">
+                    <input type="text" class="formulario__input" placeholder="Tiktok" formControlName="redes_tiktok">
                 </div>
             </div>
 
