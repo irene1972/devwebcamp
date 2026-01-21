@@ -13,7 +13,7 @@ const router=express.Router();
 router.get('/listar', listarPonentes);
 router.post('/crear', upload.single('imagen'), crearPonente);
 router.get('/editar/:id',obtenerPonente);
-router.post('/editar/:id',actualizarPonente);
+router.put('/editar/:id',upload.single('imagen'),actualizarPonente);
 router.delete('/eliminar/:id', eliminarPonente);
 
 export default router;

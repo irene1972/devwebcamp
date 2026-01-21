@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-editar',
-  imports: [ReactiveFormsModule, RouterLink,CommonModule],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './editar.html',
   styleUrl: './editar.css',
 })
@@ -15,12 +15,13 @@ export class Editar {
   mensaje: string = '';
   tipo: boolean = false;
   tags: string[] = [];
-  id:number=21;
-  redes:any={};
-  imagen:string='';
+  id: string | null = '';
+  redes: any = {};
+  imagen: string = '';
+  imagenFile!: File | null;
 
-   constructor(private cd: ChangeDetectorRef){
-    
+  constructor(private cd: ChangeDetectorRef, private route: ActivatedRoute, private router: Router) {
+
     this.miForm = new FormGroup({
       nombre: new FormControl('', [
         Validators.required
@@ -45,59 +46,120 @@ export class Editar {
 
     }, []);
   }
+  get nombre() {
+    return this.miForm.get('nombre');
+  }
 
+  get apellido() {
+    return this.miForm.get('apellido');
+  }
+
+  get ciudad() {
+    return this.miForm.get('ciudad');
+  }
+
+  get pais() {
+    return this.miForm.get('pais');
+  }
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      this.id = id;
+    });
     this.obtenerDatos();
   }
 
-  actualizarDatos() {
+  async actualizarDatos() {
+    //todo:
+    //recoger todos los campos, actualizar bd con todos los campos modificados 
+    //ahora la imagen no es obligatorio subirla
+    //Si se sube muy importante actualizar en bd la nueva ruta de imagen
+    if (!this.miForm.valid) {
+      this.miForm.markAllAsTouched();
+      this.mensaje = 'Los campos nombre,apellido,ciudad y pais son obligatorios';
+      return;
+    }
+    console.log(this.miForm.value);
 
-  }
+    const formData = new FormData();
 
-  onFileSelected(event:Event){
-
-  }
-
-  insertarTags(event:Event){
-
-  }
-
-  eliminarTag(index:number){
-
-  }
-  async obtenerDatos(){
-    const ponente=await fetch(`http://localhost:3000/api/ponente/editar/${this.id}`,{
-      method:'GET'
-    })
-    .then(response=>response.json())
-    .then(data=>{
-      const ponente=data[0];
-
-      if(data.length===0) return;
-
-      this.imagen=ponente.imagen;
-
-      this.tags=ponente.tags.split(',');
-
-      this.redes=JSON.parse(ponente.redes);
-
-      this.miForm.patchValue({
-      nombre: ponente.nombre,
-      apellido: ponente.apellido,
-      ciudad: ponente.ciudad,
-      pais: ponente.pais,
-      redes_facebook: decodeURIComponent(this.redes.facebook),
-      redes_twitter: decodeURIComponent(this.redes.twitter),
-      redes_youtube: decodeURIComponent(this.redes.youtube),
-      redes_instagram: decodeURIComponent(this.redes.instagram),
-      redes_tiktok: decodeURIComponent(this.redes.tiktok),
-      redes_github: decodeURIComponent(this.redes.github)
- 
+    // campos normales
+    Object.entries(this.miForm.value).forEach(([key, value]) => {
+      formData.append(key, value as string);
     });
-    
+
+    if (this.imagenFile) {
+      // archivo
+      formData.append('imagen', this.imagenFile);
+    }
+
+    await fetch(`http://localhost:3000/api/ponente/editar/${this.id}`, {
+      method: 'PUT',
+      body: formData
     })
-    .catch(error=>console.log(error))
-    .finally(() => {
+      .then(response => response.json())
+      .then(data => {
+        console.log('ireneeee4');
+        console.log(data);
+        
+
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.imagenFile = input.files[0];
+      console.log(this.imagenFile);
+    }
+  }
+
+  insertarTags(event: Event) {
+
+  }
+
+  eliminarTag(index: number) {
+
+  }
+  async obtenerDatos() {
+
+    await fetch(`http://localhost:3000/api/ponente/editar/${this.id}`, {
+      method: 'GET'
+    })
+      .then(response => response.json())
+      .then(data => {
+        const ponente = data[0];
+
+        if (data.length === 0) this.router.navigate(['/admin/ponentes']);
+
+        this.imagen = ponente.imagen;
+
+        this.tags = ponente.tags.split(',');
+
+        this.redes = JSON.parse(ponente.redes);
+
+        this.miForm.patchValue({
+          nombre: ponente.nombre,
+          apellido: ponente.apellido,
+          ciudad: ponente.ciudad,
+          pais: ponente.pais,
+          redes_facebook: decodeURIComponent(this.redes.facebook),
+          redes_twitter: decodeURIComponent(this.redes.twitter),
+          redes_youtube: decodeURIComponent(this.redes.youtube),
+          redes_instagram: decodeURIComponent(this.redes.instagram),
+          redes_tiktok: decodeURIComponent(this.redes.tiktok),
+          redes_github: decodeURIComponent(this.redes.github)
+
+        });
+
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
         this.cd.detectChanges();
       });
   }
