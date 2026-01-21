@@ -76,6 +76,7 @@ const obtenerPonente = async (req, res) => {
   }
 }
 const actualizarPonente = async (req, res) => {
+  const id=req.params.id;
   const datos = req.body;
   const { nombre, apellido, ciudad, pais, tags, redes_facebook, redes_github, redes_instagram, redes_tiktok, redes_twitter, redes_youtube } = req.body;
   const imagen = req.file;
@@ -104,7 +105,7 @@ const actualizarPonente = async (req, res) => {
 
     // guardar en BD con la imagen
     try {
-      await pool.query('UPDATE ponentes SET nombre=?,apellido=?,ciudad=?,pais=?,imagen=?,tags=?,redes=?', [nombre, apellido, ciudad, pais, nombreArchivoSinExtension, tags, redes]);
+      await pool.query('UPDATE ponentes SET nombre=?,apellido=?,ciudad=?,pais=?,imagen=?,tags=?,redes=? WHERE id=?', [nombre, apellido, ciudad, pais, nombreArchivoSinExtension, tags, redes,id]);
 
       // Crear copias PNG y WEBP
       const rutaOriginal = imagen.path;
@@ -133,7 +134,7 @@ const actualizarPonente = async (req, res) => {
   } else {
   // guardar en BD sin la imagen
   try {
-    await pool.query('UPDATE ponentes SET nombre=?,apellido=?,ciudad=?,pais=?,tags=?,redes=?', [nombre, apellido, ciudad, pais, tags, redes]);
+    await pool.query('UPDATE ponentes SET nombre=?,apellido=?,ciudad=?,pais=?,tags=?,redes=? WHERE id=?', [nombre, apellido, ciudad, pais, tags, redes,id]);
 
     const ponente = { ...datos };
     res.json({ mensaje: 'Datos guardados correctamente', ponente });

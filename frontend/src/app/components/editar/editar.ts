@@ -99,9 +99,14 @@ export class Editar {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('ireneeee4');
-        console.log(data);
-        
+        if (data.error) {
+          this.mensaje = data.error;
+          return;
+        }
+        this.tipo = true;
+        this.mensaje = data.mensaje;
+        this.router.navigate(['/admin/ponentes']);
+
 
       })
       .catch(error => console.log(error))
@@ -119,12 +124,35 @@ export class Editar {
     }
   }
 
-  insertarTags(event: Event) {
+  insertarTags(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
 
+    // Detectar Enter o Coma
+    if (event.key === 'Enter' || event.key === ',') {
+      event.preventDefault(); // Evita submit del form o coma en el input
+
+      const valor = input.value.trim();
+      if (!valor) return;
+
+      // Separar por comas por si hay más de un tag
+      valor.split(',')
+        .map(tag => tag.trim())
+        .filter(tag => tag.length > 0)
+        .forEach(tag => {
+          if (!this.tags.includes(tag)) {
+            this.tags.push(tag);
+          }
+        });
+
+      // Limpiar input y actualizar el FormControl
+      input.value = '';
+      this.miForm.get('tags')?.setValue(this.tags.join(','));
+    }
   }
 
   eliminarTag(index: number) {
-
+    this.tags.splice(index, 1);
+    this.miForm.get('tags')?.setValue(this.tags.join(','));
   }
   async obtenerDatos() {
 
@@ -148,14 +176,15 @@ export class Editar {
           apellido: ponente.apellido,
           ciudad: ponente.ciudad,
           pais: ponente.pais,
-          redes_facebook: decodeURIComponent(this.redes.facebook),
-          redes_twitter: decodeURIComponent(this.redes.twitter),
-          redes_youtube: decodeURIComponent(this.redes.youtube),
-          redes_instagram: decodeURIComponent(this.redes.instagram),
-          redes_tiktok: decodeURIComponent(this.redes.tiktok),
-          redes_github: decodeURIComponent(this.redes.github)
-
+          redes_facebook: decodeURIComponent(this.redes.facebook === undefined ? '' : this.redes.facebook),
+          redes_twitter: decodeURIComponent(this.redes.twitter === undefined ? '' : this.redes.twitter),
+          redes_youtube: decodeURIComponent(this.redes.youtube === undefined ? '' : this.redes.youtube),
+          redes_instagram: decodeURIComponent(this.redes.instagram === undefined ? '' : this.redes.instagram),
+          redes_tiktok: decodeURIComponent(this.redes.tiktok === undefined ? '' : this.redes.tiktok),
+          redes_github: decodeURIComponent(this.redes.github === undefined ? '' : this.redes.github)
         });
+        console.log('ireneeee');
+        console.log(this.tags);
 
       })
       .catch(error => console.log(error))
