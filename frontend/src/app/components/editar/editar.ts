@@ -183,8 +183,6 @@ export class Editar {
           redes_tiktok: decodeURIComponent(this.redes.tiktok === undefined ? '' : this.redes.tiktok),
           redes_github: decodeURIComponent(this.redes.github === undefined ? '' : this.redes.github)
         });
-        console.log('ireneeee');
-        console.log(this.tags);
 
       })
       .catch(error => console.log(error))
