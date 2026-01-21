@@ -15,6 +15,8 @@ const guardarDatos = async (req, res) => {
   }
 
   const nombreArchivo = imagen.filename;
+  const partes=nombreArchivo.split('.');
+  const nombreArchivoSinExtension=partes[0];
   let redes = {};
 
   if (redes_facebook) redes.facebook = redes_facebook;
@@ -28,7 +30,7 @@ const guardarDatos = async (req, res) => {
 
   // guardar en BD
   try {
-    pool.query('INSERT INTO ponentes (nombre,apellido,ciudad,pais,imagen,tags,redes) VALUES (?,?,?,?,?,?,?)', [nombre, apellido, ciudad, pais, nombreArchivo, tags, redes]);
+    pool.query('INSERT INTO ponentes (nombre,apellido,ciudad,pais,imagen,tags,redes) VALUES (?,?,?,?,?,?,?)', [nombre, apellido, ciudad, pais, nombreArchivoSinExtension, tags, redes]);
 
     // 📸 Crear copias PNG y WEBP
     const rutaOriginal = imagen.path;
@@ -36,13 +38,17 @@ const guardarDatos = async (req, res) => {
     const nombreBase = path.basename(nombreArchivo, extension);
     const directorio = path.dirname(rutaOriginal);
 
-    await sharp(rutaOriginal)
-      .png({ quality: 90 })
-      .toFile(path.join(directorio, `${nombreBase}.png`));
+    if (extension !== '.png') {
+      await sharp(rutaOriginal)
+        .png({ quality: 90 })
+        .toFile(path.join(directorio, `${nombreBase}.png`));
+    }
 
-    await sharp(rutaOriginal)
-      .webp({ quality: 80 })
-      .toFile(path.join(directorio, `${nombreBase}.webp`));
+    if (extension !== '.webp') {
+      await sharp(rutaOriginal)
+        .webp({ quality: 80 })
+        .toFile(path.join(directorio, `${nombreBase}.webp`));
+    }
 
     const ponente = { ...datos, imagen: nombreArchivo };
     res.json({ mensaje: 'Datos guardados correctamente', ponente });
