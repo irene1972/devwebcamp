@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -15,8 +15,12 @@ export class Editar {
   mensaje: string = '';
   tipo: boolean = false;
   tags: string[] = [];
+  id:number=21;
+  redes:any={};
+  imagen:string='';
 
-  constructor() {
+   constructor(private cd: ChangeDetectorRef){
+    
     this.miForm = new FormGroup({
       nombre: new FormControl('', [
         Validators.required
@@ -43,7 +47,7 @@ export class Editar {
   }
 
   ngOnInit(): void {
-    
+    this.obtenerDatos();
   }
 
   actualizarDatos() {
@@ -60,5 +64,41 @@ export class Editar {
 
   eliminarTag(index:number){
 
+  }
+  async obtenerDatos(){
+    const ponente=await fetch(`http://localhost:3000/api/ponente/editar/${this.id}`,{
+      method:'GET'
+    })
+    .then(response=>response.json())
+    .then(data=>{
+      const ponente=data[0];
+
+      if(data.length===0) return;
+
+      this.imagen=ponente.imagen;
+
+      this.tags=ponente.tags.split(',');
+
+      this.redes=JSON.parse(ponente.redes);
+
+      this.miForm.patchValue({
+      nombre: ponente.nombre,
+      apellido: ponente.apellido,
+      ciudad: ponente.ciudad,
+      pais: ponente.pais,
+      redes_facebook: decodeURIComponent(this.redes.facebook),
+      redes_twitter: decodeURIComponent(this.redes.twitter),
+      redes_youtube: decodeURIComponent(this.redes.youtube),
+      redes_instagram: decodeURIComponent(this.redes.instagram),
+      redes_tiktok: decodeURIComponent(this.redes.tiktok),
+      redes_github: decodeURIComponent(this.redes.github)
+ 
+    });
+    
+    })
+    .catch(error=>console.log(error))
+    .finally(() => {
+        this.cd.detectChanges();
+      });
   }
 }

@@ -7,7 +7,7 @@ const listarPonentes=async(req,res)=>{
     const resultado=await pool.query('SELECT * FROM ponentes');
     return res.json(resultado[0]);
   } catch (error) {
-    return res.status(500).json({ error: 'Error al consultar datos ponente' }, error);
+    return res.status(500).json({ error: 'Error al consultar datos ponentes' }, error);
   }
 }
 const crearPonente = async (req, res) => {
@@ -67,7 +67,13 @@ const crearPonente = async (req, res) => {
 
 }
 const obtenerPonente=async(req,res)=>{
-
+  const id=req.params.id;
+  try {
+    const resultado=await pool.query('SELECT * FROM ponentes WHERE id=?',[id]);
+    return res.json(resultado[0]);
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al consultar datos ponente' }, error);
+  }
 }
 const actualizarPonente=async(req,res)=>{
 
