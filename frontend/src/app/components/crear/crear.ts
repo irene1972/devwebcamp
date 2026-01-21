@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,7 +18,7 @@ export class Crear {
   tags: string[] = [];
   imagenFile!: File | null;
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef,private router:Router) {
 
     this.miForm = new FormGroup({
       nombre: new FormControl('', [
@@ -89,12 +89,9 @@ export class Crear {
       .then(response => response.json())
       .then(data => {
         if (data.error) {
-          this.mensaje=data.error;
+          this.mensaje = data.error;
           return;
         }
-
-        this.mensaje = data.mensaje;
-        this.tipo = true;
 
         this.fileInput.nativeElement.value = '';
 
@@ -104,6 +101,11 @@ export class Crear {
 
         this.tags = [];
 
+        //redirect hacia /ponentes
+        this.router.navigate(['/admin/ponentes']);
+
+        this.mensaje = data.mensaje;
+        this.tipo = true;
 
 
       })
