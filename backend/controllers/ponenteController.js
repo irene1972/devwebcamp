@@ -66,6 +66,12 @@ const crearPonente = async (req, res) => {
   }
 
 }
+const obtenerPonente=async(req,res)=>{
+
+}
+const actualizarPonente=async(req,res)=>{
+
+}
 const eliminarPonente=async(req,res)=>{
   const id=req.params.id;
 
@@ -80,5 +86,7 @@ const eliminarPonente=async(req,res)=>{
 export {
   listarPonentes,
   crearPonente,
-  eliminarPonente
+  eliminarPonente,
+  obtenerPonente,
+  actualizarPonente
 }

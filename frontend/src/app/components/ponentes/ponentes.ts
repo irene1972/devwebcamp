@@ -57,6 +57,8 @@ export class Ponentes {
       .then(response=>response.json())
       .then(data=>{
         console.log(data);
+        //reload
+        window.location.reload();
       })
       .catch(error=>console.log(error));
   }
