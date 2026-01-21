@@ -8,3 +8,6 @@
 .cont1{
     justify-content: right;
 }
+tr,td{
+    padding: 4px;
+}

@@ -2,7 +2,15 @@ import pool from '../config/db.js';
 import sharp from 'sharp';
 import path from 'path';
 
-const guardarDatos = async (req, res) => {
+const listarPonentes=async(req,res)=>{
+  try {
+    const resultado=await pool.query('SELECT * FROM ponentes');
+    return res.json(resultado[0]);
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al consultar datos ponente' }, error);
+  }
+}
+const crearPonente = async (req, res) => {
 
   const datos = req.body;
   const { nombre, apellido, ciudad, pais, tags, redes_facebook, redes_github, redes_instagram, redes_tiktok, redes_twitter, redes_youtube } = req.body;
@@ -30,7 +38,7 @@ const guardarDatos = async (req, res) => {
 
   // guardar en BD
   try {
-    pool.query('INSERT INTO ponentes (nombre,apellido,ciudad,pais,imagen,tags,redes) VALUES (?,?,?,?,?,?,?)', [nombre, apellido, ciudad, pais, nombreArchivoSinExtension, tags, redes]);
+    await pool.query('INSERT INTO ponentes (nombre,apellido,ciudad,pais,imagen,tags,redes) VALUES (?,?,?,?,?,?,?)', [nombre, apellido, ciudad, pais, nombreArchivoSinExtension, tags, redes]);
 
     // 📸 Crear copias PNG y WEBP
     const rutaOriginal = imagen.path;
@@ -54,10 +62,23 @@ const guardarDatos = async (req, res) => {
     res.json({ mensaje: 'Datos guardados correctamente', ponente });
 
   } catch (error) {
-    return res.status(500).json({ error: 'Error al guardar los datos' }, error);
+    return res.status(500).json({ error: 'Error al guardar los datos' });
   }
 
 }
+const eliminarPonente=async(req,res)=>{
+  const id=req.params.id;
+
+  try {
+    const resultado=await pool.query('DELETE FROM ponentes WHERE id=?',[id]);
+    return res.json({ mensaje: 'Ponente eliminado correctamente' });
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al eliminar el ponente' }, error);
+  }
+  
+}
 export {
-  guardarDatos
+  listarPonentes,
+  crearPonente,
+  eliminarPonente
 }

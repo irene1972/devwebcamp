@@ -15,6 +15,7 @@ import { Registrados } from './components/registrados/registrados';
 import { Regalos } from './components/regalos/regalos';
 import { Crear } from './components/crear/crear';
 import { Logout } from './components/logout/logout';
+import { Editar } from './components/editar/editar';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -30,6 +31,7 @@ export const routes: Routes = [
     {path:'admin/dashboard',component:Dashboard},
     {path:'admin/ponentes',component:Ponentes},
     {path:'admin/ponentes/crear',component:Crear},
+    {path:'admin/ponentes/editar/:id',component:Editar},
     {path:'admin/eventos',component:Eventos},
     {path:'admin/registrados',component:Registrados},
     {path:'admin/regalos',component:Regalos},

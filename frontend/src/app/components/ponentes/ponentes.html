@@ -4,7 +4,7 @@
             <h2>DevWebCamp</h2>
         </a>
         <nav>
-            <form  [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+            <form [formGroup]="miForm" (ngSubmit)="cerrarSesion()">
                 <input type="submit" value="Cerrar Sesión">
             </form>
         </nav>
@@ -42,5 +42,29 @@
             Añadir Ponente
         </a>
     </div>
-    
+    <div [class.text-danger]="tipo === false" [class.text-success]="tipo === true">{{mensaje}}</div>
+    <div class="tabla">
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Ubicación</th>
+                <th>Acciones</th>
+            </tr>
+
+            @if(arrayPonentes.length>0){
+                @for(item of arrayPonentes; track item.id){
+                <tr>
+                    <td>{{item.nombre}} {{item.apellido}}</td>
+                    <td>{{item.ciudad}}, {{item.pais}}</td>
+                    <td>
+                        <a [routerLink]="[`/admin/ponentes/editar/${item.id}`]" routerLinkActive="activo">Editar</a>
+                        <button type="button" (click)="eliminar($event,item.id)">Eliminar</button>
+                    </td>
+                </tr>
+                }
+            }
+
+        </table>
+    </div>
+
 </section>
