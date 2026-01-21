@@ -1,9 +1,11 @@
 import jwt from 'jsonwebtoken';
-import pool from '../config/db.js';
+import { Auth } from '../models/Auth.js';
+
+const auth=new Auth();
 
 const decodificarToken=async function(token,secret){
 
-    const response=await pool.query('SELECT * FROM usuarios WHERE token=?',[token]);
+    const response=await auth.getUserByToken(token);
     
     if(response[0][0]===undefined){
         return "error";

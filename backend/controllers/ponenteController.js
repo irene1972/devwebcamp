@@ -1,10 +1,12 @@
-import pool from '../config/db.js';
 import sharp from 'sharp';
 import path from 'path';
+import { Ponente } from '../models/Ponente.js';
+
+const ponen=new Ponente();
 
 const listarPonentes = async (req, res) => {
   try {
-    const resultado = await pool.query('SELECT * FROM ponentes');
+    const resultado = await ponen.getPonentes();
     return res.json(resultado[0]);
   } catch (error) {
     return res.status(500).json({ error: 'Error al consultar datos ponentes' }, error);
@@ -38,7 +40,7 @@ const crearPonente = async (req, res) => {
 
   // guardar en BD
   try {
-    await pool.query('INSERT INTO ponentes (nombre,apellido,ciudad,pais,imagen,tags,redes) VALUES (?,?,?,?,?,?,?)', [nombre, apellido, ciudad, pais, nombreArchivoSinExtension, tags, redes]);
+    await ponen.insertPonente(nombre, apellido, ciudad, pais, nombreArchivoSinExtension, tags, redes);
 
     // Crear copias PNG y WEBP
     const rutaOriginal = imagen.path;
@@ -69,7 +71,7 @@ const crearPonente = async (req, res) => {
 const obtenerPonente = async (req, res) => {
   const id = req.params.id;
   try {
-    const resultado = await pool.query('SELECT * FROM ponentes WHERE id=?', [id]);
+    const resultado = await ponen.getPonenteById(id);
     return res.json(resultado[0]);
   } catch (error) {
     return res.status(500).json({ error: 'Error al consultar datos ponente' }, error);
@@ -105,7 +107,7 @@ const actualizarPonente = async (req, res) => {
 
     // guardar en BD con la imagen
     try {
-      await pool.query('UPDATE ponentes SET nombre=?,apellido=?,ciudad=?,pais=?,imagen=?,tags=?,redes=? WHERE id=?', [nombre, apellido, ciudad, pais, nombreArchivoSinExtension, tags, redes,id]);
+      await ponen.updatePonenteAndImage(nombre, apellido, ciudad, pais, nombreArchivoSinExtension, tags, redes,id);
 
       // Crear copias PNG y WEBP
       const rutaOriginal = imagen.path;
@@ -134,7 +136,7 @@ const actualizarPonente = async (req, res) => {
   } else {
   // guardar en BD sin la imagen
   try {
-    await pool.query('UPDATE ponentes SET nombre=?,apellido=?,ciudad=?,pais=?,tags=?,redes=? WHERE id=?', [nombre, apellido, ciudad, pais, tags, redes,id]);
+    await ponen.updatePonenteWithoutImage(nombre, apellido, ciudad, pais, tags, redes,id);
 
     const ponente = { ...datos };
     res.json({ mensaje: 'Datos guardados correctamente', ponente });
@@ -148,10 +150,10 @@ const eliminarPonente = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const resultado = await pool.query('DELETE FROM ponentes WHERE id=?', [id]);
+    await ponen.deletePonenteById(id);
     return res.json({ mensaje: 'Ponente eliminado correctamente' });
   } catch (error) {
-    return res.status(500).json({ error: 'Error al eliminar el ponente' }, error);
+    return res.status(500).json({ error: 'Error al eliminar el ponente' });
   }
 
 }
