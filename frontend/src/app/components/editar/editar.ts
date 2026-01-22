@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { insertar_tags, eliminar_tag } from '../../../app/core/services/utils.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-editar',
@@ -20,6 +21,7 @@ export class Editar {
   redes: any = {};
   imagen: string = '';
   imagenFile!: File | null;
+  imagesUrl:string=environment.imagesUrl;
 
   constructor(private cd: ChangeDetectorRef, private route: ActivatedRoute, private router: Router) {
 
@@ -139,8 +141,6 @@ export class Editar {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('irene11:');
-        console.log(data);
         const ponente = data[0];
 
         if (data.length === 0) this.router.navigate(['/admin/ponentes']);

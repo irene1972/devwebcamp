@@ -69,11 +69,9 @@
 
             <div class="contenedor-imagen">
                 <picture>
-                    <source [srcset]="'http://localhost:3000/imgs/' + imagen + '.webp'" type="image/webp">
-
-                    <source [srcset]="'http://localhost:3000/imgs/' + imagen + '.png'" type="image/png">
-
-                    <img [src]="'http://localhost:3000/imgs/' + imagen + '.png'" alt="Imagen Ponente">
+                    <source [srcset]="imagesUrl + imagen + '.webp'" type="image/webp">
+                    <source [srcset]="imagesUrl + imagen + '.png'" type="image/png">
+                    <img [src]="imagesUrl + imagen + '.png'" alt="Imagen Ponente">
                 </picture>
             </div>
 
