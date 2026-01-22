@@ -27,6 +27,7 @@ app.use(cors(corsOptions));
 
 app.use('/api/auth',authRoutes);
 app.use('/api/ponente',ponenteRoutes);
+app.use('/imgs', express.static('public/imgs'));
 
 const PORT=process.env.PORT || 3000;
 

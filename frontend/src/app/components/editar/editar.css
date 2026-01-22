@@ -1,3 +1,15 @@
 .cont1{
     justify-content: right;
 }
+
+.contenedor-imagen {
+  width: 50vw;        /* 50% del ancho de la ventana */
+  max-width: 25%;     /* seguridad extra */
+  /*margin: 0 auto; */    /* centra el contenedor */
+}
+
+.contenedor-imagen img {
+  width: 100%;        /* la imagen ocupa todo el contenedor */
+  height: auto;       /* mantiene proporción */
+  display: block;     /* elimina espacios raros */
+}

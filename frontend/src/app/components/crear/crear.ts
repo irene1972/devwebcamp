@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/co
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { insertar_tags, eliminar_tag } from '../../../app/core/services/utils.service';
 
 @Component({
   selector: 'app-crear',
@@ -18,7 +19,7 @@ export class Crear {
   tags: string[] = [];
   imagenFile!: File | null;
 
-  constructor(private cd: ChangeDetectorRef,private router:Router) {
+  constructor(private cd: ChangeDetectorRef, private router: Router) {
 
     this.miForm = new FormGroup({
       nombre: new FormControl('', [
@@ -118,35 +119,11 @@ export class Crear {
   }
 
   insertarTags(event: KeyboardEvent) {
-    const input = event.target as HTMLInputElement;
-
-    // Detectar Enter o Coma
-    if (event.key === 'Enter' || event.key === ',') {
-      event.preventDefault(); // Evita submit del form o coma en el input
-
-      const valor = input.value.trim();
-      if (!valor) return;
-
-      // Separar por comas por si hay más de un tag
-      valor.split(',')
-        .map(tag => tag.trim())
-        .filter(tag => tag.length > 0)
-        .forEach(tag => {
-          if (!this.tags.includes(tag)) {
-            this.tags.push(tag);
-          }
-        });
-
-      // Limpiar input y actualizar el FormControl
-      input.value = '';
-      this.miForm.get('tags')?.setValue(this.tags.join(','));
-    }
+    insertar_tags(event, this.tags, this.miForm);
   }
 
-
   eliminarTag(index: number) {
-    this.tags.splice(index, 1);
-    this.miForm.get('tags')?.setValue(this.tags.join(','));
+    eliminar_tag(index, this.tags, this.miForm);
   }
 
   onFileSelected(event: Event) {

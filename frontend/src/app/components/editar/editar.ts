@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { insertar_tags, eliminar_tag } from '../../../app/core/services/utils.service';
 
 @Component({
   selector: 'app-editar',
@@ -125,34 +126,11 @@ export class Editar {
   }
 
   insertarTags(event: KeyboardEvent) {
-    const input = event.target as HTMLInputElement;
-
-    // Detectar Enter o Coma
-    if (event.key === 'Enter' || event.key === ',') {
-      event.preventDefault(); // Evita submit del form o coma en el input
-
-      const valor = input.value.trim();
-      if (!valor) return;
-
-      // Separar por comas por si hay más de un tag
-      valor.split(',')
-        .map(tag => tag.trim())
-        .filter(tag => tag.length > 0)
-        .forEach(tag => {
-          if (!this.tags.includes(tag)) {
-            this.tags.push(tag);
-          }
-        });
-
-      // Limpiar input y actualizar el FormControl
-      input.value = '';
-      this.miForm.get('tags')?.setValue(this.tags.join(','));
-    }
+    insertar_tags(event,this.tags,this.miForm);
   }
 
   eliminarTag(index: number) {
-    this.tags.splice(index, 1);
-    this.miForm.get('tags')?.setValue(this.tags.join(','));
+    eliminar_tag(index,this.tags,this.miForm);
   }
   async obtenerDatos() {
 
@@ -161,6 +139,8 @@ export class Editar {
     })
       .then(response => response.json())
       .then(data => {
+        console.log('irene11:');
+        console.log(data);
         const ponente = data[0];
 
         if (data.length === 0) this.router.navigate(['/admin/ponentes']);
