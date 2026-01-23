@@ -13,7 +13,11 @@ export class Evento {
     async getEventos() {
         return await pool.query('SELECT * FROM eventos');
     }
-    
+
+    async insertEvento() {
+        await pool.query('INSERT INTO eventos (nombre,descripcion,disponibles,categoria_id,dia_id,hora_id,ponente_id) VALUES (?,?,?,?,?,?,?)', [this.nombre, this.descripcion, this.disponible, this.categoria_id, this.dia, this.hora, this.ponente_id]);
+    }
+
     validar(){
         if(!this.nombre){
             return 'El nombre es obligatorio';
