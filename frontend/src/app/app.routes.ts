@@ -13,9 +13,9 @@ import { Ponentes } from './components/ponentes/ponentes';
 import { Eventos } from './components/eventos/eventos';
 import { Registrados } from './components/registrados/registrados';
 import { Regalos } from './components/regalos/regalos';
-import { Crear } from './components/crear/crear';
+import { Crear } from './components/ponentes/crear/crear';
 import { Logout } from './components/logout/logout';
-import { Editar } from './components/editar/editar';
+import { Editar } from './components/ponentes/editar/editar';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},

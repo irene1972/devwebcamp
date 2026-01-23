@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { insertar_tags, eliminar_tag } from '../../../app/core/services/utils.service';
-import { environment } from '../../../environments/environment';
-import { autenticarPanelAdmin } from '../../core/services/utils.service';
+import { insertar_tags, eliminar_tag } from '../../../../app/core/services/utils.service';
+import { environment } from '../../../../environments/environment';
+import { autenticarPanelAdmin } from '../../../core/services/utils.service';
 
 @Component({
   selector: 'app-editar',
