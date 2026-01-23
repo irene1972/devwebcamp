@@ -30,7 +30,7 @@ export class CrearEvento {
       categoria_id: new FormControl('', [
         Validators.required
       ]),
-      ponente: new FormControl('', [
+      ponente_id: new FormControl('', [
         Validators.required
       ]),
       disponible: new FormControl('', [
@@ -98,8 +98,8 @@ export class CrearEvento {
     return this.miForm.get('categoria_id');
   }
 
-  get ponente() {
-    return this.miForm.get('ponente');
+  get ponente_id() {
+    return this.miForm.get('ponente_id');
   }
 
   get disponible() {

@@ -6,6 +6,7 @@ import ponenteRoutes from './routes/ponenteRoutes.js';
 import categoriaRoutes from './routes/categoriaRoutes.js';
 import diaRoutes from './routes/diaRoutes.js';
 import horaRoutes from './routes/horaRoutes.js';
+import eventoRoutes from './routes/eventoRoutes.js';
 
 const corsOptions ={
    origin:'*', 
@@ -33,6 +34,7 @@ app.use('/api/ponente',ponenteRoutes);
 app.use('/api/categoria',categoriaRoutes);
 app.use('/api/dia',diaRoutes);
 app.use('/api/hora',horaRoutes);
+app.use('/api/evento',eventoRoutes);
 app.use('/imgs', express.static('public/imgs'));
 
 const PORT=process.env.PORT || 3000;

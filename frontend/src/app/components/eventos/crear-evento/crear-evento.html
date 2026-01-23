@@ -59,10 +59,10 @@
             </div>
 
             <div class="formulario__campo">
-                <label for="ponente" class="formulario__label">Ponente Evento</label>
-                <input type="text" class="formulario__input" placeholder="Buscar Ponente" id="ponente"
-                    formControlName="ponente">
-                @if (ponente?.touched && ponente?.hasError('required')) {
+                <label for="ponente_id" class="formulario__label">Ponente Evento</label>
+                <input type="text" class="formulario__input" placeholder="Buscar Ponente" id="ponente_id"
+                    formControlName="ponente_id">
+                @if (ponente_id?.touched && ponente_id?.hasError('required')) {
                 <div class="text-danger">
                     El ponente es obligatorio.
                 </div>
