@@ -1,4 +1,6 @@
 import { FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
+import { environment } from "../../../environments/environment";
 
 export function insertar_tags(event: KeyboardEvent, tags: string[], miForm: FormGroup) {
     const input = event.target as HTMLInputElement;
@@ -26,7 +28,70 @@ export function insertar_tags(event: KeyboardEvent, tags: string[], miForm: Form
     }
 }
 
-export function eliminar_tag(index: number,tags:string[],miForm: FormGroup) {
+export function eliminar_tag(index: number, tags: string[], miForm: FormGroup) {
     tags.splice(index, 1);
     miForm.get('tags')?.setValue(tags.join(','));
-  }
+}
+
+export function autenticarPanelAdmin(router: Router) {
+    //recuperar el token del local storage
+    var token = localStorage.getItem('token');
+    var email = localStorage.getItem('email');
+
+    if (email) {
+        //usuario autenticado
+        //consultar a bd para obtener si es admin o no   
+        fetch(`${environment.apiUrl}api/auth/isAdmin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify({ email: email })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    router.navigate(['/login']);
+                }
+
+                if (data.mensaje !== 1) {
+                    router.navigate(['/login']);
+                }
+                console.log(data);
+                //El usuario es admin y está autentificado
+            })
+            .catch(error => {
+                console.log(error);
+                router.navigate(['/login']);
+            });
+
+    } else {
+        //extraer email del token
+        fetch(`${environment.apiUrl}api/auth/decodificar-token`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify({ token: token })
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.decoded !== 'error') {
+                    //usuario autenticado
+                    const email = data.decoded.user;
+                    localStorage.setItem('email', email);
+
+                } else {
+                    console.log('data.decoded -> error');
+                    router.navigate(['/login']);
+                }
+
+            })
+            .catch(error => {
+                console.log(error);
+                router.navigate(['/login']);
+            });
+    }
+
+}
