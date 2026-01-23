@@ -4,12 +4,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-ponentes',
+  selector: 'app-ponentes2',
   imports: [ReactiveFormsModule, RouterLink, RouterLinkActive],
-  templateUrl: './ponentes.html',
-  styleUrl: './ponentes.css',
+  templateUrl: './ponentes2.html',
+  styleUrl: './ponentes2.css',
 })
-export class Ponentes {
+export class Ponentes2 {
   miForm: FormGroup;
   titulo: string = 'Ponentes / Conferencistas';
   mensaje: string = '';

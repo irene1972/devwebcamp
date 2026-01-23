@@ -9,12 +9,14 @@ import { Confirmar } from './components/confirmar/confirmar';
 import { Restablecer } from './components/restablecer/restablecer';
 import { Dashboard } from './components/dashboard/dashboard';
 import { FinalizarRegistro } from './components/finalizar-registro/finalizar-registro';
-import { Ponentes } from './components/ponentes/ponentes';
 import { Eventos } from './components/eventos/eventos';
 import { Registrados } from './components/registrados/registrados';
 import { Regalos } from './components/regalos/regalos';
-import { Crear } from './components/ponentes/crear/crear';
-import { Editar } from './components/ponentes/editar/editar';
+import { Ponentes2 } from './components/ponentes2/ponentes2';
+import { CrearPonente } from './components/ponentes2/crear-ponente/crear-ponente';
+import { EditarPonente } from './components/ponentes2/editar-ponente/editar-ponente';
+import { CrearEvento } from './components/eventos/crear-evento/crear-evento';
+import { EditarEvento } from './components/eventos/editar-evento/editar-evento';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -27,10 +29,12 @@ export const routes: Routes = [
     {path:'restablecer',component:Restablecer},
     {path:'finalizar-registro',component:FinalizarRegistro},
     {path:'admin/dashboard',component:Dashboard},
-    {path:'admin/ponentes',component:Ponentes},
-    {path:'admin/ponentes/crear',component:Crear},
-    {path:'admin/ponentes/editar/:id',component:Editar},
+    {path:'admin/ponentes',component:Ponentes2},
+    {path:'admin/ponentes/crear',component:CrearPonente},
+    {path:'admin/ponentes/editar/:id',component:EditarPonente},
     {path:'admin/eventos',component:Eventos},
+    {path:'admin/eventos/crear',component:CrearEvento},
+    {path:'admin/eventos/editar/:id',component:EditarEvento},
     {path:'admin/registrados',component:Registrados},
     {path:'admin/regalos',component:Regalos},
     {path:'**',component:C404}

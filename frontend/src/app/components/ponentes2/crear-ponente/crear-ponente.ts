@@ -6,13 +6,14 @@ import { environment } from '../../../../environments/environment';
 import { autenticarPanelAdmin } from '../../../core/services/utils.service';
 import { CommonModule } from '@angular/common';
 
+
 @Component({
-  selector: 'app-crear',
+  selector: 'app-crear-ponente',
   imports: [ReactiveFormsModule, RouterLink, CommonModule],
-  templateUrl: './crear.html',
-  styleUrl: './crear.css',
+  templateUrl: './crear-ponente.html',
+  styleUrl: './crear-ponente.css',
 })
-export class Crear {
+export class CrearPonente {
   @ViewChild('fileInput') fileInput!: ElementRef;
   miForm: FormGroup;
   titulo: string = 'Crear Ponente';

@@ -7,12 +7,12 @@ import { environment } from '../../../../environments/environment';
 import { autenticarPanelAdmin } from '../../../core/services/utils.service';
 
 @Component({
-  selector: 'app-editar',
+  selector: 'app-editar-ponente',
   imports: [ReactiveFormsModule, RouterLink, CommonModule],
-  templateUrl: './editar.html',
-  styleUrl: './editar.css',
+  templateUrl: './editar-ponente.html',
+  styleUrl: './editar-ponente.css',
 })
-export class Editar {
+export class EditarPonente {
   miForm: FormGroup;
   titulo: string = 'Actualizar Ponente';
   mensaje: string = '';
