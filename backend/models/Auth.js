@@ -14,6 +14,10 @@ export class Auth {
         return await pool.query('SELECT * FROM usuarios WHERE token=?',[token]);
     }
 
+    async getAdminByEmail(email){
+        return await pool.query('SELECT admin FROM usuarios WHERE email=?',[email]);
+    }
+
     async updateTokenByEmail(token,email){
         await pool.query('UPDATE usuarios SET token=? WHERE email=?',[token,email]);
     }

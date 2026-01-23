@@ -6,7 +6,8 @@ import {
     logout,
     decodificaToken,
     confirmar,
-    restablecer
+    restablecer,
+    isAdmin
 } from '../controllers/authController.js';
 import upload from '../helpers/upload.js';
 
@@ -15,6 +16,8 @@ const router=express.Router();
 //router.get('/',envioEmail);
 router.post('/login',login);
 router.get('/logout',logout);
+
+router.post('/isAdmin',isAdmin);
 
 router.post('/registro',registro);
 
