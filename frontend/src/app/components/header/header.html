@@ -7,7 +7,7 @@
             <ul class="my-0 mx-3 list-unstyled d-md-flex gap-md-4">
                 <li><a class="text-decoration-none text-dark" [routerLink]="['/registro']" routerLinkActive="activo">Registro</a></li>
                 <li><a class="text-decoration-none text-dark" [routerLink]="['/login']" routerLinkActive="activo">Iniciar Sesión</a></li>
-                <li><a class="text-decoration-none text-dark" [routerLink]="['/logout']" routerLinkActive="activo">Cerrar Sesión</a></li>
+                <li><a class="boton text-decoration-none text-dark"  (click)="logout()" routerLinkActive="activo">Cerrar Sesión</a></li>
             </ul>
         </nav>
     </div>
