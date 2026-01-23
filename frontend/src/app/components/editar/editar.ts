@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { insertar_tags, eliminar_tag } from '../../../app/core/services/utils.service';
 import { environment } from '../../../environments/environment';
+import { autenticarPanelAdmin } from '../../core/services/utils.service';
 
 @Component({
   selector: 'app-editar',
@@ -65,6 +66,7 @@ export class Editar {
     return this.miForm.get('pais');
   }
   ngOnInit(): void {
+    autenticarPanelAdmin(this.router);
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.id = id;
