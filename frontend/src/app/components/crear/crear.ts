@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { insertar_tags, eliminar_tag } from '../../../app/core/services/utils.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-crear',
@@ -83,7 +84,7 @@ export class Crear {
     // archivo
     formData.append('imagen', this.imagenFile);
 
-    fetch('http://localhost:3000/api/ponente/crear', {
+    fetch(`${environment.apiUrl}api/ponente/crear`, {
       method: 'POST',
       body: formData
     })

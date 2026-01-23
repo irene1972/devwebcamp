@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-olvide',
@@ -36,7 +37,7 @@ export class Olvide {
     }
     console.log(this.miForm.value);
     
-    fetch('http://localhost:3000/api/auth/olvide',{
+    fetch(`${environment.apiUrl}api/auth/olvide`,{
       method:'POST',
       headers:{
         'Content-Type':'application/json; charset=UTF-8'

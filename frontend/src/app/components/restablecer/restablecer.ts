@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-restablecer',
@@ -40,7 +41,7 @@ export class Restablecer {
     console.log(this.miForm.value);
 
     //llamar a restablecer password
-    fetch('http://localhost:3000/api/auth/restablecer', {
+    fetch(`${environment.apiUrl}api/auth/restablecer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'

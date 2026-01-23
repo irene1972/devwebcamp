@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { NgClass } from "../../../../node_modules/@angular/common/types/_common_module-chunk";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-confirmar',
@@ -22,7 +23,7 @@ export class Confirmar implements OnInit {
 
     //llamada a la api que me devuelva los datos del token decodificado
 
-    fetch('http://localhost:3000/api/auth/decodificar-token', {
+    fetch(`${environment.apiUrl}api/auth/decodificar-token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
@@ -36,7 +37,7 @@ export class Confirmar implements OnInit {
           const email = data.decoded.user;
 
           try {
-            fetch(`http://localhost:3000/api/auth/confirmar/${email}`, {
+            fetch(`${environment.apiUrl}api/auth/confirmar/${email}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json; charset=UTF-8'

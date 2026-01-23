@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-ponentes',
@@ -20,7 +21,7 @@ export class Ponentes {
   }
 
   ngOnInit(): void {
-    fetch(`http://localhost:3000/api/ponente/listar`,{
+    fetch(`${environment.apiUrl}api/ponente/listar`,{
       method:'GET'
     })
       .then(response=>response.json())
@@ -51,7 +52,7 @@ export class Ponentes {
     event.preventDefault();
     const boton=event.target as HTMLInputElement;
     
-    fetch(`http://localhost:3000/api/ponente/eliminar/${id}`,{
+    fetch(`${environment.apiUrl}api/ponente/eliminar/${id}`,{
       method:'DELETE'
     })
       .then(response=>response.json())

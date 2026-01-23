@@ -96,7 +96,7 @@ export class Editar {
       formData.append('imagen', this.imagenFile);
     }
 
-    await fetch(`http://localhost:3000/api/ponente/editar/${this.id}`, {
+    await fetch(`${environment.apiUrl}api/ponente/editar/${this.id}`, {
       method: 'PUT',
       body: formData
     })
@@ -136,7 +136,7 @@ export class Editar {
   }
   async obtenerDatos() {
 
-    await fetch(`http://localhost:3000/api/ponente/editar/${this.id}`, {
+    await fetch(`${environment.apiUrl}api/ponente/editar/${this.id}`, {
       method: 'GET'
     })
       .then(response => response.json())
