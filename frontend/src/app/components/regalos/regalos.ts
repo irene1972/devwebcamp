@@ -16,7 +16,4 @@ export class Regalos {
     this.miForm = new FormGroup({}, []);
   }
 
-  cargarDatos() {
-
-  }
 }

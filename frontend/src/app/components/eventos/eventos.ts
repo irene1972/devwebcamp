@@ -16,7 +16,4 @@ export class Eventos {
     this.miForm=new FormGroup({},[]);
   }
 
-  cargarDatos(){
-
-  }
 }

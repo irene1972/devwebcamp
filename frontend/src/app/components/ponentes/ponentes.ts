@@ -55,10 +55,6 @@ export class Ponentes {
       });
   }
 
-  cerrarSesion() {
-    console.log('cerrar sesion');
-  }
-
   eliminar(event: Event, id: number) {
     event.preventDefault();
     const boton = event.target as HTMLInputElement;

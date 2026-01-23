@@ -16,7 +16,4 @@ export class Registrados {
     this.miForm = new FormGroup({}, []);
   }
 
-  cargarDatos() {
-
-  }
 }

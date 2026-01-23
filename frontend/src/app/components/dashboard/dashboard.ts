@@ -21,7 +21,4 @@ export class Dashboard {
     autenticarPanelAdmin(this.router);
   }
 
-  cargarDatos() {
-
-  }
 }
