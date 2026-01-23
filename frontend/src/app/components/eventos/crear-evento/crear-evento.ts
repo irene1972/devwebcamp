@@ -16,6 +16,7 @@ export class CrearEvento {
   mensaje: string = '';
   tipo:boolean=false;
   categorias:any[]=[];
+  dias:any[]=[];
 
   constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
@@ -43,6 +44,20 @@ export class CrearEvento {
         }
         console.log(data);
         this.categorias=data;
+        this.cd.detectChanges();
+      })
+      .catch(error=>console.log(error));
+
+      fetch(`${environment.apiUrl}api/dia/listar`)
+      .then(response=>response.json())
+      .then(data=>{
+        if(data.error){
+          console.log(data.error);
+          this.mensaje=data.error;
+          return;
+        }
+        console.log(data);
+        this.dias=data;
         this.cd.detectChanges();
       })
       .catch(error=>console.log(error));

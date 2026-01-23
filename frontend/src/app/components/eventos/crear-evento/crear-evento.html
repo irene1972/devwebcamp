@@ -35,10 +35,18 @@
                 <select formControlName="categoria_id" id="categoria_id">
                     <option value="" disabled>-- seleccione --</option>
                     @for(categoria of categorias; track categoria.id){
-                        <option [value]="[categoria.id]">{{categoria.nombre}}</option>
-                    <!--<option [value]="categoria.id">{{categoria.nombre}}</option>-->
+                    <option [value]="[categoria.id]">{{categoria.nombre}}</option>
                     }
                 </select>
+            </div>
+
+            <div class="formulario__campo">
+                @for(dia of dias; track dia.id){
+                    <div>
+                        <label [for]="[dia.nombre.toString()]">{{dia.nombre}}</label>
+                        <input type="radio" formControlName="dia" name="dia" [id]="[dia.nombre.toString()]" [value]="[dia.id]">
+                    </div>
+                }
             </div>
 
             <input type="submit" class="formulario__submit" value="Registrar Evento" [disabled]="!miForm.valid">
