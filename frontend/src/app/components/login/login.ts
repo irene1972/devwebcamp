@@ -65,7 +65,7 @@ export class Login {
         if(data.admin){
           this.router.navigate(['/admin/dashboard']);
         }else{
-          this.router.navigate(['/finalizar-registro']);
+          this.router.navigate(['/home']);
         }
         
       })
