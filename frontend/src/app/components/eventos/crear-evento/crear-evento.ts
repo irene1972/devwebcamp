@@ -17,6 +17,7 @@ export class CrearEvento {
   tipo:boolean=false;
   categorias:any[]=[];
   dias:any[]=[];
+  horas:any[]=[];
 
   constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
@@ -26,7 +27,15 @@ export class CrearEvento {
       descripcion: new FormControl('', [
         Validators.required
       ]),
-      categoria_id: new FormControl('', [])
+      categoria_id: new FormControl('', [
+        Validators.required
+      ]),
+      ponente: new FormControl('', [
+        Validators.required
+      ]),
+      disponible: new FormControl('', [
+        Validators.required
+      ])
 
     }, []);
   }
@@ -61,6 +70,20 @@ export class CrearEvento {
         this.cd.detectChanges();
       })
       .catch(error=>console.log(error));
+
+      fetch(`${environment.apiUrl}api/hora/listar`)
+      .then(response=>response.json())
+      .then(data=>{
+        if(data.error){
+          console.log(data.error);
+          this.mensaje=data.error;
+          return;
+        }
+        console.log(data);
+        this.horas=data;
+        this.cd.detectChanges();
+      })
+      .catch(error=>console.log(error));
   }
 
   get nombre() {
@@ -73,6 +96,14 @@ export class CrearEvento {
 
   get categoria_id() {
     return this.miForm.get('categoria_id');
+  }
+
+  get ponente() {
+    return this.miForm.get('ponente');
+  }
+
+  get disponible() {
+    return this.miForm.get('disponible');
   }
 
   cargarDatos() {

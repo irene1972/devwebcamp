@@ -49,6 +49,37 @@
                 }
             </div>
 
+            <div id="horas" class="formulario__campo">
+                <label>Seleccionar Hora</label>
+                <ul>
+                    @for (hora of horas; track hora.id) {
+                        <li>{{hora.hora}}</li>
+                    }
+                </ul>
+            </div>
+
+            <div class="formulario__campo">
+                <label for="ponente" class="formulario__label">Ponente Evento</label>
+                <input type="text" class="formulario__input" placeholder="Buscar Ponente" id="ponente"
+                    formControlName="ponente">
+                @if (ponente?.touched && ponente?.hasError('required')) {
+                <div class="text-danger">
+                    El ponente es obligatorio.
+                </div>
+                }
+            </div>
+
+            <div class="formulario__campo">
+                <label for="disponible" class="formulario__label">Lugares disponibles</label>
+                <input type="number" class="formulario__input" placeholder="Ejemplo 20" id="disponible"
+                    formControlName="disponible">
+                @if (disponible?.touched && disponible?.hasError('required')) {
+                <div class="text-danger">
+                    Disponibles es obligatorio.
+                </div>
+                }
+            </div>
+
             <input type="submit" class="formulario__submit" value="Registrar Evento" [disabled]="!miForm.valid">
         </form>
     </div>
