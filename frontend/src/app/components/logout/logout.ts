@@ -11,6 +11,7 @@ export class Logout {
   constructor(private router:Router){}
   ngOnInit(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
     this.router.navigate(['/login']);
   }
 }

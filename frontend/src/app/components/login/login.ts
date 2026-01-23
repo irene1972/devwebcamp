@@ -64,6 +64,7 @@ export class Login {
         const token=data.mensaje;
         localStorage.setItem('token', token);
         if(data.admin){
+          //localStorage.removeItem('token');
           this.router.navigate(['/admin/dashboard']);
         }else{
           this.router.navigate(['/home']);
