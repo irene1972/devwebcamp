@@ -14,10 +14,10 @@ export class CrearEvento {
   titulo: string = 'Registrar Evento';
   miForm: FormGroup;
   mensaje: string = '';
-  tipo:boolean=false;
-  categorias:any[]=[];
-  dias:any[]=[];
-  horas:any[]=[];
+  tipo: boolean = false;
+  categorias: any[] = [];
+  dias: any[] = [];
+  horas: any[] = [];
 
   constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
@@ -36,6 +36,10 @@ export class CrearEvento {
       disponible: new FormControl('', [
         Validators.required
       ])
+      ,
+      dia: new FormControl('', [
+        Validators.required
+      ])
 
     }, []);
   }
@@ -44,46 +48,46 @@ export class CrearEvento {
     autenticarPanelAdmin(this.router);
 
     fetch(`${environment.apiUrl}api/categoria/listar`)
-      .then(response=>response.json())
-      .then(data=>{
-        if(data.error){
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
           console.log(data.error);
-          this.mensaje=data.error;
+          this.mensaje = data.error;
           return;
         }
         console.log(data);
-        this.categorias=data;
+        this.categorias = data;
         this.cd.detectChanges();
       })
-      .catch(error=>console.log(error));
+      .catch(error => console.log(error));
 
-      fetch(`${environment.apiUrl}api/dia/listar`)
-      .then(response=>response.json())
-      .then(data=>{
-        if(data.error){
+    fetch(`${environment.apiUrl}api/dia/listar`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
           console.log(data.error);
-          this.mensaje=data.error;
+          this.mensaje = data.error;
           return;
         }
         console.log(data);
-        this.dias=data;
+        this.dias = data;
         this.cd.detectChanges();
       })
-      .catch(error=>console.log(error));
+      .catch(error => console.log(error));
 
-      fetch(`${environment.apiUrl}api/hora/listar`)
-      .then(response=>response.json())
-      .then(data=>{
-        if(data.error){
+    fetch(`${environment.apiUrl}api/hora/listar`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
           console.log(data.error);
-          this.mensaje=data.error;
+          this.mensaje = data.error;
           return;
         }
         console.log(data);
-        this.horas=data;
+        this.horas = data;
         this.cd.detectChanges();
       })
-      .catch(error=>console.log(error));
+      .catch(error => console.log(error));
   }
 
   get nombre() {
@@ -106,23 +110,26 @@ export class CrearEvento {
     return this.miForm.get('disponible');
   }
 
+  get dia() {
+    return this.miForm.get('dia');
+  }
+
   cargarDatos() {
+    console.log('ireneee');
+    console.log(this.miForm.value);
+
     if (!this.miForm.valid) {
       this.miForm.markAllAsTouched();
       return;
     }
     console.log(this.miForm.value);
 
-    const formData = new FormData();
-
-    // campos normales
-    Object.entries(this.miForm.value).forEach(([key, value]) => {
-      formData.append(key, value as string);
-    });
-
     fetch(`${environment.apiUrl}api/evento/crear`, {
       method: 'POST',
-      body: formData
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.miForm.value)
     })
       .then(response => response.json())
       .then(data => {
@@ -132,7 +139,7 @@ export class CrearEvento {
         }
 
         console.log(data);
-
+        //this.router.navigate(['/admin/eventos']);
 
       })
       .catch(error => console.log(error))

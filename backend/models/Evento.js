@@ -20,25 +20,26 @@ export class Evento {
 
     validar(){
         if(!this.nombre){
-            return 'El nombre es obligatorio';
+            return [0,'El nombre es obligatorio'];
         }
         if(!this.descripcion){
-            return 'La descripción es obligatoria';
+            return [0,'La descripción es obligatoria'];
         }
         if(!this.categoria_id){
-            return 'Elige una categoría';
+            return [0,'Elige una categoría'];
         }
         if(!this.dia){
-            return 'Elige el día del evento';
+            return [0,'Elige el día del evento'];
         }
         if(!this.hora){
-            return 'Elige la hora del evento';
+            return [0,'Elige la hora del evento'];
         }
         if(!this.disponible){
-            return 'Añade una cantidad de lugares disponibles';
+            return [0,'Añade una cantidad de lugares disponibles'];
         }
         if(!this.ponente_id){
-            return 'Selecciona a la persona encargada del evento';
+            return [0,'Selecciona a la persona encargada del evento'];
         }
+        return [1,'Validado correctamente'];
     }
 }
