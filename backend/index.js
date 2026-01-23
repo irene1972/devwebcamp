@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import authRoutes from './routes/authRoutes.js';
 import ponenteRoutes from './routes/ponenteRoutes.js';
+import categoriaRoutes from './routes/categoriaRoutes.js';
 
 const corsOptions ={
    origin:'*', 
@@ -27,6 +28,7 @@ app.use(cors(corsOptions));
 
 app.use('/api/auth',authRoutes);
 app.use('/api/ponente',ponenteRoutes);
+app.use('/api/categoria',categoriaRoutes);
 app.use('/imgs', express.static('public/imgs'));
 
 const PORT=process.env.PORT || 3000;

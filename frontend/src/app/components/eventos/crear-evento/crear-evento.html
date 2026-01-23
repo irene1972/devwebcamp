@@ -1,1 +1,47 @@
-<p>crear works!</p>
+<section>
+    <h2>{{titulo}}</h2>
+    <div class="cont1 d-flex">
+        <a class="btn btn-primary btn-derecha" [routerLink]="['/admin/eventos']">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Volver
+        </a>
+    </div>
+    <div>
+        <div [class.text-danger]="tipo === false" [class.text-success]="tipo === true">{{mensaje}}</div>
+        <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+            <div class="formulario__campo">
+                <label for="nombre" class="formulario__label">Nombre Evento</label>
+                <input type="text" class="formulario__input" placeholder="Nombre del evento" id="nombre"
+                    formControlName="nombre">
+                @if (nombre?.touched && nombre?.hasError('required')) {
+                <div class="text-danger">
+                    El nombre es obligatorio.
+                </div>
+                }
+            </div>
+
+            <div class="formulario__campo">
+                <label for="descripcion" class="formulario__label">Descripción</label>
+                <textarea class="formulario__input" placeholder="Descripción del evento" id="descripcion"
+                    formControlName="descripcion" rows="8"></textarea>
+                @if (descripcion?.touched && descripcion?.hasError('required')) {
+                <div class="text-danger">
+                    La descripcion es obligatoria.
+                </div>
+                }
+            </div>
+
+            <div class="formulario__campo">
+                <select formControlName="categoria_id" id="categoria_id">
+                    <option value="" disabled>-- seleccione --</option>
+                    @for(categoria of categorias; track categoria.id){
+                        <option [value]="[categoria.id]">{{categoria.nombre}}</option>
+                    <!--<option [value]="categoria.id">{{categoria.nombre}}</option>-->
+                    }
+                </select>
+            </div>
+
+            <input type="submit" class="formulario__submit" value="Registrar Evento" [disabled]="!miForm.valid">
+        </form>
+    </div>
+</section>
