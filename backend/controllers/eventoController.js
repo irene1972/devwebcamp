@@ -22,7 +22,21 @@ const crearEvento = async (req, res) => {
   
 }
 
+const listarEventosHorario = async (req, res) => {
+  try {
+    const evento=new Evento({});
+    const categoria=req.params.categoria_id;
+    const dia=req.params.dia;
+    console.log('ireneeee',categoria,dia);
+    const resultado = await evento.getEventoHorarioByCategoriaYDia(categoria,dia);
+    return res.json(resultado[0]);
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al consultar los eventos' });
+  }
+}
+
 export {
   listarEventos,
-  crearEvento
+  crearEvento,
+  listarEventosHorario
 }

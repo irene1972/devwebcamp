@@ -57,7 +57,7 @@ export function autenticarPanelAdmin(router: Router) {
                 if (data.mensaje !== 1) {
                     router.navigate(['/login']);
                 }
-                console.log(data);
+                //console.log(data);
                 //El usuario es admin y está autentificado
             })
             .catch(error => {
@@ -83,7 +83,7 @@ export function autenticarPanelAdmin(router: Router) {
                     localStorage.setItem('email', email);
 
                 } else {
-                    console.log('data.decoded -> error');
+                    //console.log('data.decoded -> error');
                     router.navigate(['/login']);
                 }
 

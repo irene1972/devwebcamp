@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { autenticarPanelAdmin } from '../../../core/services/utils.service';
 
@@ -19,6 +20,8 @@ export class CrearEvento {
   dias: any[] = [];
   horas: any[] = [];
   //diaHidden:string='';
+  datos: any = { categoria_id: "", dia: "" };
+  @ViewChildren('horaItem') horasLi!: QueryList<ElementRef<HTMLLIElement>>;
 
   constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
@@ -40,7 +43,8 @@ export class CrearEvento {
       dia: new FormControl('', [
         Validators.required
       ]),
-      diaHidden: new FormControl('', [])
+      diaHidden: new FormControl('', []),
+      horaHidden: new FormControl('', [])
 
     }, []);
   }
@@ -52,11 +56,11 @@ export class CrearEvento {
       .then(response => response.json())
       .then(data => {
         if (data.error) {
-          console.log(data.error);
+          //console.log(data.error);
           this.mensaje = data.error;
           return;
         }
-        console.log(data);
+        //console.log(data);
         this.categorias = data;
         this.cd.detectChanges();
       })
@@ -66,11 +70,11 @@ export class CrearEvento {
       .then(response => response.json())
       .then(data => {
         if (data.error) {
-          console.log(data.error);
+          //console.log(data.error);
           this.mensaje = data.error;
           return;
         }
-        console.log(data);
+        //console.log(data);
         this.dias = data;
         this.cd.detectChanges();
       })
@@ -80,11 +84,11 @@ export class CrearEvento {
       .then(response => response.json())
       .then(data => {
         if (data.error) {
-          console.log(data.error);
+          //console.log(data.error);
           this.mensaje = data.error;
           return;
         }
-        console.log(data);
+        //console.log(data);
         this.horas = data;
         this.cd.detectChanges();
       })
@@ -122,7 +126,7 @@ export class CrearEvento {
       this.miForm.markAllAsTouched();
       return;
     }
-    console.log(this.miForm.value);
+    //console.log(this.miForm.value);
 
     fetch(`${environment.apiUrl}api/evento/crear`, {
       method: 'POST',
@@ -138,7 +142,7 @@ export class CrearEvento {
           return;
         }
 
-        console.log(data);
+        //console.log(data);
         this.router.navigate(['/admin/eventos']);
 
       })
@@ -150,10 +154,66 @@ export class CrearEvento {
 
   }
 
-  terminoBusqueda(event:Event){
-    const input=event.target as HTMLInputElement;
-    //this.diaHidden=input.id;
+  terminoBusqueda(event: Event) {
+    const input = event.target as HTMLInputElement;
+    //rellenamos el input oculto de dia
     this.miForm.get('diaHidden')?.setValue(input.id);
+
+    //hacemos que aparezcan solo las opciones de hora que correspondan al día seleccionado
+    this.datos.dia = this.dia?.value[0];
+    //console.log(this.datos);
+    this.buscarEventos(this.datos);
+
     this.cd.detectChanges();
+  }
+
+  terminoBusqueda2() {
+    this.datos.categoria_id = this.categoria_id?.value;
+    //console.log(this.datos);
+    this.buscarEventos(this.datos);
+  }
+
+  buscarEventos(datos: any) {
+    if (Object.values(datos).includes('')) {
+      return;
+    }
+
+    fetch(`${environment.apiUrl}api/evento/listar/${datos.categoria_id}/${datos.dia}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.log(error));
+
+    this.obtenerHorasDisponibles();
+  }
+
+  obtenerHorasDisponibles() {
+    if (!this.horasLi) return;
+
+    const horas = this.horasLi.map(li => {
+      //li.nativeElement.addEventListener('click',this.seleccionarHora);
+      return {
+        id: li.nativeElement.dataset['id'],
+        texto: li.nativeElement.innerText.trim()
+      };
+    });
+
+    //console.log('Horas capturadas:', horas);
+  }
+
+  seleccionarHora(event:Event,hora:any){
+    this.miForm.get('horaHidden')?.setValue(hora.id);
+    const li=event.target as HTMLLIElement;
+
+    const arrayLis=li.parentElement?.querySelectorAll('.resaltar');
+    arrayLis?.forEach(elem=>{
+      elem.classList.remove('resaltar');
+    });
+
+    li.classList.add('resaltar');
+    
+    
+
   }
 }

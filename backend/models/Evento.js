@@ -18,6 +18,10 @@ export class Evento {
         await pool.query('INSERT INTO eventos (nombre,descripcion,disponibles,categoria_id,dia_id,hora_id,ponente_id) VALUES (?,?,?,?,?,?,?)', [this.nombre, this.descripcion, this.disponible, this.categoria_id, this.dia, this.hora, this.ponente_id]);
     }
 
+    async getEventoHorarioByCategoriaYDia(categoria,dia){
+        return await pool.query('SELECT id,categoria_id,dia_id,hora_id FROM eventos WHERE categoria_id=? AND dia_id=?',[categoria,dia]);
+    }
+
     validar(){
         if(!this.nombre){
             return [0,'El nombre es obligatorio'];

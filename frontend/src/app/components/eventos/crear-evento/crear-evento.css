@@ -9,3 +9,8 @@ li {
 li:hover {
     cursor: pointer;
 }
+
+.resaltar{
+    background-color: blue;
+    color:white;
+}

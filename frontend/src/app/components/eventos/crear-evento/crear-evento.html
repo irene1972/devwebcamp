@@ -32,7 +32,7 @@
             </div>
 
             <div class="formulario__campo">
-                <select formControlName="categoria_id" id="categoria_id">
+                <select formControlName="categoria_id" id="categoria_id" (change)="terminoBusqueda2()">
                     <option value="" disabled>-- seleccione --</option>
                     @for(categoria of categorias; track categoria.id){
                     <option [value]="[categoria.id]">{{categoria.nombre}}</option>
@@ -54,9 +54,13 @@
                 <label>Seleccionar Hora</label>
                 <ul>
                     @for (hora of horas; track hora.id) {
-                        <li>{{hora.hora}}</li>
+                        <li 
+                            #horaItem 
+                            [attr.data-id]="hora.id" 
+                            (click)="seleccionarHora($event,hora)">{{hora.hora}}</li>
                     }
                 </ul>
+                <input type="hidden"  formControlName="horaHidden">
             </div>
 
             <div class="formulario__campo">
