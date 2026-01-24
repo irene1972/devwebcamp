@@ -121,6 +121,7 @@ export class CrearEvento {
   }
 
   cargarDatos() {
+    console.log('irene2');
     console.log(this.miForm.value);
 
     if (!this.miForm.valid) {
@@ -157,6 +158,11 @@ export class CrearEvento {
 
   terminoBusqueda(event: Event) {
     const input = event.target as HTMLInputElement;
+
+    this.miForm.get('diaHidden')?.setValue('');
+    this.miForm.get('horaHidden')?.setValue('');
+    this.cd.detectChanges();
+
     //rellenamos el input oculto de dia
     this.miForm.get('diaHidden')?.setValue(input.id);
 
@@ -228,7 +234,7 @@ export class CrearEvento {
       li.classList.add('resaltar');
     }
 
-
+    //this.diaHidden=this.miForm.get('dia')?.value;
 
   }
 }
