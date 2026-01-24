@@ -6,9 +6,9 @@ export class Evento {
         this.descripcion=datos.descripcion;
         this.disponible=datos.disponible;
         this.categoria_id=datos.categoria_id;
-        this.dia=datos.dia;
-        this.hora=datos.hora;
-        this.ponente_id=datos.ponente_id;
+        this.dia=datos.diaHidden;
+        this.hora=datos.horaHidden;
+        this.ponente_id=datos.ponenteHidden;
     }
     async getEventos() {
         return await pool.query('SELECT * FROM eventos');

@@ -55,18 +55,14 @@
                 <label>Seleccionar Hora</label>
                 <ul>
                     @for (hora of horas; track hora.id) {
-                        
+
                     @if(idsHorasTomadas.includes(hora.id)){
-                    <li 
-                        #horaItem [attr.data-id]="hora.id" 
-                        class="deshabilitada">
+                    <li #horaItem [attr.data-id]="hora.id" class="deshabilitada">
                         {{hora.hora}}
 
                     </li>
                     }@else{
-                    <li 
-                        #horaItem [attr.data-id]="hora.id" 
-                        (click)="seleccionarHora($event,hora)">
+                    <li #horaItem [attr.data-id]="hora.id" (click)="seleccionarHora($event,hora)">
                         {{hora.hora}}
 
                     </li>
@@ -77,14 +73,28 @@
             </div>
 
             <div class="formulario__campo">
-                <label for="ponente_id" class="formulario__label">Ponente Evento</label>
-                <input type="text" class="formulario__input" placeholder="Buscar Ponente" id="ponente_id"
-                    formControlName="ponente_id" (keyup)="buscarPonente($event)">
-                @if (ponente_id?.touched && ponente_id?.hasError('required')) {
+                <label for="ponente" class="formulario__label">Ponente Evento</label>
+                <input type="text" class="formulario__input" placeholder="Buscar Ponente" id="ponente"
+                    formControlName="ponente" (keyup)="buscarPonente($event)">
+                <input type="hidden" formControlName="ponenteHidden">
+                @if (ponente?.touched && ponente?.hasError('required')) {
                 <div class="text-danger">
                     El ponente es obligatorio.
                 </div>
                 }
+                <ul>
+                    @if(!ponenteInvisible){
+                        {{ponentesFiltrados}}
+                        @if(ponentesFiltrados.length===0){
+                            <li>No hay resultados</li>
+                        }@else{
+                            @for(ponente of ponentesFiltrados; track ponente.id){
+                        <li [id]="[ponente.id]" (click)="seleccionarPonente($event)">{{ponente.nombre}}</li>
+                    }
+                        }
+                    }
+                </ul>
+
             </div>
 
             <div class="formulario__campo">

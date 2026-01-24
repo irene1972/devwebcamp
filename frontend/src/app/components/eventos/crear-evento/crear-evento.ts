@@ -4,10 +4,11 @@ import { Router, RouterLink } from '@angular/router';
 import { ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { autenticarPanelAdmin } from '../../../core/services/utils.service';
+import { CommonModule, NgClass } from "@angular/common";
 
 @Component({
   selector: 'app-crear-evento',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule],
   templateUrl: './crear-evento.html',
   styleUrl: './crear-evento.css',
 })
@@ -25,6 +26,7 @@ export class CrearEvento {
   idsHorasTomadas: any[] = [];
   ponentes: any[] = [];
   ponentesFiltrados: any[] = [];
+  ponenteInvisible: boolean = false;
 
   constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
@@ -37,7 +39,7 @@ export class CrearEvento {
       categoria_id: new FormControl('', [
         Validators.required
       ]),
-      ponente_id: new FormControl('', [
+      ponente: new FormControl('', [
         Validators.required
       ]),
       disponible: new FormControl('', [
@@ -47,7 +49,8 @@ export class CrearEvento {
         Validators.required
       ]),
       diaHidden: new FormControl('', []),
-      horaHidden: new FormControl('', [])
+      horaHidden: new FormControl('', []),
+      ponenteHidden: new FormControl('', [])
 
     }, []);
   }
@@ -113,7 +116,7 @@ export class CrearEvento {
         } else {
           //console.log(data);
           this.formatearPonentes(data);
-          
+
         }
       })
       .catch(error => console.log(error))
@@ -134,8 +137,8 @@ export class CrearEvento {
     return this.miForm.get('categoria_id');
   }
 
-  get ponente_id() {
-    return this.miForm.get('ponente_id');
+  get ponente() {
+    return this.miForm.get('ponente');
   }
 
   get disponible() {
@@ -147,7 +150,7 @@ export class CrearEvento {
   }
 
   cargarDatos() {
-    //console.log(this.miForm.value);
+    console.log(this.miForm.value);
 
     if (!this.miForm.valid) {
       this.miForm.markAllAsTouched();
@@ -267,17 +270,19 @@ export class CrearEvento {
     const input = event.target as HTMLInputElement;
     const stringBusqueda = input.value;
     if (stringBusqueda.length < 3) {
+      this.ponentesFiltrados=[];
+      this.cd.detectChanges();
       return;
     }
-    const expresion=new RegExp(stringBusqueda,'i');
-    
-    this.ponentesFiltrados=this.ponentes.filter(ponente=>{
+    const expresion = new RegExp(stringBusqueda, 'i');
+
+    this.ponentesFiltrados = this.ponentes.filter(ponente => {
       //console.log(ponente.nombre.toLowerCase())
-      if(ponente.nombre.toLowerCase().search(expresion) != -1){
+      if (ponente.nombre.toLowerCase().search(expresion) != -1) {
         return ponente;
       }
     });
-    
+
     this.cd.detectChanges();
   }
 
@@ -288,6 +293,14 @@ export class CrearEvento {
         id: ponente.id
       }
     });
-    
+
+  }
+
+  seleccionarPonente(evento: Event) {
+    const li = evento.target as HTMLLIElement;
+    this.miForm.get('ponente')?.setValue(li.textContent);
+    this.miForm.get('ponenteHidden')?.setValue(li.id);
+    this.ponenteInvisible=true;
+    this.cd.detectChanges();
   }
 }
