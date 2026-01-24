@@ -44,7 +44,8 @@
                 @for(dia of dias; track dia.id){
                     <div>
                         <label [for]="[dia.nombre.toString()]">{{dia.nombre}}</label>
-                        <input type="radio" formControlName="dia" name="dia" [id]="[dia.nombre.toString()]" [value]="[dia.id]">
+                        <input type="radio" formControlName="dia" name="dia" [id]="[dia.id]" [value]="[dia.id]" (change)="terminoBusqueda($event)">
+                        <input type="hidden"  formControlName="diaHidden">
                     </div>
                 }
             </div>

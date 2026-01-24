@@ -11,8 +11,6 @@ const listarEventos = async (req, res) => {
 }
 
 const crearEvento = async (req, res) => {
-  console.log('ireneee');
-  console.log(req.body);
   const evento=new Evento(req.body);
   try {
     if(!evento.validar()[0]) return res.status(400).json({ error: evento.validar()[1] });;

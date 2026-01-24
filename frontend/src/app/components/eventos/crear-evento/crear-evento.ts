@@ -18,6 +18,7 @@ export class CrearEvento {
   categorias: any[] = [];
   dias: any[] = [];
   horas: any[] = [];
+  //diaHidden:string='';
 
   constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
@@ -35,11 +36,11 @@ export class CrearEvento {
       ]),
       disponible: new FormControl('', [
         Validators.required
-      ])
-      ,
+      ]),
       dia: new FormControl('', [
         Validators.required
-      ])
+      ]),
+      diaHidden: new FormControl('', [])
 
     }, []);
   }
@@ -115,7 +116,6 @@ export class CrearEvento {
   }
 
   cargarDatos() {
-    console.log('ireneee');
     console.log(this.miForm.value);
 
     if (!this.miForm.valid) {
@@ -139,7 +139,7 @@ export class CrearEvento {
         }
 
         console.log(data);
-        //this.router.navigate(['/admin/eventos']);
+        this.router.navigate(['/admin/eventos']);
 
       })
       .catch(error => console.log(error))
@@ -148,5 +148,12 @@ export class CrearEvento {
       });
 
 
+  }
+
+  terminoBusqueda(event:Event){
+    const input=event.target as HTMLInputElement;
+    //this.diaHidden=input.id;
+    this.miForm.get('diaHidden')?.setValue(input.id);
+    this.cd.detectChanges();
   }
 }
