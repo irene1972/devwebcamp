@@ -22,7 +22,9 @@ export class CrearEvento {
   //diaHidden:string='';
   datos: any = { categoria_id: "", dia: "" };
   @ViewChildren('horaItem') horasLi!: QueryList<ElementRef<HTMLLIElement>>;
-  idsHorasTomadas:any[]=[];
+  idsHorasTomadas: any[] = [];
+  ponentes: any[] = [];
+  ponentesFiltrados: any[] = [];
 
   constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
@@ -94,6 +96,30 @@ export class CrearEvento {
         this.cd.detectChanges();
       })
       .catch(error => console.log(error));
+
+    fetch(`${environment.apiUrl}api/ponente/listar`, {
+      method: 'GET'
+    })
+      .then(response => response.json())
+      .then(data => {
+        //console.log(data);
+        if (data.error) {
+          this.mensaje = data.error;
+          return;
+        }
+        if (data.length === 0) {
+          this.mensaje = 'No hay datos de ponentes';
+          this.tipo = true;
+        } else {
+          //console.log(data);
+          this.formatearPonentes(data);
+          
+        }
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
   }
 
   get nombre() {
@@ -121,8 +147,7 @@ export class CrearEvento {
   }
 
   cargarDatos() {
-    console.log('irene2');
-    console.log(this.miForm.value);
+    //console.log(this.miForm.value);
 
     if (!this.miForm.valid) {
       this.miForm.markAllAsTouched();
@@ -144,7 +169,7 @@ export class CrearEvento {
           return;
         }
 
-        console.log(data);
+        //console.log(data);
         this.router.navigate(['/admin/eventos']);
 
       })
@@ -152,7 +177,6 @@ export class CrearEvento {
       .finally(() => {
         this.cd.detectChanges();
       });
-
 
   }
 
@@ -198,16 +222,16 @@ export class CrearEvento {
 
   obtenerHorasDisponibles(data: any) {
     const horasTomadas = data.map((evento: any) => evento.hora_id);
-    
+
     if (!this.horasLi) return;
 
     const horasNoTomadas = this.horasLi.toArray().filter(li => !horasTomadas.includes(Number(li.nativeElement.dataset['id'])));
-  
-    horasNoTomadas.forEach(elem=>{
+
+    horasNoTomadas.forEach(elem => {
       elem.nativeElement.classList.remove('deshabilitada');
     });
 
-    this.idsHorasTomadas=horasTomadas;
+    this.idsHorasTomadas = horasTomadas;
 
     this.cd.detectChanges();
   }
@@ -221,7 +245,7 @@ export class CrearEvento {
         datosLleno = false
       }
     });
-    console.log(datosLleno);
+    //console.log(datosLleno);
     if (datosLleno) {
       const li = event.target as HTMLLIElement;
       li.classList.remove('deshabilitada');
@@ -236,5 +260,34 @@ export class CrearEvento {
 
     //this.diaHidden=this.miForm.get('dia')?.value;
 
+  }
+
+  buscarPonente(event: KeyboardEvent) {
+
+    const input = event.target as HTMLInputElement;
+    const stringBusqueda = input.value;
+    if (stringBusqueda.length < 3) {
+      return;
+    }
+    const expresion=new RegExp(stringBusqueda,'i');
+    
+    this.ponentesFiltrados=this.ponentes.filter(ponente=>{
+      //console.log(ponente.nombre.toLowerCase())
+      if(ponente.nombre.toLowerCase().search(expresion) != -1){
+        return ponente;
+      }
+    });
+    
+    this.cd.detectChanges();
+  }
+
+  formatearPonentes(arrayPonentes: any[] = []) {
+    this.ponentes = arrayPonentes.map(ponente => {
+      return {
+        nombre: ponente.nombre.trim() + ' ' + ponente.apellido.trim(),
+        id: ponente.id
+      }
+    });
+    
   }
 }
