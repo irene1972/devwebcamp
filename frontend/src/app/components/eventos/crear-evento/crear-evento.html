@@ -42,11 +42,12 @@
 
             <div class="formulario__campo">
                 @for(dia of dias; track dia.id){
-                    <div>
-                        <label [for]="[dia.nombre.toString()]">{{dia.nombre}}</label>
-                        <input type="radio" formControlName="dia" name="dia" [id]="[dia.id]" [value]="[dia.id]" (change)="terminoBusqueda($event)">
-                        <input type="hidden"  formControlName="diaHidden">
-                    </div>
+                <div>
+                    <label [for]="[dia.nombre.toString()]">{{dia.nombre}}</label>
+                    <input type="radio" formControlName="dia" name="dia" [id]="[dia.id]" [value]="[dia.id]"
+                        (change)="terminoBusqueda($event)">
+                    <input type="hidden" formControlName="diaHidden">
+                </div>
                 }
             </div>
 
@@ -54,13 +55,25 @@
                 <label>Seleccionar Hora</label>
                 <ul>
                     @for (hora of horas; track hora.id) {
-                        <li 
-                            #horaItem 
-                            [attr.data-id]="hora.id" 
-                            (click)="seleccionarHora($event,hora)">{{hora.hora}}</li>
+                        
+                    @if(idsHorasTomadas.includes(hora.id)){
+                    <li 
+                        #horaItem [attr.data-id]="hora.id" 
+                        class="deshabilitada">
+                        {{hora.hora}}
+
+                    </li>
+                    }@else{
+                    <li 
+                        #horaItem [attr.data-id]="hora.id" 
+                        (click)="seleccionarHora($event,hora)">
+                        {{hora.hora}}
+
+                    </li>
+                    }
                     }
                 </ul>
-                <input type="hidden"  formControlName="horaHidden">
+                <input type="hidden" formControlName="horaHidden">
             </div>
 
             <div class="formulario__campo">

@@ -12,5 +12,10 @@ li:hover {
 
 .resaltar{
     background-color: blue;
-    color:white;
+    color:white !important;
+}
+
+.deshabilitada{
+    border-color: rgb(216, 211, 211);
+    color: rgb(31, 28, 28);
 }

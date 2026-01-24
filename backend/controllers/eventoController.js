@@ -27,7 +27,6 @@ const listarEventosHorario = async (req, res) => {
     const evento=new Evento({});
     const categoria=req.params.categoria_id;
     const dia=req.params.dia;
-    console.log('ireneeee',categoria,dia);
     const resultado = await evento.getEventoHorarioByCategoriaYDia(categoria,dia);
     return res.json(resultado[0]);
   } catch (error) {

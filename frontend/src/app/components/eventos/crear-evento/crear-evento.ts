@@ -22,6 +22,7 @@ export class CrearEvento {
   //diaHidden:string='';
   datos: any = { categoria_id: "", dia: "" };
   @ViewChildren('horaItem') horasLi!: QueryList<ElementRef<HTMLLIElement>>;
+  idsHorasTomadas:any[]=[];
 
   constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
@@ -142,7 +143,7 @@ export class CrearEvento {
           return;
         }
 
-        //console.log(data);
+        console.log(data);
         this.router.navigate(['/admin/eventos']);
 
       })
@@ -181,39 +182,53 @@ export class CrearEvento {
     fetch(`${environment.apiUrl}api/evento/listar/${datos.categoria_id}/${datos.dia}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
+        this.obtenerHorasDisponibles(data);
       })
       .catch(error => console.log(error));
 
-    this.obtenerHorasDisponibles();
+
   }
 
-  obtenerHorasDisponibles() {
+  obtenerHorasDisponibles(data: any) {
+    const horasTomadas = data.map((evento: any) => evento.hora_id);
+    
     if (!this.horasLi) return;
 
-    const horas = this.horasLi.map(li => {
-      //li.nativeElement.addEventListener('click',this.seleccionarHora);
-      return {
-        id: li.nativeElement.dataset['id'],
-        texto: li.nativeElement.innerText.trim()
-      };
+    const horasNoTomadas = this.horasLi.toArray().filter(li => !horasTomadas.includes(Number(li.nativeElement.dataset['id'])));
+  
+    horasNoTomadas.forEach(elem=>{
+      elem.nativeElement.classList.remove('deshabilitada');
     });
 
-    //console.log('Horas capturadas:', horas);
+    this.idsHorasTomadas=horasTomadas;
+
+    this.cd.detectChanges();
   }
 
-  seleccionarHora(event:Event,hora:any){
+  seleccionarHora(event: Event, hora: any) {
     this.miForm.get('horaHidden')?.setValue(hora.id);
-    const li=event.target as HTMLLIElement;
 
-    const arrayLis=li.parentElement?.querySelectorAll('.resaltar');
-    arrayLis?.forEach(elem=>{
-      elem.classList.remove('resaltar');
+    let datosLleno = true;
+    Object.values(this.datos).forEach(elem => {
+      if (!elem) {
+        datosLleno = false
+      }
     });
+    console.log(datosLleno);
+    if (datosLleno) {
+      const li = event.target as HTMLLIElement;
+      li.classList.remove('deshabilitada');
 
-    li.classList.add('resaltar');
-    
-    
+      const arrayLis = li.parentElement?.querySelectorAll('.resaltar');
+      arrayLis?.forEach(elem => {
+        elem.classList.remove('resaltar');
+      });
+
+      li.classList.add('resaltar');
+    }
+
+
 
   }
 }
