@@ -65,7 +65,7 @@
                 </tr>
                 }@else{
 
-                @for(evento of arrayEventos; track evento.id){
+                @for(evento of eventosPaginados; track evento.id){
                 <tr>
                     <td>{{evento.nombre}}</td>
                     <td>{{evento.descripcion}}</td>
@@ -83,7 +83,18 @@
                 }
             </tbody>
         </table>
+        <!-- Añadir paginación -->
+        <div class="paginacion">
+            <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+                ⬅ Anterior
+            </button>
 
+            <span>Página {{ paginaActual }} de {{ totalPaginas }}</span>
+
+            <button (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+                Siguiente ➡
+            </button>
+        </div>
     </div>
 
 </section>

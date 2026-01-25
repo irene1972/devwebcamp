@@ -16,14 +16,21 @@ export class Eventos {
   mensaje: string = '';
   arrayEventos: any[] = [];
 
+  //añadir paginación
+  eventosPaginados: any[] = [];
+
+  paginaActual: number = 1;
+  itemsPorPagina: number = 5;
+  totalPaginas: number = 0;
+
   constructor(private cd: ChangeDetectorRef) {
     this.miForm = new FormGroup({}, []);
   }
   ngOnInit(): void {
     this.listarEventos();
-    
 
-    
+
+
   }
   listarEventos() {
     fetch(`${environment.apiUrl}api/evento/listarConJoin`)
@@ -31,10 +38,32 @@ export class Eventos {
       .then(data => {
         console.log(data);
         this.arrayEventos = data;
-        this.cd.detectChanges();
+
+        //añadir paginación
+        this.totalPaginas = Math.ceil(this.arrayEventos.length / this.itemsPorPagina);
+        this.actualizarPaginacion();
       })
       .catch(error => console.log(error));
   }
-  
 
+  actualizarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+    const fin = inicio + this.itemsPorPagina;
+    this.eventosPaginados = this.arrayEventos.slice(inicio, fin);
+    this.cd.detectChanges();
+  }
+
+  paginaAnterior() {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.actualizarPaginacion();
+    }
+  }
+
+  paginaSiguiente() {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.actualizarPaginacion();
+    }
+  }
 }
