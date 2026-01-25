@@ -10,6 +10,16 @@ const listarEventos = async (req, res) => {
   }
 }
 
+const listarConJoin=async (req,res)=>{
+try {
+    const evento=new Evento({});
+    const resultado = await evento.getEventosConJoin();
+    return res.json(resultado[0]);
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al consultar datos eventos con join' });
+  }
+}
+
 const crearEvento = async (req, res) => {
   const evento=new Evento(req.body);
   try {
@@ -36,6 +46,7 @@ const listarEventosHorario = async (req, res) => {
 
 export {
   listarEventos,
+  listarConJoin,
   crearEvento,
   listarEventosHorario
 }

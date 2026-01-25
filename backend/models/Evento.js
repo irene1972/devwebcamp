@@ -14,6 +14,21 @@ export class Evento {
         return await pool.query('SELECT * FROM eventos');
     }
 
+    async getEventosConJoin() {
+        return await pool.query(`SELECT e.*,
+                                        d.id as dia_id,
+                                        d.nombre as dia_nombre,
+                                        h.id as hora_id,
+                                        h.hora as hora_hora,
+                                        p.id as ponente_id,
+                                        p.nombre as ponente_nombre,
+                                        p.apellido as ponente_apellido 
+                                    FROM devwebcamp.eventos as e
+                                    JOIN dias AS d ON e.dia_id=d.id
+                                    JOIN horas AS h ON e.hora_id=h.id
+                                    JOIN ponentes AS p ON e.ponente_id=p.id;`);
+    }
+
     async insertEvento() {
         await pool.query('INSERT INTO eventos (nombre,descripcion,disponibles,categoria_id,dia_id,hora_id,ponente_id) VALUES (?,?,?,?,?,?,?)', [this.nombre, this.descripcion, this.disponible, this.categoria_id, this.dia, this.hora, this.ponente_id]);
     }

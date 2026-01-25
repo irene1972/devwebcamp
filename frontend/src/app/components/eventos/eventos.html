@@ -44,5 +44,46 @@
             Añadir Evento
         </a>
     </div>
+    <div [class.text-danger]="tipo === false" [class.text-success]="tipo === true">{{mensaje}}</div>
+    <div class="tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Día</th>
+                    <th>Hora</th>
+                    <th>Ponente</th>
+                    <th>Disponibles</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(arrayEventos.length===0){
+                <tr>
+                    <td colspan="7">No hay resultados</td>
+                </tr>
+                }@else{
+
+                @for(evento of arrayEventos; track evento.id){
+                <tr>
+                    <td>{{evento.nombre}}</td>
+                    <td>{{evento.descripcion}}</td>
+                    <td>{{evento.dia_nombre}}</td>
+                    <td>{{evento.hora_hora}}</td>
+                    <td>{{evento.ponente_nombre}} {{evento.ponente_apellido}}</td>
+                    <td>{{evento.disponibles}}</td>
+                    <td>
+                        <button>Editar</button>
+                        <button>Eliminar</button>
+                    </td>
+                </tr>
+                }
+
+                }
+            </tbody>
+        </table>
+
+    </div>
 
 </section>
