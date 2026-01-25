@@ -22,11 +22,14 @@ export class Evento {
                                         h.hora as hora_hora,
                                         p.id as ponente_id,
                                         p.nombre as ponente_nombre,
-                                        p.apellido as ponente_apellido 
-                                    FROM devwebcamp.eventos as e
+                                        p.apellido as ponente_apellido,
+                                        c.id as categoria_id,
+                                        c.nombre as categoria_nombre
+                                    FROM eventos as e
                                     JOIN dias AS d ON e.dia_id=d.id
                                     JOIN horas AS h ON e.hora_id=h.id
-                                    JOIN ponentes AS p ON e.ponente_id=p.id;`);
+                                    JOIN ponentes AS p ON e.ponente_id=p.id
+                                    JOIN categorias AS c ON e.categoria_id=c.id;`);
     }
 
     async insertEvento() {

@@ -38,7 +38,7 @@ export class Eventos {
       .then(data => {
         console.log(data);
         this.arrayEventos = data;
-
+        
         //añadir paginación
         this.totalPaginas = Math.ceil(this.arrayEventos.length / this.itemsPorPagina);
         this.actualizarPaginacion();
