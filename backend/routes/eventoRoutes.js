@@ -4,7 +4,9 @@ import { crearEvento,
         listarConJoinById, 
         listarEventos, 
         listarEventosHorario,
-        editarEvento } from '../controllers/eventoController.js';
+        editarEvento,
+        eliminarEvento
+         } from '../controllers/eventoController.js';
 
 const router=express.Router();
 
@@ -14,5 +16,6 @@ router.get('/listarConJoinById/:id', listarConJoinById);
 router.get('/listar/:categoria_id/:dia', listarEventosHorario);
 router.post('/crear', crearEvento);
 router.put('/editar/:id', editarEvento);
+router.delete('/eliminar/:id', eliminarEvento);
 
 export default router;

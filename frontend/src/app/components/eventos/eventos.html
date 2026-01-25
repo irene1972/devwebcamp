@@ -77,7 +77,7 @@
                     <td>{{evento.disponibles}}</td>
                     <td>
                         <button [routerLink]="[`/admin/eventos/editar/${evento.id}`]" routerLinkActive="activo">Editar</button>
-                        <button>Eliminar</button>
+                        <button [id]="evento.id" (click)="eliminar($event)">Eliminar</button>
                     </td>
                 </tr>
                 }

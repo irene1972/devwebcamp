@@ -51,16 +51,20 @@ export class Evento {
                                     WHERE e.id=?;`, [id]);
     }
 
+    async getEventoHorarioByCategoriaYDia(categoria, dia) {
+        return await pool.query('SELECT id,categoria_id,dia_id,hora_id FROM eventos WHERE categoria_id=? AND dia_id=?', [categoria, dia]);
+    }
+
     async insertEvento() {
         await pool.query('INSERT INTO eventos (nombre,descripcion,disponibles,categoria_id,dia_id,hora_id,ponente_id) VALUES (?,?,?,?,?,?,?)', [this.nombre, this.descripcion, this.disponible, this.categoria_id, this.dia, this.hora, this.ponente_id]);
     }
 
     async actualizarEvento(id) {
-        await pool.query('UPDATE eventos SET nombre=?,descripcion=?,disponibles=?,categoria_id=?,dia_id=?,hora_id=?,ponente_id=? WHERE id=?', [this.nombre, this.descripcion, this.disponible, this.categoria_id, this.dia, this.hora, this.ponente_id,id]);
+        await pool.query('UPDATE eventos SET nombre=?,descripcion=?,disponibles=?,categoria_id=?,dia_id=?,hora_id=?,ponente_id=? WHERE id=?', [this.nombre, this.descripcion, this.disponible, this.categoria_id, this.dia, this.hora, this.ponente_id, id]);
     }
 
-    async getEventoHorarioByCategoriaYDia(categoria, dia) {
-        return await pool.query('SELECT id,categoria_id,dia_id,hora_id FROM eventos WHERE categoria_id=? AND dia_id=?', [categoria, dia]);
+    async eliminarEvento(id){
+        await pool.query('DELETE FROM eventos WHERE id=?',[id]);
     }
 
     validar() {

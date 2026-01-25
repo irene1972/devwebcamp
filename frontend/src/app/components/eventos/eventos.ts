@@ -66,4 +66,20 @@ export class Eventos {
       this.actualizarPaginacion();
     }
   }
+
+  eliminar(evento:Event){
+    const boton=evento.target as HTMLButtonElement;
+    const id=boton.id;
+    
+    fetch(`${environment.apiUrl}api/evento/eliminar/${id}`,{
+      method:'DELETE'
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        window.location.reload();
+        
+      })
+      .catch(error => console.log(error));
+  }
 }

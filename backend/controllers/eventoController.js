@@ -65,11 +65,22 @@ const editarEvento = async (req, res) => {
   }
 }
 
+const eliminarEvento=async(req,res)=>{
+  const evento=new Evento({});
+  try {
+    evento.eliminarEvento(req.params.id);
+    return res.json({ mensaje: 'Evento Eliminado correctamente' });
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al eliminar el evento' });
+  }
+}
+
 export {
   listarEventos,
   listarConJoin,
   listarConJoinById,
   crearEvento,
   listarEventosHorario,
-  editarEvento
+  editarEvento,
+  eliminarEvento
 }
