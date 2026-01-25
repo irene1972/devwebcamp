@@ -76,7 +76,7 @@
                     <td>{{evento.ponente_nombre}} {{evento.ponente_apellido}}</td>
                     <td>{{evento.disponibles}}</td>
                     <td>
-                        <button>Editar</button>
+                        <button [routerLink]="[`/admin/eventos/editar/${evento.id}`]" routerLinkActive="activo">Editar</button>
                         <button>Eliminar</button>
                     </td>
                 </tr>

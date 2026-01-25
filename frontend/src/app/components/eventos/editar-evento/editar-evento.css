@@ -1,0 +1,23 @@
+li {
+    color: blue;
+    border: 1px solid blue;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+li:hover {
+    cursor: pointer;
+}
+.cont1{
+    justify-content: right;
+}
+.resaltar{
+    background-color: blue;
+    color:white !important;
+}
+
+.deshabilitada{
+    border-color: rgb(216, 211, 211);
+    color: rgb(31, 28, 28);
+}

@@ -1,1 +1,119 @@
-<p>editar works!</p>
+<section>
+    <h2>{{titulo}}</h2>
+    <div class="cont1 d-flex">
+        <a class="btn btn-primary btn-derecha" [routerLink]="['/admin/eventos']">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+            Volver
+        </a>
+    </div>
+    <div>
+        <div [class.text-danger]="tipo === false" [class.text-success]="tipo === true">{{mensaje}}</div>
+        <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+            <div class="formulario__campo">
+                <label for="nombre" class="formulario__label">Nombre Evento</label>
+                <input type="text" class="formulario__input" placeholder="Nombre del evento" id="nombre"
+                    formControlName="nombre">
+                @if (nombre?.touched && nombre?.hasError('required')) {
+                <div class="text-danger">
+                    El nombre es obligatorio.
+                </div>
+                }
+            </div>
+
+            <div class="formulario__campo">
+                <label for="descripcion" class="formulario__label">Descripción</label>
+                <textarea class="formulario__input" placeholder="Descripción del evento" id="descripcion"
+                    formControlName="descripcion" rows="8"></textarea>
+                @if (descripcion?.touched && descripcion?.hasError('required')) {
+                <div class="text-danger">
+                    La descripcion es obligatoria.
+                </div>
+                }
+            </div>
+
+            <div class="formulario__campo">
+                <select formControlName="categoria_id" id="categoria_id" (change)="terminoBusqueda2()">
+                    @for(categoria of categorias; track categoria.id){
+                    <option [value]="categoria.id">{{categoria.nombre}}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="formulario__campo">
+                @for(dia of dias; track dia.id){
+                <div>
+                    <label [for]="[dia.nombre.toString()]">{{dia.nombre}}</label>
+                    <input type="radio" formControlName="dia" name="dia" [id]="dia.id" [value]="dia.id"
+                        (change)="terminoBusqueda($event)">
+                    <input type="hidden" formControlName="diaHidden">
+                </div>
+                }
+            </div>
+
+            <div id="horas" class="formulario__campo">
+                <label>Seleccionar Hora</label>
+                <ul>
+                    @for (hora of horas; track hora.id) {
+
+                    @if(idsHorasTomadas.includes(hora.id)){
+                    @if(hora.id==evento.hora_id){
+                    <li #horaItem [attr.data-id]="hora.id" class="resaltar" (click)="seleccionarHora($event,hora)">
+                        {{hora.hora}}
+
+                    </li>
+                    }@else{
+                    <li #horaItem [attr.data-id]="hora.id" class="deshabilitada">
+                        {{hora.hora}}
+
+                    </li>
+                    }
+                    }@else{
+                    <li #horaItem [attr.data-id]="hora.id" (click)="seleccionarHora($event,hora)">
+                        {{hora.hora}}
+
+                    </li>
+                    }
+                    }
+                </ul>
+                <input type="hidden" formControlName="horaHidden">
+            </div>
+
+            <div class="formulario__campo">
+                <label for="ponente" class="formulario__label">Ponente Evento</label>
+                <input type="text" class="formulario__input" placeholder="Buscar Ponente" id="ponente"
+                    formControlName="ponente" (keyup)="buscarPonente($event)">
+                <input type="hidden" formControlName="ponenteHidden">
+                @if (ponente?.touched && ponente?.hasError('required')) {
+                <div class="text-danger">
+                    El ponente es obligatorio.
+                </div>
+                }
+                <ul>
+                    @if(!ponenteInvisible){
+                    @if(ponentesFiltrados.length===0){
+                    <li>No hay resultados</li>
+                    }@else{
+                    @for(ponente of ponentesFiltrados; track ponente.id){
+                    <li [id]="[ponente.id]" (click)="seleccionarPonente($event)">{{ponente.nombre}}</li>
+                    }
+                    }
+                    }
+                </ul>
+
+            </div>
+
+            <div class="formulario__campo">
+                <label for="disponible" class="formulario__label">Lugares disponibles</label>
+                <input type="number" class="formulario__input" placeholder="Ejemplo 20" id="disponible"
+                    formControlName="disponible">
+                @if (disponible?.touched && disponible?.hasError('required')) {
+                <div class="text-danger">
+                    Disponibles es obligatorio.
+                </div>
+                }
+            </div>
+
+            <input type="submit" class="formulario__submit" value="Actualizar Evento" [disabled]="!miForm.valid">
+        </form>
+    </div>
+</section>
