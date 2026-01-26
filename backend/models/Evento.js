@@ -62,7 +62,8 @@ export class Evento {
                                         FROM eventos e 
 	                                    JOIN horas h ON e.hora_id=h.id 
                                         JOIN ponentes p ON e.ponente_id=p.id
-                                        WHERE categoria_id=? AND dia_id=?`, [categoria, dia]);
+                                        WHERE categoria_id=? AND dia_id=?
+                                        ORDER BY h.id ASC`, [categoria, dia]);
     }
 
     async insertEvento() {
