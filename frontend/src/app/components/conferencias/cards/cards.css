@@ -1,7 +1,12 @@
 .mini-card{
+    background-color: blue;
     color:white;
     padding: 1rem;
     border-radius: 5%;
+}
+
+.green{
+    background-color: green;
 }
 img{
     width: 4rem;

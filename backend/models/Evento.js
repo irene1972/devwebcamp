@@ -52,7 +52,17 @@ export class Evento {
     }
 
     async getEventoHorarioByCategoriaYDia(categoria, dia) {
-        return await pool.query('SELECT id,categoria_id,dia_id,hora_id FROM eventos WHERE categoria_id=? AND dia_id=?', [categoria, dia]);
+        /*return await pool.query('SELECT id,categoria_id,dia_id,hora_id FROM eventos WHERE categoria_id=? AND dia_id=?', [categoria, dia]);*/
+        return await pool.query(`SELECT e.*,
+                                        h.id as hora_id, 
+                                        h.hora as hora_hora,
+                                        p.nombre as ponente_nombre,
+                                        p.apellido as ponente_apellido,
+                                        p.imagen as ponente_imagen
+                                        FROM eventos e 
+	                                    JOIN horas h ON e.hora_id=h.id 
+                                        JOIN ponentes p ON e.ponente_id=p.id
+                                        WHERE categoria_id=? AND dia_id=?`, [categoria, dia]);
     }
 
     async insertEvento() {

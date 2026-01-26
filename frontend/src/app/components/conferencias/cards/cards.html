@@ -1,0 +1,16 @@
+<div class="cards">
+    @for(evento of eventos; track evento.id){
+    <div class="card">
+        <p>{{evento.hora_hora}}</p>
+        <div [class]="(evento.categoria_id===4)?' green mini-card ':'mini-card '">
+            <h5>{{evento.nombre}}</h5>
+            <p>{{evento.descripcion}}</p>
+            <div class="info-ponente">
+                <img src="{{rutaImg}}{{evento.ponente_imagen}}.webp" alt="imagen ponente">
+                <p class="nombre">{{evento.ponente_nombre}} {{evento.ponente_apellido}}</p>
+            </div>
+        </div>
+    </div>
+    }
+
+</div>
