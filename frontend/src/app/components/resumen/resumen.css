@@ -1,0 +1,38 @@
+.contenedor{
+    position: relative;
+    line-height: 3rem;
+    margin: 4rem 0;
+}
+.superior{
+    position: absolute;
+    top: 5rem;
+    left: 10rem;
+}
+.inferior{
+    position: absolute;
+    top: 20rem;
+    left: 10rem;
+}
+.imagen-transparente {
+    opacity: 0.5;
+    filter: sepia(20%) hue-rotate(200deg) saturate(120%);
+    /*background-image: linear-gradient(to right,rgba(blue,.7),rgba(blue,.9),url(/img/seminario.jpg));*/
+}
+p{
+    font-size: 4rem;
+}
+.elementos2{
+    display: flex;
+    /*width: 100%;*/
+
+}
+.elemento{
+    color:white;
+    font-weight: bold;
+    flex: 0 0 50%;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 2rem;
+}
