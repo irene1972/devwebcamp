@@ -8,6 +8,9 @@
 .cont1{
     justify-content: right;
 }
+table{
+    width: 100%;
+}
 tr,td{
     padding: 4px;
 }
