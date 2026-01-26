@@ -17,6 +17,10 @@ import { CrearPonente } from './components/ponentes2/crear-ponente/crear-ponente
 import { EditarPonente } from './components/ponentes2/editar-ponente/editar-ponente';
 import { CrearEvento } from './components/eventos/crear-evento/crear-evento';
 import { EditarEvento } from './components/eventos/editar-evento/editar-evento';
+import { Inicio } from './components/inicio/inicio';
+import { Devwebcamp } from './components/devwebcamp/devwebcamp';
+import { Paquetes } from './components/paquetes/paquetes';
+import { Conferencias } from './components/conferencias/conferencias';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -37,5 +41,12 @@ export const routes: Routes = [
     {path:'admin/eventos/editar/:id',component:EditarEvento},
     {path:'admin/registrados',component:Registrados},
     {path:'admin/regalos',component:Regalos},
+
+    //Área pública
+    {path:'inicio',component:Inicio},
+    {path:'devwebcamp',component:Devwebcamp},
+    {path:'paquetes',component:Paquetes},
+    {path:'workshops-conferencias',component:Conferencias},
+
     {path:'**',component:C404}
 ];
