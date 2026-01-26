@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { autenticarPanelAdmin } from '../../core/services/utils.service';
 
 @Component({
   selector: 'app-ponentes2',
@@ -28,6 +29,7 @@ export class Ponentes2 {
   }
 
   ngOnInit(): void {
+     autenticarPanelAdmin(this.router);
     fetch(`${environment.apiUrl}api/ponente/listar`, {
       method: 'GET'
     })

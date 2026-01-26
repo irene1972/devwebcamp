@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { autenticarPanelAdmin } from '../../core/services/utils.service';
 
 @Component({
   selector: 'app-eventos',
@@ -23,10 +24,11 @@ export class Eventos {
   itemsPorPagina: number = 5;
   totalPaginas: number = 0;
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private router: Router,private cd: ChangeDetectorRef) {
     this.miForm = new FormGroup({}, []);
   }
   ngOnInit(): void {
+    autenticarPanelAdmin(this.router);
     this.listarEventos();
 
 
