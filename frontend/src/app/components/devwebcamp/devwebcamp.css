@@ -1,0 +1,20 @@
+p{
+    line-height: 2;
+}
+
+@media screen and (min-width: 600px) {
+  .contenedor-info{
+    display: flex;
+    gap: 1rem;
+
+}
+.contenedor-imagen{
+    /*width: 50%;*/
+    flex: 0 0 50%;
+
+}
+img{
+    width: 100%;
+}
+  
+}
