@@ -2,49 +2,24 @@
     <h1>Speakers</h1>
     <h2>Conoce a nuestros expertos de DevWebCamp</h2>
     <div class="cards">
+        @for(ponente of ponentes; track ponente.id){
         <div class="card">
-            <img src="/img/imagenes/speakers/0ce9a8963fdd9ddb8514c7b2c08cc4e7.png" alt="imagen speaker">
-            <h3>Nico Fraga</h3>
-            <p>Buenos Aires, Argentina</p>
+            <picture>
+                    <source [srcset]="imagesUrl + ponente.imagen + '.webp'" type="image/webp">
+                    <source [srcset]="imagesUrl + ponente.imagen + '.png'" type="image/png">
+                    <img [src]="imagesUrl + ponente.imagen + '.png'" alt="Imagen Speaker">
+                </picture>
+            <h3>{{ponente.nombre}} {{ponente.apellido}}</h3>
+            <p>{{ponente.ciudad}}, {{ponente.pais}}</p>
             <div class="spans">
-                <span>PHP</span>
-                <span>Laravel</span>
-                <span>CSS</span>
-                <span>HTML</span>
+                {{ponente.tags.split(',')}}
+                @for(tag of ponente.tags.split(','); track tag){
+                    @if(tag.length>0){
+                        <span>{{tag}}</span>
+                    }
+                }
             </div>
         </div>
-        <div class="card">
-            <img src="/img/imagenes/speakers/0ce9a8963fdd9ddb8514c7b2c08cc4e7.png" alt="imagen speaker">
-            <h3>Nico Fraga</h3>
-            <p>Buenos Aires, Argentina</p>
-            <div class="spans">
-                <span>PHP</span>
-                <span>Laravel</span>
-                <span>CSS</span>
-                <span>HTML</span>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/img/imagenes/speakers/0ce9a8963fdd9ddb8514c7b2c08cc4e7.png" alt="imagen speaker">
-            <h3>Nico Fraga</h3>
-            <p>Buenos Aires, Argentina</p>
-            <div class="spans">
-                <span>PHP</span>
-                <span>Laravel</span>
-                <span>CSS</span>
-                <span>HTML</span>
-            </div>
-        </div>
-        <div class="card">
-            <img src="/img/imagenes/speakers/0ce9a8963fdd9ddb8514c7b2c08cc4e7.png" alt="imagen speaker">
-            <h3>Nico Fraga</h3>
-            <p>Buenos Aires, Argentina</p>
-            <div class="spans">
-                <span>PHP</span>
-                <span>Laravel</span>
-                <span>CSS</span>
-                <span>HTML</span>
-            </div>
-        </div>
+        }
     </div>
 </section>
