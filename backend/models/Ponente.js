@@ -9,6 +9,10 @@ export class Ponente {
         return await pool.query('SELECT * FROM ponentes WHERE id=?', [id]);
     }
 
+    async getTotalPonentes(id) {
+        return await pool.query('SELECT COUNT(id) AS total_ponentes FROM ponentes;');
+    }
+
     async updatePonenteWithoutImage(nombre, apellido, ciudad, pais, tags, redes,id){
         await pool.query('UPDATE ponentes SET nombre=?,apellido=?,ciudad=?,pais=?,tags=?,redes=? WHERE id=?', [nombre, apellido, ciudad, pais, tags, redes,id]);
     }

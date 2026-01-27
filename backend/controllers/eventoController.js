@@ -42,6 +42,16 @@ const listarEventosHorario = async (req, res) => {
   }
 }
 
+const obtenerTotalEventosPorCategoria=async(req,res)=>{
+  try {
+    const evento=new Evento({});
+    const resultado=await evento.getTotalEventosGroupByCategoria();
+    return res.json(resultado[0]);
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al consultar el total de eventos por categoría' });
+  }
+}
+
 const crearEvento = async (req, res) => {
   const evento = new Evento(req.body);
   try {
@@ -79,6 +89,7 @@ export {
   listarEventos,
   listarConJoin,
   listarConJoinById,
+  obtenerTotalEventosPorCategoria,
   crearEvento,
   listarEventosHorario,
   editarEvento,

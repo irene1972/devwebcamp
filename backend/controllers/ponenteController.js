@@ -157,10 +157,21 @@ const eliminarPonente = async (req, res) => {
   }
 
 }
+
+const obtenerTotalPonentes=async(req,res)=>{
+  try {
+    const resultado=await ponen.getTotalPonentes();
+    return res.json(resultado[0]);
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al obtener el total de ponentes' });
+  }
+}
+
 export {
   listarPonentes,
   crearPonente,
   eliminarPonente,
   obtenerPonente,
+  obtenerTotalPonentes,
   actualizarPonente
 }

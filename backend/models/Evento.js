@@ -66,6 +66,13 @@ export class Evento {
                                         ORDER BY h.id ASC`, [categoria, dia]);
     }
 
+    async getTotalEventosGroupByCategoria(){
+        return await pool.query(`SELECT count(e.id) AS total, c.nombre 
+                            FROM eventos e
+                            JOIN categorias c ON e.categoria_id=c.id
+                            GROUP BY e.categoria_id`);
+    }
+
     async insertEvento() {
         await pool.query('INSERT INTO eventos (nombre,descripcion,disponibles,categoria_id,dia_id,hora_id,ponente_id) VALUES (?,?,?,?,?,?,?)', [this.nombre, this.descripcion, this.disponible, this.categoria_id, this.dia, this.hora, this.ponente_id]);
     }

@@ -4,6 +4,7 @@ import { crearEvento,
         listarConJoinById, 
         listarEventos, 
         listarEventosHorario,
+        obtenerTotalEventosPorCategoria,
         editarEvento,
         eliminarEvento
          } from '../controllers/eventoController.js';
@@ -14,6 +15,7 @@ router.get('/listar', listarEventos);
 router.get('/listarConJoin', listarConJoin);
 router.get('/listarConJoinById/:id', listarConJoinById);
 router.get('/listar/:categoria_id/:dia', listarEventosHorario);
+router.get('/total',obtenerTotalEventosPorCategoria);
 router.post('/crear', crearEvento);
 router.put('/editar/:id', editarEvento);
 router.delete('/eliminar/:id', eliminarEvento);
