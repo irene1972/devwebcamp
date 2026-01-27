@@ -1,1 +1,16 @@
-<p>boletos works!</p>
+<section>
+    <h1>Boletos & Precios</h1>
+    <h2>Precios para DevWebCamp</h2>
+
+    <div class="boletos">
+        @for(boleto of [['presencial',199],['virtual',49],['gratis',0]]; track boleto){
+            <div class="boleto">
+                <h3>DevWebCamp</h3>
+                <h4>{{boleto[0]}}</h4>
+                <p>${{boleto[1]}}</p>
+            </div>
+        }
+        <button routerLink="/paquetes" class="btn btn-primary">Ver Paquetes</button>
+    </div>
+
+</section>
