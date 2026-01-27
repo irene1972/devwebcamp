@@ -5,18 +5,38 @@
         @for(ponente of ponentes; track ponente.id){
         <div class="card">
             <picture>
-                    <source [srcset]="imagesUrl + ponente.imagen + '.webp'" type="image/webp">
-                    <source [srcset]="imagesUrl + ponente.imagen + '.png'" type="image/png">
-                    <img [src]="imagesUrl + ponente.imagen + '.png'" alt="Imagen Speaker">
-                </picture>
+                <source [srcset]="imagesUrl + ponente.imagen + '.webp'" type="image/webp">
+                <source [srcset]="imagesUrl + ponente.imagen + '.png'" type="image/png">
+                <img [src]="imagesUrl + ponente.imagen + '.png'" alt="Imagen Speaker">
+            </picture>
             <h3>{{ponente.nombre}} {{ponente.apellido}}</h3>
             <p>{{ponente.ciudad}}, {{ponente.pais}}</p>
-            <div class="spans">
-                {{ponente.tags.split(',')}}
-                @for(tag of ponente.tags.split(','); track tag){
-                    @if(tag.length>0){
-                        <span>{{tag}}</span>
+            <div class="redes">
+                <ul>
+                    @for(dato of arrayRedes;track dato.id){
+                        @if(ponente.id==dato.id){
+                            @for(red of dato.redes;track red){
+                                @switch (red[0]) {
+                                    @case('facebook'){
+                                        <a [routerLink]="[red[1]]"><li><img src="/img/camara.svg" alt="icono de facebook"></li></a>
+                                    }
+                                    @case('twitter'){
+                                        <a [routerLink]="[red[1]]"><li><img src="/img/rueda.svg" alt="icono de twitter"></li></a>
+                                    }
+                                    @default(){
+                                        <a [routerLink]="[red[1]]"><li><img src="/img/rayo.svg" alt="icono de redes sociales"></li></a>
+                                    }
+                                }
+                            }
+                        }
                     }
+                </ul>
+            </div>
+            <div class="spans">
+                @for(tag of ponente.tags.split(','); track tag){
+                @if(tag.length>0){
+                <span>{{tag}}</span>
+                }
                 }
             </div>
         </div>
