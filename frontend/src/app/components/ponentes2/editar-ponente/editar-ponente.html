@@ -82,10 +82,12 @@
 
                 <div class="tags">
 
-                    <span class="tag" *ngFor="let tag of tags; let i = index">
+                    <span class="tag">
+                        @for(tag of tags; track tag; let i = $index){
                         @if(tag!==""){
                         {{ tag }}
                         <button type="button" (click)="eliminarTag(i)">×</button>
+                        }
                         }
                     </span>
 
