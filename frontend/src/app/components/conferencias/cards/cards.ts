@@ -22,7 +22,7 @@ async llamadaEventos(categoria:number,dia:number){
     fetch(`${environment.apiUrl}api/evento/listar/${categoria}/${dia}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         this.eventos=data;
         
       })

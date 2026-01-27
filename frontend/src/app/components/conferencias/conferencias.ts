@@ -30,7 +30,7 @@ export class Conferencias {
     })
       .then(response => response.json())
       .then(data => {
-          console.log(data);
+          //console.log(data);
           this.categorias=data;
 
       })
@@ -45,7 +45,7 @@ export class Conferencias {
     })
       .then(response => response.json())
       .then(data => {
-          console.log(data);
+          //console.log(data);
           this.dias=data;
 
       })

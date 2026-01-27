@@ -16,14 +16,12 @@
 .imagen-transparente {
     opacity: 0.5;
     filter: sepia(20%) hue-rotate(200deg) saturate(120%);
-    /*background-image: linear-gradient(to right,rgba(blue,.7),rgba(blue,.9),url(/img/seminario.jpg));*/
 }
 p{
     font-size: 4rem;
 }
 .elementos2{
     display: flex;
-    /*width: 100%;*/
 
 }
 .elemento{
