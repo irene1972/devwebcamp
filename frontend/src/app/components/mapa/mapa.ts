@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import * as L from 'leaflet';
+//import * as L from 'leaflet';
 
 @Component({
   selector: 'app-mapa',
@@ -8,6 +8,7 @@ import * as L from 'leaflet';
   styleUrl: './mapa.css',
 })
 export class Mapa {
+/*
   ngAfterViewInit() {
     const map = L.map('map').setView([40.4168, -3.7038], 13);
 
@@ -15,4 +16,5 @@ export class Mapa {
       attribution: '© OpenStreetMap'
     }).addTo(map);
   }
+*/
 }
