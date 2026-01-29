@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "DevWebCamp con express, js, css y html",
   "main": "index.js",
+  "type":"module",
   "scripts": {
     "dev": "nodemon --import dotenv/config index.js",
     "start": "node --import dotenv/config index.js"

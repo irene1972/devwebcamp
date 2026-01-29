@@ -1,6 +1,7 @@
 <section>
     <h1>{{titulo}}</h1>
     <h2>Elige tu plan</h2>
+    <div [class.text-danger]="tipo === false" [class.text-success]="tipo === true">{{mensaje}}</div>
     <div class="contenedor-cards">
         <div class="card">
             <h3>Pase Gratis</h3>

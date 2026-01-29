@@ -7,7 +7,8 @@ import {
     decodificaToken,
     confirmar,
     restablecer,
-    isAdmin
+    isAdmin,
+    obtenerUsuarioPorEmail
 } from '../controllers/authController.js';
 import upload from '../helpers/upload.js';
 
@@ -16,6 +17,8 @@ const router=express.Router();
 //router.get('/',envioEmail);
 router.post('/login',login);
 router.get('/logout',logout);
+
+router.post('/obtener-usuario-por-email',obtenerUsuarioPorEmail);
 
 router.post('/isAdmin',isAdmin);
 

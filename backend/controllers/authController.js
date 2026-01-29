@@ -229,6 +229,20 @@ const isAdmin = async (req, res) => {
 
 }
 
+const obtenerUsuarioPorEmail = async (req, res) => {
+    const email = req.body.email;
+    try {
+        const response = await auth.getUserByEmail(email);
+
+        if (response[0].length === 0) {
+            return res.status(404).json({ error: 'Usuario no registrado' });
+        }
+        res.json(response[0][0]);
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al consultar los datos' });
+    }
+}
+
 export {
     login,
     registro,
@@ -237,5 +251,6 @@ export {
     decodificaToken,
     confirmar,
     restablecer,
-    isAdmin
+    isAdmin,
+    obtenerUsuarioPorEmail
 }

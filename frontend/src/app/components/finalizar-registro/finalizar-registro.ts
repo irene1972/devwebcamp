@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { autenticarPanelAdmin } from '../../core/services/utils.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-finalizar-registro',
@@ -12,8 +13,10 @@ import { Router } from '@angular/router';
 export class FinalizarRegistro {
   miForm: FormGroup;
   titulo: string = 'Finalizar Registro';
+  mensaje:string='';
+  tipo:boolean=false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private cd: ChangeDetectorRef) {
     this.miForm = new FormGroup({
       email: new FormControl('', [])
     }, []);
@@ -23,17 +26,66 @@ export class FinalizarRegistro {
     autenticarPanelAdmin(this.router);
   }
 
-  cargarDatos() {
+  async cargarDatos() {
+
+    const email=localStorage.getItem('email');
+    const usuarioId=await this.consultarUsuarioPorEmail(email);
+
     var rand = function () {
-      return Math.random().toString(36).substr(2); // remove `0.`
+      return Math.random().toString(36).substr(2);
     };
 
     var token = function () {
-      return rand() + rand(); // to make it longer
+      return rand() + rand();
     };
 
     const miToken=token();
-    console.log('generamos token');
-    console.log(miToken);
+    await this.crearRegistro(usuarioId,miToken);
+
+  }
+  async crearRegistro(usuario:number,token:string){
+
+    if(usuario && token){
+      await fetch(`${environment.apiUrl}api/registro/crear`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json; charset=UTF-8'
+      },
+      body:JSON.stringify({usuario:usuario,token:token})
+    })
+      .then(response=>response.json())
+      .then(data=>{
+        console.log(data);
+        if(data.error){
+          this.mensaje=data.error;
+          return;
+        }
+        this.mensaje=data.mensaje;
+        this.tipo=true;
+        //redirect hacia /boleto/token
+      })
+      .catch(error=>console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+    }else{
+      this.mensaje='Usuario no válido';
+      console.error('Falta el email o el token');
+    }
+  }
+  async consultarUsuarioPorEmail(email:string | null){
+    return await fetch(`${environment.apiUrl}api/auth/obtener-usuario-por-email`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json; charset=UTF-8'
+      },
+      body:JSON.stringify({email:email})
+    })
+      .then(response=>response.json())
+      .then(data=>{
+        console.log(data);
+        return data.id;
+      })
+      .catch(error=>console.log(error));
   }
 }
