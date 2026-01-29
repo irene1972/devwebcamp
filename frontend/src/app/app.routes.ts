@@ -21,6 +21,7 @@ import { Inicio } from './components/inicio/inicio';
 import { Devwebcamp } from './components/devwebcamp/devwebcamp';
 import { Paquetes } from './components/paquetes/paquetes';
 import { Conferencias } from './components/conferencias/conferencias';
+import { Boleto } from './components/boleto/boleto';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -47,6 +48,7 @@ export const routes: Routes = [
     {path:'devwebcamp',component:Devwebcamp},
     {path:'paquetes',component:Paquetes},
     {path:'workshops-conferencias',component:Conferencias},
+    {path:'boleto/:token',component:Boleto},
 
     {path:'**',component:C404}
 ];

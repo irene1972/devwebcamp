@@ -15,6 +15,7 @@ export class FinalizarRegistro {
   titulo: string = 'Finalizar Registro';
   mensaje:string='';
   tipo:boolean=false;
+  token:string='';
 
   constructor(private router: Router, private cd: ChangeDetectorRef) {
     this.miForm = new FormGroup({
@@ -39,8 +40,8 @@ export class FinalizarRegistro {
       return rand() + rand();
     };
 
-    const miToken=token();
-    await this.crearRegistro(usuarioId,miToken);
+    this.token=token();
+    await this.crearRegistro(usuarioId,this.token);
 
   }
   async crearRegistro(usuario:number,token:string){
@@ -62,7 +63,8 @@ export class FinalizarRegistro {
         }
         this.mensaje=data.mensaje;
         this.tipo=true;
-        //redirect hacia /boleto/token
+        this.router.navigate([`/boleto/${this.token}`]);
+        
       })
       .catch(error=>console.log(error))
       .finally(() => {
