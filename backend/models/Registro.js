@@ -5,10 +5,11 @@ export class Registro {
         return await pool.query('SELECT * FROM registros');
     }
     async getRegistroByEmail(email) {
+        const PAQUETE_GRATUITO=3;
         return await pool.query(`SELECT * 
                             FROM usuarios u
                             JOIN registros r ON u.id=r.usuario_id 
-                            WHERE u.email=?`, [email]);
+                            WHERE u.email=? AND r.paquete_id=?`, [email,PAQUETE_GRATUITO]);
     }
     async insertRegistro(paquete, pago, token, usuario) {
         await pool.query('INSERT INTO registros (paquete_id,pago_id,token,usuario_id) VALUES (?,?,?,?)', [paquete, pago, token, usuario]);

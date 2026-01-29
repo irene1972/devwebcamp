@@ -34,7 +34,7 @@ export class FinalizarRegistro {
 
     //hacer validación
     if (email) {
-      console.log(email);
+      //console.log(email);
       const registroPorEmail = await this.consultarRegistroPorEmail(email);
       if (registroPorEmail.error === 'No encontrado') {
 
@@ -53,6 +53,7 @@ export class FinalizarRegistro {
         await this.crearRegistro(usuarioId, this.token);
       }else{
         this.mensaje='El usuario ya tiene un Pase';
+        this.router.navigate([`/boleto/${registroPorEmail[0].token}`]);
         this.cd.detectChanges();
       }
     }
@@ -71,7 +72,7 @@ export class FinalizarRegistro {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          //console.log(data);
           if (data.error) {
             this.mensaje = data.error;
             return;
@@ -118,7 +119,7 @@ export class FinalizarRegistro {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         return data;
       })
       .catch(error => console.log(error));
