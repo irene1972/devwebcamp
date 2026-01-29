@@ -37,8 +37,6 @@ export class Speakers {
           infoRedes.redes=Object.entries(redesObj);
           this.arrayRedes.push(infoRedes);
         }
-        console.log('ireneeee');
-        console.log(this.arrayRedes);
       })
       .catch(error => console.log(error))
       .finally(() => {

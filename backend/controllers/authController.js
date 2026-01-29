@@ -214,14 +214,19 @@ const restablecer = async (req, res) => {
 
 const isAdmin = async (req, res) => {
     const email = req.body.email;
-    const response = await auth.getAdminByEmail(email);
 
-    if (response[0].length === 0) {
+    try {
+        const response = await auth.getAdminByEmail(email);
+        if (response[0].length === 0) {
+            return res.status(404).json({ error: 'No hay datos' });
+        } else {
+            return res.json({ mensaje: response[0][0].admin });
+        }
+    } catch (error) {
         return res.status(500).json({ error: 'Error al consultar la base de datos' });
-    } else {
-        return res.json({ mensaje: response[0][0].admin });
     }
-    
+
+
 }
 
 export {

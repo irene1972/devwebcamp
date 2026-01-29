@@ -38,7 +38,7 @@ export function autenticarPanelAdmin(router: Router) {
     var token = localStorage.getItem('token');
     var email = localStorage.getItem('email');
 
-    if (email) {
+    if (email && email !== 'undefined') {
         //usuario autenticado
         //consultar a bd para obtener si es admin o no   
         fetch(`${environment.apiUrl}api/auth/isAdmin`, {
@@ -57,8 +57,6 @@ export function autenticarPanelAdmin(router: Router) {
                 if (data.mensaje !== 1) {
                     router.navigate(['/login']);
                 }
-                //console.log(data);
-                //El usuario es admin y está autentificado
             })
             .catch(error => {
                 console.log(error);
@@ -66,7 +64,6 @@ export function autenticarPanelAdmin(router: Router) {
             });
 
     } else {
-        //extraer email del token
         fetch(`${environment.apiUrl}api/auth/decodificar-token`, {
             method: 'POST',
             headers: {

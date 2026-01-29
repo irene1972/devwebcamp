@@ -62,12 +62,13 @@ export class Login {
 
         this.tipo=true;
         const token=data.mensaje;
+
         localStorage.setItem('token', token);
+        localStorage.setItem('email',data.email);
         if(data.admin){
-          //localStorage.removeItem('token');
           this.router.navigate(['/admin/dashboard']);
         }else{
-          this.router.navigate(['/home']);
+          this.router.navigate(['/finalizar-registro']);
         }
         
       })
