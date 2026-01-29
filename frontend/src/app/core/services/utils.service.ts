@@ -53,10 +53,11 @@ export function autenticarPanelAdmin(router: Router) {
                 if (data.error) {
                     router.navigate(['/login']);
                 }
-
+/*
                 if (data.mensaje !== 1) {
                     router.navigate(['/login']);
                 }
+                    */
             })
             .catch(error => {
                 console.log(error);
