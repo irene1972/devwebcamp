@@ -10,6 +10,14 @@ export class Auth {
         return await pool.query('SELECT * FROM usuarios WHERE email=?', [email]);
     }
 
+    async getUserByTokenBoleto(email) {
+        return await pool.query(`SELECT r.paquete_id,p.nombre as paquete_nombre,r.pago_id,r.token,u.id,u.nombre,u.apellido,u.email 
+                                    FROM registros r
+                                    JOIN usuarios u ON r.usuario_id=u.id 
+                                    JOIN paquetes p ON r.paquete_id=p.id
+                                    WHERE r.token=?`, [email]);
+    }
+
     async getUserByToken(token){
         return await pool.query('SELECT * FROM usuarios WHERE token=?',[token]);
     }

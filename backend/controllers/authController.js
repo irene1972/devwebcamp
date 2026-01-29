@@ -243,6 +243,18 @@ const obtenerUsuarioPorEmail = async (req, res) => {
     }
 }
 
+const obtenerUsuarioPorTokenBoleto=async(req,res)=>{
+    const token=req.body.token;
+    try {
+        const response=await auth.getUserByTokenBoleto(token);
+        if (response[0].length === 0) {
+            return res.status(404).json({ error: 'Token no válido' });
+        }
+        res.json(response[0][0]);
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al consultar los datos' });
+    }
+}
 export {
     login,
     registro,
@@ -252,5 +264,6 @@ export {
     confirmar,
     restablecer,
     isAdmin,
-    obtenerUsuarioPorEmail
+    obtenerUsuarioPorEmail,
+    obtenerUsuarioPorTokenBoleto
 }

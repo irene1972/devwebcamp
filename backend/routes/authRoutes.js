@@ -8,7 +8,8 @@ import {
     confirmar,
     restablecer,
     isAdmin,
-    obtenerUsuarioPorEmail
+    obtenerUsuarioPorEmail,
+    obtenerUsuarioPorTokenBoleto
 } from '../controllers/authController.js';
 import upload from '../helpers/upload.js';
 
@@ -19,6 +20,7 @@ router.post('/login',login);
 router.get('/logout',logout);
 
 router.post('/obtener-usuario-por-email',obtenerUsuarioPorEmail);
+router.post('/obtener-usuario-por-token-boleto',obtenerUsuarioPorTokenBoleto);
 
 router.post('/isAdmin',isAdmin);
 

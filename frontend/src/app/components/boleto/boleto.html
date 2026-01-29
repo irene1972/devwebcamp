@@ -1,1 +1,18 @@
-<p>boleto works!</p>
+<section>
+    <h1>{{titulo}}</h1>
+    <p>Tu Boleto - Te recomendamos almacenarlo, puedes compartirlo en redes sociales.</p>
+    <div [class.text-danger]="tipo === false" [class.text-success]="tipo === true">{{mensaje}}</div>
+    <div>
+        <div class="boleto">
+            <div>
+                <h4>DevWebCamp</h4>
+                <p class="tipo">{{usuario.paquete_nombre}}</p>
+                <p>{{usuario.nombre}} {{usuario.apellido}}</p>
+            </div>
+            <div class="codigo">
+                #{{usuario.token}}
+            </div>
+        </div>
+    </div>
+
+</section>
