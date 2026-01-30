@@ -105,7 +105,19 @@ export class ConferenciasPago {
   eliminarEvento(id: number) {
     this.eventosSeleccionados = this.eventosSeleccionados.filter(evento => evento.id !== id);
   }
-  cargarDatos() {
+  cargarDatos(e:Event) {
+    e.preventDefault();
     console.log(this.miForm.value);
+    if(!this.miForm.value.idRegalo || this.eventosSeleccionados.length===0){
+      Swal.fire({
+        title: 'Error',
+        text: 'Elige al menos un evento y un regalo',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+    console.log('registrando...');
+
   }
 }

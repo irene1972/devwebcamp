@@ -33,6 +33,17 @@ div.registros{
     display: flex;
     justify-content: space-between;
 }
+h2{
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+}
+h3{
+    font-size: 1rem;
+}
+span{
+    display: block;
+    margin-top: 2rem;
+}
 @media screen and (min-width: 768px) {
     .contenedor {
         display: flex;
