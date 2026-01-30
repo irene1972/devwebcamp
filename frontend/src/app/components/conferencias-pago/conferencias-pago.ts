@@ -4,6 +4,7 @@ import { Cards } from '../conferencias/cards/cards';
 import Swal from 'sweetalert2';
 import { Regalo } from '../../interfaces/regalo';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-conferencias-pago',
@@ -27,7 +28,7 @@ export class ConferenciasPago {
   idEvento: any = [];
   eventosSeleccionados: any[] = [];
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef,private router:Router) {
 
     this.miForm = new FormGroup({
       idRegalo: new FormControl('', [
@@ -131,11 +132,26 @@ export class ConferenciasPago {
         headers: {
           'Content-Type': 'application/json; charset=UTF-8'
         },
-        body: JSON.stringify({ eventos, regalo, email})
+        body: JSON.stringify({ eventos, regalo, email })
       })
         .then(response => response.json())
         .then(data => {
           console.log(data);
+          if (data.error) {
+            this.mensaje = data.error;
+            return;
+          }
+          Swal.fire({
+            title: "Registrado con éxito",
+            text:"Tus conferencias se han almacenado y tu registro se ha completado, te esperamos en DevWebCamp",
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: "OK",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate([`/boleto/${data.tokenBoleto}`]);
+            } 
+          });          
 
         })
         .catch(error => console.log(error))

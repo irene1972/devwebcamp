@@ -6,7 +6,7 @@ export class Registro {
     }
     async getRegistroByEmail(email) {
         const PAQUETE_GRATUITO=3;
-        return await pool.query(`SELECT * 
+        return await pool.query(`SELECT u.*,r.id as registro_id, r.paquete_id,r.pago_id,r.token,r.usuario_id,r.regalo_id  
                             FROM usuarios u
                             JOIN registros r ON u.id=r.usuario_id 
                             WHERE u.email=? AND r.paquete_id=?`, [email,PAQUETE_GRATUITO]);

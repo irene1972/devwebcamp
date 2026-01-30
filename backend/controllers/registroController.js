@@ -1,6 +1,7 @@
 import pool from '../config/db.js';
 import { Registro } from "../models/Registro.js";
 import { Evento } from "../models/Evento.js";
+import { EventoRegistro } from "../models/EventoRegistro.js";
 
 const registro = new Registro();
 
@@ -44,7 +45,7 @@ const conferencias = async (req, res) => {
         //console.log(respuesta);
         if (respuesta[0].length > 0) {
             const idUsuario = respuesta[0][0].id;
-            console.log(idUsuario);
+            const registro=respuesta[0][0];
 
             //eventos.forEach(async elemento => {
             for (const elemento of eventos) {
@@ -62,7 +63,26 @@ const conferencias = async (req, res) => {
                 }
             }
             //almacenar el registro
-            res.json({mensaje:'Actualizado con éxito'});
+            for(const evento of eventos){
+                const evento_registro=new EventoRegistro(evento,registro.registro_id);
+                console.log(evento,registro.registro_id);
+                try {
+                    await evento_registro.insertEventoRegistro();
+                } catch (error) {
+                    return res.status(500).json({ error: 'Error al insertar los datos' });
+                }
+            }
+
+            try {
+                console.log('registro_id',registro.registro_id);
+                console.log('regalo_id',regalo);
+                await pool.query('UPDATE registros SET regalo_id=? WHERE id=?;',[regalo,registro.registro_id]);
+            } catch (error) {
+                return res.status(500).json({ error: 'Error al actualizar datos regalo' });
+            }
+            
+
+            res.json({mensaje:'Actualizado con éxito',tokenBoleto:registro.token});
         } else {
             return res.status(404).json({ error: 'No encontrado' });
         }
