@@ -105,10 +105,10 @@ export class ConferenciasPago {
   eliminarEvento(id: number) {
     this.eventosSeleccionados = this.eventosSeleccionados.filter(evento => evento.id !== id);
   }
-  cargarDatos(e:Event) {
+  cargarDatos(e: Event) {
     e.preventDefault();
     console.log(this.miForm.value);
-    if(!this.miForm.value.idRegalo || this.eventosSeleccionados.length===0){
+    if (!this.miForm.value.idRegalo || this.eventosSeleccionados.length === 0) {
       Swal.fire({
         title: 'Error',
         text: 'Elige al menos un evento y un regalo',
@@ -117,7 +117,33 @@ export class ConferenciasPago {
       });
       return;
     }
-    console.log('registrando...');
+    const eventos = this.eventosSeleccionados.map(evento => evento.id);
+    this.registrarDatos(eventos, this.miForm.value.idRegalo);
+
+  }
+  async registrarDatos(eventos: number[], regalo: number) {
+
+    const email = localStorage.getItem('email');
+
+    if (email) {
+      await fetch(`${environment.apiUrl}api/registro/finalizar-registro/conferencias`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify({ eventos, regalo, email})
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+
+        })
+        .catch(error => console.log(error))
+        .finally(() => {
+          this.cd.detectChanges();
+        });
+    }
+
 
   }
 }
