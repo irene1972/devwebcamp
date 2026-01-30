@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { autenticarPanelAdmin } from '../../core/services/utils.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-finalizar-registro',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterLink],
   templateUrl: './finalizar-registro.html',
   styleUrl: './finalizar-registro.css',
 })
