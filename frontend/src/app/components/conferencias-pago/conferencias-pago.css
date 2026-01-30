@@ -1,0 +1,44 @@
+.contenedor{
+padding: 2rem 0 0 1rem;
+}
+.mini-card {
+    color: white;
+    padding: 1rem;
+    border-radius: 5%;
+}
+
+img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.info-ponente {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.registros{
+    padding: 0 .5rem 0 2rem;
+    align-items: flex-start;
+}
+.registro{
+    background-color: rgb(245, 239, 239);
+    padding: 3rem;
+    border-radius: 1rem;
+    position: -webkit-sticky;
+    position: sticky;
+    top:0;
+}
+@media screen and (min-width: 768px) {
+    .contenedor {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .seccion {
+        flex: 0 0 50%;
+    }
+
+}

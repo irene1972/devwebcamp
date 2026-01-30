@@ -22,6 +22,7 @@ import { Devwebcamp } from './components/devwebcamp/devwebcamp';
 import { Paquetes } from './components/paquetes/paquetes';
 import { Conferencias } from './components/conferencias/conferencias';
 import { Boleto } from './components/boleto/boleto';
+import { ConferenciasPago } from './components/conferencias-pago/conferencias-pago';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -49,6 +50,9 @@ export const routes: Routes = [
     {path:'paquetes',component:Paquetes},
     {path:'workshops-conferencias',component:Conferencias},
     {path:'boleto/:token',component:Boleto},
+
+    //Ária pago
+    {path:'conferencias-pago',component:ConferenciasPago},
 
     {path:'**',component:C404}
 ];

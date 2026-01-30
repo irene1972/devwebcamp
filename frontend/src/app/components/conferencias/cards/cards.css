@@ -1,42 +1,51 @@
-.mini-card{
-    background-color: blue;
-    color:white;
-    padding: 1rem;
-    border-radius: 5%;
+.mini-card {
+  background-color: blue;
+  color: white;
+  padding: 1rem;
+  border-radius: 5%;
 }
 
-.green{
-    background-color: green;
-}
-img{
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    background-color: white;
+.green {
+  background-color: green;
 }
 
-.info-ponente{
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-.card{
-    flex:0 0 100%;
-    border: none;
-    
-}
-@media screen and (min-width: 360px) {
-  .cards{
-    display: flex;
-    flex-wrap: wrap;
-    gap:1rem;
-  }
-  .card{
-    flex:0 0 46%;
-    border: none;
-    
+img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: white;
 }
 
+.info-ponente {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.card {
+  flex: 0 0 100%;
+  border: none;
+
+}
+p.hora{
+  margin: 0;
+}
+.agregar{
+  margin-top: 1rem;
+  width: 100%;
+  background-color: azure;
+  color: black;
+  font-weight: bold;
+}
+button.agregar:disabled{
+  cursor: not-allowed;
+  pointer-events: auto;
 }
 @media screen and (min-width: 768px) {
   .cards{
@@ -45,7 +54,7 @@ img{
     gap:1rem;
   }
   .card{
-    flex:0 0 23%;
+    flex:0 0 48%;
     border: none;
     
 }

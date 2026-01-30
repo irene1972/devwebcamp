@@ -1,0 +1,24 @@
+<div class="contenedor">
+    <div class="seccion">
+        <section>
+            <h1>{{titulo}}</h1>
+            <h2>Talleres y conferencias dictados por expertos en Desarrollo Web</h2>
+
+            @for(categoria of categorias; track categoria.id){
+            <div [class]="categoria.nombre">
+                <h3>{{categoria.nombre}}</h3>
+                <div class="dias">
+                    @for(dia of dias; track dia.id){
+                    <h4>{{dia.nombre}}</h4>
+                    <app-cards [rutaImg]="imagesUrl" [categoria]="categoria.id" [dia]="dia.id"></app-cards>
+                    }
+
+                </div>
+            </div>
+            }
+        </section>
+    </div>
+    <div class="seccion registros">
+        <h2 class="registro">Registro</h2>
+    </div>
+</div>
