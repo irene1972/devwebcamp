@@ -19,17 +19,19 @@ img {
     gap: 1rem;
     align-items: center;
 }
-.registros{
-    padding: 0 .5rem 0 2rem;
-    align-items: flex-start;
-}
-.registro{
+div.registros{
     background-color: rgb(245, 239, 239);
     padding: 3rem;
     border-radius: 1rem;
     position: -webkit-sticky;
     position: sticky;
     top:0;
+    padding: 0 .5rem 0 2rem;
+    align-items: flex-start;
+}
+.registro{
+    display: flex;
+    justify-content: space-between;
 }
 @media screen and (min-width: 768px) {
     .contenedor {

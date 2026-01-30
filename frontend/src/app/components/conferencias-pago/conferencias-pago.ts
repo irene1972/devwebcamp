@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Cards } from '../conferencias/cards/cards';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-conferencias-pago',
@@ -58,7 +59,21 @@ export class ConferenciasPago {
   }
   recogerId(arrayEventos:any){
     this.idEvento=arrayEventos[0];
-    this.eventosSeleccionados.push(arrayEventos[0]);
+    if(this.eventosSeleccionados.length<5){
+      this.eventosSeleccionados.push(arrayEventos[0]);
+    }else{
+      Swal.fire({
+        title:'Error',
+        text:'Sólo se permite un máximo de 5 eventos',
+        icon:'error',
+        confirmButtonText:'OK'
+      });
+    }
     console.log(this.eventosSeleccionados);
+  }
+
+  eliminarEvento(id:number){
+    this.eventosSeleccionados=this.eventosSeleccionados.filter(evento=>evento.id!==id);
+    
   }
 }

@@ -10,7 +10,8 @@
                 <div class="dias">
                     @for(dia of dias; track dia.id){
                     <h4>{{dia.nombre}}</h4>
-                    <app-cards [evSeleccionados]="eventosSeleccionados" [rutaImg]="imagesUrl" [categoria]="categoria.id" [dia]="dia.id" (idEmitir)="recogerId($event)"></app-cards>
+                    <app-cards [evSeleccionados]="eventosSeleccionados" [rutaImg]="imagesUrl" [categoria]="categoria.id"
+                        [dia]="dia.id" (idEmitir)="recogerId($event)"></app-cards>
                     }
 
                 </div>
@@ -19,9 +20,14 @@
         </section>
     </div>
     <div class="seccion registros">
-        <h2 class="registro">Registro</h2>
-        <p>{{idEvento.id}}</p>
-        <p>{{idEvento.nombre}}</p>
-        <p>{{idEvento.descripcion}}</p>
+        <h2 class="encabezado">Registro</h2>
+        <div class="registros">
+            @for(evento of eventosSeleccionados; track evento.id){
+            <div class="registro">
+                <h3>{{evento.nombre}}</h3>
+                <button (click)="eliminarEvento(evento.id)">X</button>
+            </div>
+            }
+        </div>
     </div>
 </div>
