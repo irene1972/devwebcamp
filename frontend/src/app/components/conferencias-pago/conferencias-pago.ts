@@ -2,30 +2,45 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Cards } from '../conferencias/cards/cards';
 import Swal from 'sweetalert2';
+import { Regalo } from '../../interfaces/regalo';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-conferencias-pago',
-  imports: [Cards],
+  imports: [ReactiveFormsModule, Cards],
   templateUrl: './conferencias-pago.html',
   styleUrl: './conferencias-pago.css',
 })
 export class ConferenciasPago {
   titulo: string = 'Conferencias & Workshops';
+  mensaje: string = '';
+  tipo: boolean = false;
+  miForm: FormGroup;
   imagesUrl: string = environment.imagesUrl;
   categorias: any = [];
   dias: any = [];
+  regalos: Regalo[] = [];
   eventos1: any = [];
   eventos2: any = [];
   eventos3: any = [];
   eventos4: any = [];
-  idEvento:any=[];
-  eventosSeleccionados:any[]=[];
+  idEvento: any = [];
+  eventosSeleccionados: any[] = [];
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(private cd: ChangeDetectorRef) {
+
+    this.miForm = new FormGroup({
+      idRegalo: new FormControl('', [
+        Validators.required
+      ])
+
+    }, []);
+  }
 
   ngOnInit() {
     this.llamadaCategorias();
     this.llamadaDias();
+    this.llamadaRegalos();
   }
   async llamadaCategorias() {
     await fetch(`${environment.apiUrl}api/categoria/listar`, {
@@ -57,23 +72,40 @@ export class ConferenciasPago {
         this.cd.detectChanges();
       });
   }
-  recogerId(arrayEventos:any){
-    this.idEvento=arrayEventos[0];
-    if(this.eventosSeleccionados.length<5){
+  async llamadaRegalos() {
+    await fetch(`${environment.apiUrl}api/regalo/listar`, {
+      method: 'GET'
+    })
+      .then(response => response.json())
+      .then(data => {
+        //console.log(data);
+        this.regalos = data;
+
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+  }
+  recogerId(arrayEventos: any) {
+    this.idEvento = arrayEventos[0];
+    if (this.eventosSeleccionados.length < 5) {
       this.eventosSeleccionados.push(arrayEventos[0]);
-    }else{
+    } else {
       Swal.fire({
-        title:'Error',
-        text:'Sólo se permite un máximo de 5 eventos',
-        icon:'error',
-        confirmButtonText:'OK'
+        title: 'Error',
+        text: 'Sólo se permite un máximo de 5 eventos',
+        icon: 'error',
+        confirmButtonText: 'OK'
       });
     }
     console.log(this.eventosSeleccionados);
   }
 
-  eliminarEvento(id:number){
-    this.eventosSeleccionados=this.eventosSeleccionados.filter(evento=>evento.id!==id);
-    
+  eliminarEvento(id: number) {
+    this.eventosSeleccionados = this.eventosSeleccionados.filter(evento => evento.id !== id);
+  }
+  cargarDatos() {
+    console.log(this.miForm.value);
   }
 }

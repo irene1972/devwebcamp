@@ -29,5 +29,19 @@
             </div>
             }
         </div>
+        <div class="regalos">
+            <div [class.text-danger]="tipo === false" [class.text-success]="tipo === true">{{mensaje}}</div>
+            <form class="formulario" [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+                Selecciona un regalo
+                <select formControlName="idRegalo">
+                    <option value="">-- Selecciona tu regalo --</option>
+                    @for(regalo of regalos; track regalo.id){
+                    <option [value]="regalo.id">{{regalo.nombre}}</option>
+                    }
+                </select>
+                <input type="submit" class="formulario__submit" value="Registrarme" [disabled]="!miForm.valid">
+
+            </form>
+        </div>
     </div>
 </div>
