@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -11,6 +11,7 @@ export class Cards {
 @Input() rutaImg:string='';
 @Input() categoria:number=0;
 @Input() dia:number=0;
+@Output() idEmitir=new EventEmitter();
 eventos:any=[];
 
 constructor(private cd: ChangeDetectorRef){}
@@ -30,5 +31,8 @@ async llamadaEventos(categoria:number,dia:number){
       .finally(() => {
         this.cd.detectChanges();
       });
+  }
+  emitirEvento(id:number){
+    this.idEmitir.emit(id);
   }
 }

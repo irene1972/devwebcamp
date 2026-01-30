@@ -10,7 +10,7 @@
                 <div class="dias">
                     @for(dia of dias; track dia.id){
                     <h4>{{dia.nombre}}</h4>
-                    <app-cards [rutaImg]="imagesUrl" [categoria]="categoria.id" [dia]="dia.id"></app-cards>
+                    <app-cards [rutaImg]="imagesUrl" [categoria]="categoria.id" [dia]="dia.id" (idEmitir)="recogerId($event)"></app-cards>
                     }
 
                 </div>
@@ -20,5 +20,7 @@
     </div>
     <div class="seccion registros">
         <h2 class="registro">Registro</h2>
+        <p>{{idEvento}}</p>
+
     </div>
 </div>

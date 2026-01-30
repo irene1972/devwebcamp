@@ -17,6 +17,8 @@ export class ConferenciasPago {
   eventos2: any = [];
   eventos3: any = [];
   eventos4: any = [];
+  idEvento:number=0;
+  eventosSeleccionados:[]=[];
 
   constructor(private cd: ChangeDetectorRef) { }
 
@@ -53,5 +55,9 @@ export class ConferenciasPago {
       .finally(() => {
         this.cd.detectChanges();
       });
+  }
+  recogerId(id:number){
+    console.log('ID recibido desde cards:', id);
+    this.idEvento=id;
   }
 }
