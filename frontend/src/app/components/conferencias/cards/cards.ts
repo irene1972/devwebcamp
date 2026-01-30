@@ -32,7 +32,7 @@ async llamadaEventos(categoria:number,dia:number){
         this.cd.detectChanges();
       });
   }
-  emitirEvento(id:number){
-    this.idEmitir.emit(id);
+  emitirEvento(arrayEventos:any){
+    this.idEmitir.emit(arrayEventos);
   }
 }

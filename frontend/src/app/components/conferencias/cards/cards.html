@@ -9,7 +9,7 @@
                 <img src="{{rutaImg}}{{evento.ponente_imagen}}.webp" alt="imagen ponente">
                 <p class="nombre">{{evento.ponente_nombre}} {{evento.ponente_apellido}}</p>
             </div>
-            <button type="button" [id]="evento.id" class="btn btn-primary agregar" [disabled]="evento.disponibles==0" (click)="emitirEvento(evento.id)">{{evento.disponibles==0 ? "Agotado " : "Agregar - " + evento.disponibles + " Disponibles"}}</button>
+            <button type="button" [id]="evento.id" class="btn btn-primary agregar" [disabled]="evento.disponibles==0" (click)="emitirEvento([{id:evento.id,nombre:evento.nombre,descripcion:evento.descripcion}])">{{evento.disponibles==0 ? "Agotado " : "Agregar - " + evento.disponibles + " Disponibles"}}</button>
         </div>
     </div>
     }

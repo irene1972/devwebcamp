@@ -17,8 +17,8 @@ export class ConferenciasPago {
   eventos2: any = [];
   eventos3: any = [];
   eventos4: any = [];
-  idEvento:number=0;
-  eventosSeleccionados:[]=[];
+  idEvento:any=[];
+  eventosSeleccionados:any[]=[];
 
   constructor(private cd: ChangeDetectorRef) { }
 
@@ -56,8 +56,9 @@ export class ConferenciasPago {
         this.cd.detectChanges();
       });
   }
-  recogerId(id:number){
-    console.log('ID recibido desde cards:', id);
-    this.idEvento=id;
+  recogerId(arrayEventos:any){
+    this.idEvento=arrayEventos[0];
+    this.eventosSeleccionados.push(arrayEventos[0]);
+    console.log(this.eventosSeleccionados);
   }
 }
