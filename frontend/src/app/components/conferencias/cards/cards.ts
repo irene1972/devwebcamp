@@ -11,6 +11,7 @@ export class Cards {
 @Input() rutaImg:string='';
 @Input() categoria:number=0;
 @Input() dia:number=0;
+@Input() evSeleccionados:any[]=[];
 @Output() idEmitir=new EventEmitter();
 eventos:any=[];
 
@@ -34,5 +35,8 @@ async llamadaEventos(categoria:number,dia:number){
   }
   emitirEvento(arrayEventos:any){
     this.idEmitir.emit(arrayEventos);
+  }
+  isDisabled(evento:any):boolean{
+    return evento.disponibles === 0 || this.evSeleccionados.some(e => e.id === evento.id);
   }
 }
