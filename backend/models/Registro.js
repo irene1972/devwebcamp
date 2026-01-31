@@ -4,6 +4,12 @@ export class Registro {
     async getRegistros() {
         return await pool.query('SELECT * FROM registros');
     }
+    async getUsuariosRegistrados(){
+        return await pool.query(`SELECT u.nombre,u.apellido,u.email,r.usuario_id,r.paquete_id,p.nombre as paquete_nombre 
+                                    FROM usuarios u
+                                    JOIN registros r ON u.id=r.usuario_id 
+                                    JOIN paquetes p ON r.paquete_id=p.id`);
+    }
     async getRegistroByEmail(email) {
         const PAQUETE_GRATUITO=3;
         return await pool.query(`SELECT u.*,r.id as registro_id, r.paquete_id,r.pago_id,r.token,r.usuario_id,r.regalo_id  

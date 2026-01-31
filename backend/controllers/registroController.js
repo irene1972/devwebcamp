@@ -5,6 +5,20 @@ import { EventoRegistro } from "../models/EventoRegistro.js";
 
 const registro = new Registro();
 
+const obtenerUsuariosRegistrados = async (req, res) => {
+
+    try {
+        const respuesta = await registro.getUsuariosRegistrados();
+        if (respuesta[0].length > 0) {
+            return res.json(respuesta[0]);
+        } else {
+            return res.status(404).json({ error: 'No hay usuarios registrados' });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Error al consultar los datos' });
+    }
+}
+
 const obtenerRegistroPorEmail = async (req, res) => {
     const email = req.body.email;
     try {
@@ -40,9 +54,9 @@ const conferencias = async (req, res) => {
         return res.status(400).json({ error: 'No hay eventos seleccionados' });
     }
     try {
-        console.log(email);
+        
         const respuesta = await registro.getRegistroByEmail(email);
-        //console.log(respuesta);
+        
         if (respuesta[0].length > 0) {
             const idUsuario = respuesta[0][0].id;
             const registro=respuesta[0][0];
@@ -57,7 +71,7 @@ const conferencias = async (req, res) => {
                 //restar 1 a los disponibles
                 try {
                     await pool.query('UPDATE eventos SET disponibles=? WHERE id=?;', [respuesta[0][0].disponibles - 1, elemento]);
-                    console.log('Actualizado con éxito');
+                    
                 } catch (error) {
                     return res.status(404).json({ error: 'Error al actualizar disponibles' });
                 }
@@ -65,7 +79,7 @@ const conferencias = async (req, res) => {
             //almacenar el registro
             for(const evento of eventos){
                 const evento_registro=new EventoRegistro(evento,registro.registro_id);
-                console.log(evento,registro.registro_id);
+                
                 try {
                     await evento_registro.insertEventoRegistro();
                 } catch (error) {
@@ -74,8 +88,7 @@ const conferencias = async (req, res) => {
             }
 
             try {
-                console.log('registro_id',registro.registro_id);
-                console.log('regalo_id',regalo);
+                
                 await pool.query('UPDATE registros SET regalo_id=? WHERE id=?;',[regalo,registro.registro_id]);
             } catch (error) {
                 return res.status(500).json({ error: 'Error al actualizar datos regalo' });
@@ -92,6 +105,7 @@ const conferencias = async (req, res) => {
 }
 
 export {
+    obtenerUsuariosRegistrados,
     obtenerRegistroPorEmail,
     crearRegistro,
     conferencias

@@ -38,5 +38,44 @@
         </nav>
     </aside>
     <h2>{{titulo}}</h2>
-    
+    <section>
+        @if(usuariosRegistrados.length===0){
+        <div>No hay usuarios registrados</div>
+        }@else{
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Email</th>
+                    <th>Plan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(usuario of usuariosRegistrados_paginados;track usuario.usuario_id){
+                <tr>
+                    <td>{{usuario.nombre}}</td>
+                    <td>{{usuario.apellido}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>{{usuario.paquete_nombre}}</td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+        <!-- Añadir paginación -->
+        <div class="paginacion">
+            <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+                ⬅ Anterior
+            </button>
+
+            <span>Página {{ paginaActual }} de {{ totalPaginas }}</span>
+
+            <button (click)="paginaSiguiente()" [disabled]="paginaActual === totalPaginas">
+                Siguiente ➡
+            </button>
+        </div>
+        }
+    </section>
 </section>
